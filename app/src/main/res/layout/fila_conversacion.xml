@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="2dp"
+    >
+
+    <ImageView
+        android:id="@+id/contacto_profile_picture"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/user_icon"
+        />
+
+    <TextView
+        android:id="@+id/conversacion_alias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/contacto_profile_picture"
+        android:paddingBottom="10dp"
+        android:text="Desconocido"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/conversacion_ultimo_msj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/conversacion_alias"
+        android:layout_below="@+id/conversacion_alias"
+        android:text="Ultimo mensaje"
+        android:textColor="@color/black"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/conversacion_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/conversacion_alias"
+        android:layout_alignBottom="@+id/conversacion_alias"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="25/04/2017"
+        android:textColor="@color/black"
+        android:textSize="15sp"/>
+
+    <ImageView
+        android:id="@+id/marca_no_leido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circle_icon"/>
+
+    <!-- valores ocultos para procesar
+    mas facilmente la informacion -->
+    <TextView
+        android:id="@+id/nombre_conversacion_completo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/id_conversacion_completo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tipo_conversacion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        />
+</RelativeLayout>

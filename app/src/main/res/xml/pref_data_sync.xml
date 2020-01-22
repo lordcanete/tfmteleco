@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
+         design guidelines. -->
+    <Preference
+        android:key="desconectar"
+        android:title="Desconectar">
+        <intent android:action="us.tfg.p2pmessenger.view.MainActivity"/>
+    </Preference>
+
+    <Preference
+        android:key="cerrar_sesion"
+        android:title="Cerrar sesión">
+        <intent android:action="us.tfg.p2pmessenger.view.MainActivity"/>
+    </Preference>
+
+    <Preference
+        android:key="crear_red_pastry"
+        android:title="Crear nueva red">
+        <intent android:action="us.tfg.p2pmessenger.view.MainActivity"/>
+    </Preference>
+
+</PreferenceScreen>

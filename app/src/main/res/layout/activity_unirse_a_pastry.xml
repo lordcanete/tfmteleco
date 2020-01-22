@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="us.tfg.p2pmessenger.view.UnirseAPastryActivity">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/logo"/>
+
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/texto_codigo_unirse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dirección"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="40dp"
+            android:layout_height="wrap_content">
+            <com.dx.dxloadingbutton.lib.LoadingButton
+                android:id="@+id/boton_leer_codigo_qr"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+
+                app:lb_resetAfterFailed="true"
+                app:lb_btnRippleColor="#000000"
+                app:lb_btnText="@string/texto_abrir_lector_qr"
+                app:lb_btnColor="@color/primary"
+                />
+            <com.dx.dxloadingbutton.lib.LoadingButton
+                android:id="@+id/boton_unirse"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+
+                app:lb_resetAfterFailed="true"
+                app:lb_btnRippleColor="#000000"
+                app:lb_btnText="@string/texto_unirse_a_grupo"
+                app:lb_btnColor="@color/primary"
+                />
+        </LinearLayout>
+
+        <com.dx.dxloadingbutton.lib.LoadingButton
+            android:id="@+id/boton_crear_red"
+
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+
+            app:lb_resetAfterFailed="true"
+            app:lb_btnRippleColor="#000000"
+            app:lb_btnText="@string/texto_crear_red_pastry"
+            app:lb_btnColor="@color/primary"
+            />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

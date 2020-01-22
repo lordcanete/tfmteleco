@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="us.tfg.p2pmessenger.view.MensajesImportantesActivity">
+
+    <FrameLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+
+
+        <ListView
+            android:id="@+id/lista_mensajes_importantes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+        </ListView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:indeterminate="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right|end"
+            android:layout_margin="25dp"
+            android:clickable="false"
+            android:indeterminateDrawable="@drawable/progress_bar_drawable"
+            android:visibility="visible"
+            />
+
+    </FrameLayout>
+
+</LinearLayout>

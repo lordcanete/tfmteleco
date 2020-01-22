@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <item android:id="@+id/action_nuevo_grupo"
+          android:title="Nuevo grupo"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/invitar_a_pastry"
+          android:title="Invitar a la red"
+          android:orderInCategory="102"
+          app:showAsAction="never"/>
+    <item android:id="@+id/unirse_a_grupo"
+          android:title="Unirse a grupo"
+          android:orderInCategory="103"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_msj_importantes"
+          android:title="Mensajes importantes"
+          android:orderInCategory="104"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+          android:title="Ajustes"
+          android:orderInCategory="105"
+          app:showAsAction="never"/>
+</menu>

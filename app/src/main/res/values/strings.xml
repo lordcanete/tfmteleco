@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">P2PMessenger</string>
+
+    <string name="formato_hora">HH:mm</string>
+    <string name="texto_ayer">Ayer</string>
+
+
+    <string name="type_your_message">Escribir mensaje</string>
+    <string name="NoRecent">No recent</string>
+    <string name="texto_mensaje_copiado">Copiado</string>
+    <string name="nombre_usr_vacio">El nombre de usuario no puede estar vacío</string>
+    <string name="contrasena_vacia">La contraseña no puede estar vacía</string>
+    <string name="msj_login_failed">El usuario o la contraseña no son válidos</string>
+    <string name="texto_comprobar_usuario">COMPROBAR</string>
+    <string name="texto_login">INICIAR SESIÓN</string>
+    <string name="texto_signup">REGISTRAR</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Conexión</string>
+
+    <string-array name="pref_color_led">
+        <item>Ninguno</item>
+        <item>Blanco</item>
+        <item>Rojo</item>
+        <item>Amarillo</item>
+        <item>Verde</item>
+        <item>Celeste</item>
+        <item>Azul</item>
+        <item>Morado</item>
+    </string-array>
+    <string-array name="pref_color_led_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notificaciones</string>
+
+
+    <string name="pref_title_new_message_notifications_group">Tono de notificación</string>
+    <string name="pref_title_vibrate_group">Vibración</string>
+
+    <string name="pref_title_new_message_notifications_individual">Tono de notificación</string>
+    <string name="pref_title_vibrate_individual">Vibración</string>
+
+    <string name="title_activity_contactos">Elegir contacto</string>
+    <string name="texto_nuevo_grupo">Nuevo grupo</string>
+    <string name="texto_buscar_id">Buscar usuario</string>
+    <string name="texto_add_contact">Añadir contacto</string>
+    <string name="texto_abrir_lector_qr">Leer cógido QR</string>
+    <string name="texto_unirse_a_grupo">Unirse</string>
+
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Acceso a la cámara es necesario para la lectura</string>
+    <string name="no_camera_permission">Esta aplicación no puede funcionar porque no tiene el permiso de cámara. La aplicación terminará.</string>
+    <string name="low_storage_error">El lector de códigos no puede ser descargado porque no hay espacio suficiente en el sistema de almacenamiento</string>
+    <string name="texto_copiar">Copiar</string>
+    <string name="title_activity_principal_grupo">Página principal del grupo</string>
+    <string name="texto_crear_red_pastry">Crear nueva red</string>
+    <string name="aviso_crear_red">Se borrará toda la información almacenada localmente, como contactos, mensajes y claves. Perdera el acceso a su usuario en cualquie otra red y a los grupos que alli tenga creado.
+        Esta accion no se puede deshacer</string>
+
+</resources>

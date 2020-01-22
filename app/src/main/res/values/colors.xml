@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#004d40</color>
+    <color name="colorPrimaryDark">#00796b</color>
+    <color name="accent_material_light">#ffffff</color>
+
+
+
+    <!-- utilizado en el login -->
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#006156</color>
+    <color name="primary_darker">#00695D</color>
+    <color name="accent">#ffffff</color>
+
+    <color name="black">#000000</color>
+    <color name="aluminum">#999999</color>
+    <color name="iron">#CCCCCC</color>
+    <color name="white">#ffffff</color>
+
+    <color name="gray">@android:color/darker_gray</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+
+    <color name="fondo_mensaje_importante">#aaffea00</color>
+
+    <!-- colores de los nombres de conversacion -->
+    <color name="color_nombre_usuario_grupo_0">#4CAF50</color>
+    <color name="color_nombre_usuario_grupo_1">#8a42ff</color>
+    <color name="color_nombre_usuario_grupo_2">#26C6DA</color>
+    <color name="color_nombre_usuario_grupo_3">#D50000</color>
+    <color name="color_nombre_usuario_grupo_4">#F48FB1</color>
+    <color name="color_nombre_usuario_grupo_5">#6D4C41</color>
+    <color name="color_nombre_usuario_grupo_6">#01579B</color>
+    <color name="color_nombre_usuario_grupo_7">#1B5E20</color>
+    <color name="color_nombre_usuario_grupo_8">#007373</color>
+    <color name="color_nombre_usuario_grupo_9">#6F6398</color>
+    <color name="color_nombre_usuario_grupo_10">#FFEB3B</color>
+    <color name="color_nombre_usuario_grupo_11">#EC407A</color>
+    <color name="color_nombre_usuario_grupo_12">#FF6F00</color>
+    <color name="color_nombre_usuario_grupo_13">#880E4F</color>
+    <color name="color_nombre_usuario_grupo_14">#B39DDB</color>
+    <color name="color_nombre_usuario_grupo__1">#757575</color>
+</resources>

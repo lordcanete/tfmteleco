@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:layout_collapseMode="pin">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <! - - This is a centered logo - ->
+        <ImageView
+            android:id="@+id/back_button"
+            android:src="@drawable/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="left" />
+
+        <!- - This is a centered title - ->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:text="Elegir contacto"
+            android:textColor="@color/white"
+            android:layout_marginStart="39dp"
+            android:layout_alignLeft="@+id/back_button"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:text="No hay contactos"
+            android:textColor="@color/white"
+            android:layout_marginStart="39dp"
+            android:layout_alignTop="@+id/back_button"
+            android:layout_alignParentStart="true"/>
+
+        <!- - This is a custom right side button - ->
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="end"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/menu_icon"
+            style="@style/Widget.AppCompat.ActionButton" />
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar> -->
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ContactosActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <include layout="@layout/content_elegir_contactos"/>
+
+</android.support.design.widget.CoordinatorLayout>

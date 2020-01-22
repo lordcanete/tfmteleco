@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#c9c9c9"
+                android:paddingBottom="15dp"
+                android:paddingTop="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        >
+        <LinearLayout
+            android:id="@+id/origen_layout"
+            android:paddingStart="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/user_icon"/>
+            <TextView
+                android:id="@+id/origen"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="wrap_content"
+                android:maxLength="15"
+                android:layout_height="wrap_content"
+                android:text="Domingoasbgfdxc"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_icon"/>
+            <TextView
+                android:id="@+id/destino"
+                android:maxLength="15"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grupo de la elite"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/texto_fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23/09/2017"
+            android:paddingRight="10dp"
+            android:paddingTop="3dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+
+        <RelativeLayout
+            android:id="@+id/bocadillo"
+            android:layout_marginTop="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/balloon_incoming_normal">
+
+            <LinearLayout
+                android:id="@+id/chat_company_reply_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/message_text"
+                    style="@style/chat_text_message_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:autoLink="web"
+
+                    android:maxWidth="270dp"
+                    android:paddingLeft="20dp"
+                    android:text="Rahul Agrawal is a good boy but he does not know what he wants."/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/texto_hora"
+                style="@style/chat_timings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/chat_company_reply_text"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/chat_company_reply_text"
+                android:paddingBottom="5dp"
+                android:paddingRight="15dp"
+                android:text="17:10"
+                android:textColor="@color/gray"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

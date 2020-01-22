@@ -1,0 +1,42 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Allows the user to choose a ringtone in the 'notification' category. -->
+    <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+    <!-- NOTE: RingtonePreference's summary should be set to its value by the activity code. -->
+    <PreferenceCategory
+        android:title="Notificaciones de mensaje">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="tono_notificacion_individual"
+            android:title="@string/pref_title_new_message_notifications_individual"/>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="vibracion_notificacion_individual"
+            android:title="@string/pref_title_vibrate_individual"/>
+        <ListPreference
+            android:key="luz_individual"
+            android:entries="@array/pref_color_led"
+            android:entryValues="@array/pref_color_led_values"
+            android:defaultValue="5"
+            android:title="Luz"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Notificaciones de grupo">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="tono_notificacion_grupo"
+            android:title="@string/pref_title_new_message_notifications_group"/>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="vibracion_notificacion_grupo"
+            android:title="@string/pref_title_vibrate_group"/>
+        <ListPreference
+            android:key="luz_grupo"
+            android:entries="@array/pref_color_led"
+            android:entryValues="@array/pref_color_led_values"
+            android:defaultValue="7"
+            android:title="Luz"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

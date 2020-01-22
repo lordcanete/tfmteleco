@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nuevo_msj_importante"
+        android:icon="@drawable/add_icon"
+        android:title="Nuevo mensaje"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/actualizar_msj_importantes"
+        android:icon="@drawable/refresh_icon"
+        android:title="Actualizar"
+        android:orderInCategory="102"
+        app:showAsAction="ifRoom"/>
+
+</menu>

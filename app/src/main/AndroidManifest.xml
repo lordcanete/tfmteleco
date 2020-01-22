@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="us.tfg.p2pmessenger">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"
+        />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name=".ApplicationExtended"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode"/>
+
+        <!--
+        -->
+        <service android:name=".controller.ControladorAndroidImpl"
+
+                 android:process=":Proceso_servicio"
+
+        />
+
+        <activity
+            android:name=".view.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.ConversacionesActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".view.LoginActivity"
+            android:theme="@style/LoginTheme.Dark"/>
+        <activity
+            android:name=".view.SignupActivity"
+            android:parentActivityName=".view.LoginActivity"
+            android:theme="@style/LoginTheme.Dark"/>
+        <activity
+            android:name="in.co.madhur.chatbubblesdemo.ConversacionActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".view.ConversacionesActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.google.android.gms.samples.vision.barcodereader.BarcodeCaptureActivity"
+            android:label="Read Barcode"/>
+        <activity
+            android:name=".view.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".view.ConversacionesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="us.tfg.p2pmessenger.view.ConversacionesActivity"/>
+        </activity>
+        <activity
+            android:name=".view.ContactosActivity"
+            android:label="@string/title_activity_contactos"
+            android:parentActivityName=".view.ConversacionesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="us.tfg.p2pmessenger.view.ConversacionesActivity"/>
+        </activity>
+        <activity
+            android:name=".view.AddContactoActivity"
+            android:parentActivityName=".view.ContactosActivity">
+        </activity>
+        <activity android:name=".view.NuevoGrupoActivity">
+        </activity>
+        <activity android:name=".view.MensajesImportantesActivity">
+        </activity>
+        <activity android:name=".view.UnirseAGrupoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="us.tfg.p2pmessenger.view.ConversacionesActivity"/>
+        </activity>
+        <activity android:name=".view.MostrarCodigoQRActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="in.co.madhur.chatbubblesdemo.ConversacionActivity"/>
+        </activity>
+        <activity
+            android:name=".view.PrincipalGrupoActivity"
+            android:parentActivityName="in.co.madhur.chatbubblesdemo.ConversacionActivity"
+            android:label="@string/title_activity_principal_grupo"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".view.UnirseAPastryActivity"
+            android:theme="@style/LoginTheme.Dark"
+            >
+        </activity>
+    </application>
+
+</manifest>
