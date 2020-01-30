@@ -81,6 +81,7 @@
    <exclude name="us/tfg/p2pmessenger/*.java"/>
    <include name="us/tfg/p2pmessenger/view/Vista.java"/>
    <include name="us/tfg/p2pmessenger/view/VistaConsola.java"/>
+   <include name="us/tfg/p2pmessenger/view/VistaGUI.java"/>
    <include name="us/tfg/p2pmessenger/util/*.java"/>
    <include name="us/tfg/p2pmessenger/model/BloqueMensajes.java"/>
    <include name="us/tfg/p2pmessenger/model/Contacto.java"/>
