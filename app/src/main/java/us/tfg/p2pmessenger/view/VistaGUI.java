@@ -30,4 +30,34 @@ public class VistaGUI implements Vista
     {
         System.out.println("Funcionando Vista WEB\n");
     }
+
+    @Override
+    public void muestraMensaje(Mensaje mensaje,String alias)
+    {
+        System.out.println(mensaje);
+    }
+
+    @Override
+    public void notificacion(String origen)
+    {
+        System.out.println("Notificacion: Nuevo mensaje de "+origen);
+    }
+
+    @Override
+    public void excepcion(Exception e)
+    {
+        e.printStackTrace();
+    }
+
+    @Override
+    public void setSeguir(boolean seguir)
+    {
+
+    }
+
+    @Override
+    public void notificarPing(String respuesta)
+    {
+        System.out.println(respuesta);
+    }
 }
