@@ -34,13 +34,13 @@ public class VistaGUI implements Vista
     @Override
     public void muestraMensaje(Mensaje mensaje,String alias)
     {
-        System.out.println(mensaje);
+     
     }
 
     @Override
     public void notificacion(String origen)
     {
-        System.out.println("Notificacion: Nuevo mensaje de "+origen);
+     
     }
 
     @Override
@@ -58,6 +58,11 @@ public class VistaGUI implements Vista
     @Override
     public void notificarPing(String respuesta)
     {
-        System.out.println(respuesta);
+     
+    }
+    
+    @Override
+    public void errorEnviando(int error,String mensaje)
+    {
     }
 }
