@@ -39,7 +39,7 @@ public class VistaGUI extends Application
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL url = new File("./web/html/index.html").toURI().toURL();
+        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
