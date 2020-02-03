@@ -31,7 +31,7 @@ import java.net.URL;
 /**
  * Created by PCANO on 30/01/20.
  */
-public class VistaGUI implements Vista
+public class VistaGUI extends Application
 {
     public VistaGUI()
     {
@@ -56,7 +56,7 @@ public class VistaGUI implements Vista
     {
         Application.launch(VistaGUI.class, args);
     }
-
+    /*
     @Override
     public void muestraMensaje(Mensaje mensaje,String alias)
     {
@@ -90,5 +90,5 @@ public class VistaGUI implements Vista
     @Override
     public void errorEnviando(int error,String mensaje)
     {
-    }
+    }*/
 }
