@@ -44,7 +44,7 @@ public class VistaGUI extends Application
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
 
-        Scene scene = new Scene(webView, 300, 150);
+        Scene scene = new Scene(webView, 450, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
