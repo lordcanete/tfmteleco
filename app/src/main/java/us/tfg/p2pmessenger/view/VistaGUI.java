@@ -33,8 +33,24 @@ import java.net.URL;
  */
 public class VistaGUI extends Application
 {
-    public VistaGUI()
+    private ControladorApp app;
+
+    public static final Scanner scanner = new Scanner(System.in);
+
+    private boolean esperar;
+
+    private boolean apagar;
+
+    private ArrayList<Conversacion> conversaciones;
+    
+    private int puerto;
+    private String ip;
+
+    public VistaGUI(String ip, int puerto)
     {
+        this.puerto=puerto;
+        this.ip=ip;
+        app = new ControladorConsolaImpl(ip, puerto,this);
     }
 
     @Override
@@ -55,6 +71,71 @@ public class VistaGUI extends Application
     public static void main(String args[])
     {
         Application.launch(VistaGUI.class, args);
+        
+        String name = "";
+        String hint = null;
+        String usuario = null;
+        
+        if (args.length < 1)
+            System.out.println("usage -> java -cp \"../../lib/*\" --module-path /usr/share/openjfx/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]");
+        else
+        {
+            int puerto = Integer.parseInt(args[0]);
+            String ip = null;
+            if (args.length > 1) {
+                ip = args[1];
+            }
+            VistaConsola servicio = new VistaGUI(ip, puerto);
+
+            servicio.app.onCreateEntorno();
+            servicio.app.onStart();
+
+            if(servicio.app.getError()!=0)
+            {
+                servicio.procesaError();
+            }
+            /*
+            servicio.creaApp(Integer.parseInt(puerto));
+            int error=0;
+
+            error=servicio.conectaApp(hint,nombre);
+
+            System.out.println("Error = "+error);
+
+         */
+            while (!servicio.apagar)
+            {
+
+                switch (servicio.app.getModo())
+                {
+                    case ControladorApp.MODO_APAGADO:
+                        System.out.println("El nodo no se ha encendido");
+                        servicio.apagar=true;
+                        break;
+                    case ControladorApp.MODO_SESION_INICIADA:
+                        servicio.modoSesionIniciada();
+                        break;
+                    case ControladorApp.MODO_NECESARIA_DIRECION:
+                        servicio.modoNuevaDireccion();
+                        break;
+                    case ControladorApp.MODO_INICIO_SESION:
+                        servicio.modoInicioSesion();
+                        break;
+                    case ControladorApp.MODO_REGISTRO:
+                        servicio.modoRegistro();
+                        break;
+                }
+
+            }
+            System.out.println("Cerrando scanner");
+            scanner.close();
+            System.out.println("onStop");
+            servicio.app.onStop();
+            System.out.println("onDestroy");
+            servicio.app.onDestroy();
+        }
+
+        System.out.println("Fin de la aplicacion");
     }
     /*
     @Override
