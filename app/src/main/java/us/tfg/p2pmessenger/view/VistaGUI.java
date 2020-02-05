@@ -52,17 +52,17 @@ public class VistaGUI extends Application
         // now load the page
         webEngine.load(url.toString());
 
-        Thread.sleep(2000);
+        Thread.sleep(10000);
         System.out.println("Cargando otra pagina");
         //Probamos a cargar otra pagina
-        cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html");
+        cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html", webEngine);
     }
 
-    public void cargarPagina(String rutaPagina){
+    public void cargarPagina(String rutaPagina, WebEngine we){
          
         try {
             url = new File(rutaPagina).toURI().toURL();
-            webEngine.load(url.toString());
+            we.load(url.toString());
         } catch (Exception e){
             e.printStackTrace();
         }
