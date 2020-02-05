@@ -35,7 +35,7 @@ public class VistaGUI extends Application
 {
     private URL url;
     private WebView webView;
-    private final WebEngine webEngine;
+    private WebEngine webEngine;
     private Scene scene;
 
     @Override
