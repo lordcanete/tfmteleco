@@ -60,8 +60,13 @@ public class VistaGUI extends Application
 
     public void cargarPagina(String rutaPagina){
          
-         url = new File(rutaPagina).toURI().toURL();
-         webEngine.load(url.toString());
+        try {
+            url = new File(rutaPagina).toURI().toURL();
+            webEngine.load(url.toString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+         
  
     }
 
