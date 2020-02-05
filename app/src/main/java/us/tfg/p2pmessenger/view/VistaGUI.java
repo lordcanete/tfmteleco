@@ -74,11 +74,11 @@ public class VistaGUI implements Vista
         URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
         WebView webView = new WebView();
-        final WebEngine webEngine = webView.getEngine();
+        WebEngine webEngine = webView.getEngine();
 
-        Scene scene = new Scene(webView, 450, 800);
+        /*Scene scene = new Scene(webView, 450, 800);
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show();*/
 
         // now load the page
         webEngine.load(url.toString());
@@ -105,7 +105,7 @@ public class VistaGUI implements Vista
             {
                 servicio.procesaError();
             }
-            
+
             while (!servicio.apagar)
             {
 
