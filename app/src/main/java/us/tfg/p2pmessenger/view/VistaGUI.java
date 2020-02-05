@@ -135,9 +135,9 @@ public class VistaGUI implements Vista
             System.out.println("onStop");
             servicio.app.onStop();
             System.out.println("onDestroy");
-            servicio.app.onDestroy();
+            servicio.app.onDestroy();*/
         }
-*/
+
         System.out.println("Fin de la aplicacion");
     }
     
