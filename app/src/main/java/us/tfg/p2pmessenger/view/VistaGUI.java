@@ -90,7 +90,7 @@ public class VistaGUI implements Vista
         if (args.length < 1)
             System.out.println("usage -> java -cp \"../../lib/*\" --module-path /usr/share/openjfx/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]");
         else
-        {
+        {/*
             int puerto = Integer.parseInt(args[0]);
             String ip = null;
             if (args.length > 1) {
@@ -137,7 +137,7 @@ public class VistaGUI implements Vista
             System.out.println("onDestroy");
             servicio.app.onDestroy();
         }
-
+*/
         System.out.println("Fin de la aplicacion");
     }
     
