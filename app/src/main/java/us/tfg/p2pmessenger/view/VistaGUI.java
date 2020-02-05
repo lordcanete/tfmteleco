@@ -31,7 +31,7 @@ import java.net.URL;
 /**
  * Created by PCANO on 30/01/20.
  */
-public class VistaGUI extends Application
+public class VistaGUI implements Vista
 {
     private ControladorApp app;
 
@@ -52,7 +52,7 @@ public class VistaGUI extends Application
         this.ip=ip;
         app = new ControladorConsolaImpl(ip, puerto,this);
     }
-
+/*
     @Override
     public void start(Stage primaryStage) throws Exception {
         URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
@@ -67,10 +67,21 @@ public class VistaGUI extends Application
         // now load the page
         webEngine.load(url.toString());
     }
-
+*/
     public static void main(String args[])
     {
-        Application.launch(VistaGUI.class, args);
+        //Application.launch(VistaGUI.class, args);
+        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
+
+        WebView webView = new WebView();
+        final WebEngine webEngine = webView.getEngine();
+
+        Scene scene = new Scene(webView, 450, 800);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        // now load the page
+        webEngine.load(url.toString());
         
         String name = "";
         String hint = null;
@@ -94,15 +105,7 @@ public class VistaGUI extends Application
             {
                 servicio.procesaError();
             }
-            /*
-            servicio.creaApp(Integer.parseInt(puerto));
-            int error=0;
-
-            error=servicio.conectaApp(hint,nombre);
-
-            System.out.println("Error = "+error);
-
-         */
+            
             while (!servicio.apagar)
             {
 
@@ -137,7 +140,7 @@ public class VistaGUI extends Application
 
         System.out.println("Fin de la aplicacion");
     }
-    /*
+    
     @Override
     public void muestraMensaje(Mensaje mensaje,String alias)
     {
@@ -171,5 +174,5 @@ public class VistaGUI extends Application
     @Override
     public void errorEnviando(int error,String mensaje)
     {
-    }*/
+    }
 }
