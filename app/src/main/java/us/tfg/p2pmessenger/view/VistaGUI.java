@@ -96,7 +96,7 @@ public class VistaGUI implements Vista
             if (args.length > 1) {
                 ip = args[1];
             }
-            VistaConsola servicio = new VistaGUI(ip, puerto);
+            VistaGUI servicio = new VistaGUI(ip, puerto);
 
             servicio.app.onCreateEntorno();
             servicio.app.onStart();
