@@ -71,7 +71,12 @@ public class VistaGUI implements Vista
     public static void main(String args[])
     {
         //Application.launch(VistaGUI.class, args);
-        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
+        try {
+            URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
+        } catch (Exception e){
+            System.out.println(e.printStackTrace());
+        }
+        
 
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
