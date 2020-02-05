@@ -33,15 +33,19 @@ import java.net.URL;
  */
 public class VistaGUI extends Application
 {
+    private URL url;
+    private WebView webView;
+    private final WebEngine webEngine;
+    private Scene scene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
+        url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
-        WebView webView = new WebView();
-        final WebEngine webEngine = webView.getEngine();
+        webView = new WebView();
+        webEngine = webView.getEngine();
 
-        Scene scene = new Scene(webView, 450, 800);
+        scene = new Scene(webView, 450, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
