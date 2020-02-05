@@ -51,14 +51,6 @@ public class VistaGUI extends Application
 
         // now load the page
         webEngine.load(url.toString());
-
-        System.out.println("Cargando otra pagina");
-        //Probamos a cargar otra pagina
-        try{System.in.read();
-            url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html").toURI().toURL();
-            webEngine.load(url.toString());
-        }
-        catch(Exception e){}
         //cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html", webEngine);
     }
 
