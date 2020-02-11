@@ -52,8 +52,8 @@ public class VistaConsola implements Vista
         this.app.onStart();
     }
 
-    public void appGetError(){
-        this.app.getError();
+    public int appGetError(){
+        return this.app.getError();
     }
 
     public static void main(String args[])
