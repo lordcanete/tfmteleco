@@ -44,8 +44,8 @@ public class VistaConsola implements Vista
         app = new ControladorConsolaImpl(ip, puerto,this);
     }
 
-    public void appOncreateEntorno(VistaConsola servicio){
-        servicio.app.onCreateEntorno();
+    public void appOncreateEntorno(){
+        this.app.onCreateEntorno();
     }
 
 
