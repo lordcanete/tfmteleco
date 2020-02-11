@@ -14,6 +14,26 @@
 
 <body>
     <h1>Hello, <a href="../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/">world!</a></h1>
+    <div><input id="input" type="text"></div>
+    <button onclick="sendToJava();">to lower case</button>
+    <div id="result"></div>
+
+    <script type="text/javascript">
+        function sendToJava () {
+            var s = document.getElementById('input').value;
+            javaConnector.toLowerCase(s);
+        };
+
+        var jsConnector = {
+            showResult: function (result) {
+                document.getElementById('result').innerHTML = result;
+            }
+        };
+
+        function getJsConnector() {
+            return jsConnector;
+        };
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

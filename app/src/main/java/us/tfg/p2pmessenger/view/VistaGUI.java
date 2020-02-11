@@ -33,19 +33,34 @@ import java.net.URL;
  */
 public class VistaGUI extends Application
 {
-    private URL url;
-    private WebView webView;
-    private WebEngine webEngine;
-    private Scene scene;
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
-        url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
-        webView = new WebView();
-        webEngine = webView.getEngine();
+         /** for communication to the Javascript engine. */
+        private JSObject javascriptConnector;
 
-        scene = new Scene(webView, 450, 800);
+        /** for communication from the Javascript engine. */
+        private JavaConnector javaConnector = new JavaConnector();;
+
+        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
+
+        WebView webView = new WebView();
+        final WebEngine webEngine = webView.getEngine();
+
+        // set up the listener
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (Worker.State.SUCCEEDED == newValue) {
+                // set an interface object named 'javaConnector' in the web engine's page
+                JSObject window = (JSObject) webEngine.executeScript("window");
+                window.setMember("javaConnector", javaConnector);
+
+                // get the Javascript connector object. 
+                javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
+            }
+        });
+
+        Scene scene = new Scene(webView, 450, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -64,6 +79,20 @@ public class VistaGUI extends Application
         }
          
  
+    }
+
+    public class JavaConnector {
+        /**
+         * called when the JS side wants a String to be converted.
+         *
+         * @param value
+         *         the String to convert
+         */
+        public void toLowerCase(String value) {
+            if (null != value) {
+                javascriptConnector.call("showResult", value.toLowerCase());
+            }
+        }
     }
 
     public static void main(String args[])
