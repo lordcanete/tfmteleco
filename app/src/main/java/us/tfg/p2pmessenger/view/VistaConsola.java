@@ -48,6 +48,13 @@ public class VistaConsola implements Vista
         this.app.onCreateEntorno();
     }
 
+    public void appOnStart(){
+        this.app.onStart();
+    }
+
+    public void appGetError(){
+        this.app.getError();
+    }
 
     public static void main(String args[])
     {
@@ -890,7 +897,7 @@ public class VistaConsola implements Vista
         e.printStackTrace();
     }
 
-    private void procesaError()
+    public void procesaError()
     {
         switch (app.getError())
         {

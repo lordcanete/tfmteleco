@@ -69,10 +69,9 @@ public class VistaGUI extends Application
 
         VistaConsola servicio = new VistaConsola("10.0.2.4", 9001);
         servicio.appOncreateEntorno();
-        //servicio.app.onCreateEntorno();
-        servicio.app.onStart();
+        servicio.appOnStart();
 
-        if(servicio.app.getError()!=0)
+        if(servicio.appGetError()!=0)
         {
             servicio.procesaError();
         }
