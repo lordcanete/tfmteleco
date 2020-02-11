@@ -16,6 +16,7 @@ import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
+import us.tfg.p2pmessenger.view.VistaConsola;
 
 
 import javafx.application.Application;
@@ -39,9 +40,8 @@ public class VistaGUI extends Application
     private JavaConnector javaConnector = new JavaConnector();
     
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {       
 
-        
 
         URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
@@ -66,6 +66,7 @@ public class VistaGUI extends Application
 
         // now load the page
         webEngine.load(url.toString());
+        VistaConsola servicio = new VistaConsola("10.0.2.4", 9001);
         //cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html", webEngine);
     }
     /*
@@ -92,6 +93,9 @@ public class VistaGUI extends Application
             if (null != value) {
                 javascriptConnector.call("showResult", value.toLowerCase());
             }
+        }
+        public void cambiarPagina(){
+
         }
     }
 
