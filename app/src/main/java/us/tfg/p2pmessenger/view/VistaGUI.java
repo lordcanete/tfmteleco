@@ -68,7 +68,8 @@ public class VistaGUI extends Application
         webEngine.load(url.toString());
 
         VistaConsola servicio = new VistaConsola("10.0.2.4", 9001);
-        servicio.app.onCreateEntorno();
+        servicio.appOncreateEntorno();
+        //servicio.app.onCreateEntorno();
         servicio.app.onStart();
 
         if(servicio.app.getError()!=0)
