@@ -66,7 +66,45 @@ public class VistaGUI extends Application
 
         // now load the page
         webEngine.load(url.toString());
+
         VistaConsola servicio = new VistaConsola("10.0.2.4", 9001);
+        servicio.app.onCreateEntorno();
+        servicio.app.onStart();
+
+        if(servicio.app.getError()!=0)
+        {
+            servicio.procesaError();
+        }
+        while (!servicio.apagar)
+        {
+
+            switch (servicio.app.getModo())
+            {
+                case ControladorApp.MODO_APAGADO:
+                    System.out.println("El nodo no se ha encendido");
+                    servicio.apagar=true;
+                    break;
+                case ControladorApp.MODO_SESION_INICIADA:
+                    servicio.modoSesionIniciada();
+                    break;
+                case ControladorApp.MODO_NECESARIA_DIRECION:
+                    servicio.modoNuevaDireccion();
+                    break;
+                case ControladorApp.MODO_INICIO_SESION:
+                    servicio.modoInicioSesion();
+                    break;
+                case ControladorApp.MODO_REGISTRO:
+                    servicio.modoRegistro();
+                    break;
+            }
+
+        }
+        System.out.println("Cerrando scanner");
+        scanner.close();
+        System.out.println("onStop");
+        servicio.app.onStop();
+        System.out.println("onDestroy");
+        servicio.app.onDestroy();
         //cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html", webEngine);
     }
     /*
