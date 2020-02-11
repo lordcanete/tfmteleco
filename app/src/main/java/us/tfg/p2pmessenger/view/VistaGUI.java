@@ -68,7 +68,7 @@ public class VistaGUI extends Application
         webEngine.load(url.toString());
         //cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html", webEngine);
     }
-
+    /*
     public void cargarPagina(String rutaPagina, WebEngine we){
          
         try {
@@ -79,7 +79,7 @@ public class VistaGUI extends Application
         }
          
  
-    }
+    }*/
 
     public class JavaConnector {
         /**
