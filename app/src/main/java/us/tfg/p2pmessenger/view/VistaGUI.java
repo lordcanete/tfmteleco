@@ -33,15 +33,15 @@ import java.net.URL;
  */
 public class VistaGUI extends Application
 {
+    /** for communication to the Javascript engine. */
+    private JSObject javascriptConnector;
+    /** for communication from the Javascript engine. */
+    private JavaConnector javaConnector = new JavaConnector();
     
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-         /** for communication to the Javascript engine. */
-        private JSObject javascriptConnector;
-
-        /** for communication from the Javascript engine. */
-        private JavaConnector javaConnector = new JavaConnector();;
+        
 
         URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
