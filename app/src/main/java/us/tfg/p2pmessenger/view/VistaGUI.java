@@ -58,43 +58,11 @@ public class VistaGUI extends Application
 
                 // get the Javascript connector object. 
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
+
+                /*Aqui hay que iniciar el servicio y generar los listener para interactuar con el frontend*/
                 VistaConsolaPublic servicio = new VistaConsolaPublic("10.0.2.4", 9001);
                 servicio.getApp().onCreateEntorno();
                 servicio.getApp().onStart();
-                if(servicio.getApp().getError()!=0)
-        {
-            servicio.procesaError();
-        }
-        while (!servicio.getApagar())
-        {
-
-            switch (servicio.getApp().getModo())
-            {
-                case ControladorApp.MODO_APAGADO:
-                    System.out.println("El nodo no se ha encendido");
-                    servicio.setApagar(true);
-                    break;
-                case ControladorApp.MODO_SESION_INICIADA:
-                    servicio.modoSesionIniciada();
-                    break;
-                case ControladorApp.MODO_NECESARIA_DIRECION:
-                    servicio.modoNuevaDireccion();
-                    break;
-                case ControladorApp.MODO_INICIO_SESION:
-                    servicio.modoInicioSesion();
-                    break;
-                case ControladorApp.MODO_REGISTRO:
-                    servicio.modoRegistro();
-                    break;
-            }
-
-        }
-        System.out.println("Cerrando scanner");
-        servicio.scanner.close();
-        System.out.println("onStop");
-        servicio.getApp().onStop();
-        System.out.println("onDestroy");
-        servicio.getApp().onDestroy();
             }
         });
 
