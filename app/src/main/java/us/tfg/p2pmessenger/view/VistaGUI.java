@@ -101,7 +101,7 @@ public class VistaGUI extends Application
 
         }
         System.out.println("Cerrando scanner");
-        scanner.close();
+        servicio.scanner.close();
         System.out.println("onStop");
         servicio.getApp().onStop();
         System.out.println("onDestroy");
