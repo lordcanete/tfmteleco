@@ -19,6 +19,10 @@ import us.tfg.p2pmessenger.model.Mensaje;
 
 public class VistaConsolaPublic extends VistaConsola 
 {
+    public VistaConsolaPublic(String ip, int puerto){
+        super(ip, puerto);
+    }
+
     public void appOnCreateEntorno(){
         this.app.onCreateEntorno();
     }
