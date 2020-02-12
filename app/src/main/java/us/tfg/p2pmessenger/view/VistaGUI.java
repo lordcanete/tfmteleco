@@ -67,7 +67,7 @@ public class VistaGUI extends Application
 
         // now load the page
         webEngine.load(url.toString());
-        Thread.sleep(3000);
+        /*
         VistaConsolaPublic servicio = new VistaConsolaPublic("10.0.2.4", 9001);
         servicio.getApp().onCreateEntorno();
         servicio.getApp().onStart();
@@ -105,7 +105,7 @@ public class VistaGUI extends Application
         System.out.println("onStop");
         servicio.getApp().onStop();
         System.out.println("onDestroy");
-        servicio.getApp().onDestroy();
+        servicio.getApp().onDestroy();*/
         
     }
     /*
