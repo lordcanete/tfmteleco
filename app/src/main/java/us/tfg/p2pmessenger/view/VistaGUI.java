@@ -68,7 +68,7 @@ public class VistaGUI extends Application
         // now load the page
         webEngine.load(url.toString());
 
-        VistaConsola servicio = new VistaConsolaPublic("10.0.2.4", 9001);
+        VistaConsolaPublic servicio = new VistaConsolaPublic("10.0.2.4", 9001);
         servicio.getApp().onCreateEntorno();
         servicio.getApp().onStart();
 
