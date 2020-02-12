@@ -58,6 +58,9 @@ public class VistaGUI extends Application
 
                 // get the Javascript connector object. 
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
+                VistaConsolaPublic servicio = new VistaConsolaPublic("10.0.2.4", 9001);
+                servicio.getApp().onCreateEntorno();
+                servicio.getApp().onStart();
             }
         });
 
