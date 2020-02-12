@@ -24,7 +24,7 @@ public class VistaConsolaPublic extends VistaConsola
     }
 
     public void appOnCreateEntorno(){
-        this.app.onCreateEntorno();
+        super.app.onCreateEntorno();
     }
     public void appOnStart(){
         this.app.onStart();
