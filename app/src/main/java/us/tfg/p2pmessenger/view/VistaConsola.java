@@ -42,20 +42,7 @@ public class VistaConsola implements Vista
         this.puerto=puerto;
         this.ip=ip;
         app = new ControladorConsolaImpl(ip, puerto,this);
-    }
-
-    public void appOncreateEntorno(){
-        this.app.onCreateEntorno();
-    }
-
-    public void appOnStart(){
-        this.app.onStart();
-    }
-
-    public int appGetError(){
-        return this.app.getError();
-    }
-
+    }   
     public static void main(String args[])
     {
         //        TreeSet<String> algorithms = new TreeSet<>();

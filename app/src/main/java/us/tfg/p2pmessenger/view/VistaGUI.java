@@ -34,6 +34,7 @@ import java.net.URL;
  */
 public class VistaGUI extends Application
 {
+    
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
     /** for communication from the Javascript engine. */
@@ -67,7 +68,7 @@ public class VistaGUI extends Application
         // now load the page
         webEngine.load(url.toString());
 
-        VistaConsola servicio = new VistaConsola("10.0.2.4", 9001);
+        VistaConsola servicio = new VistaConsolaPublic("10.0.2.4", 9001);
         servicio.appOncreateEntorno();
         servicio.appOnStart();
 
@@ -75,14 +76,14 @@ public class VistaGUI extends Application
         {
             servicio.procesaError();
         }
-        while (!servicio.apagar)
+        while (!servicio.getApagar())
         {
 
-            switch (servicio.app.getModo())
+            switch (servicio.appGetModo())
             {
                 case ControladorApp.MODO_APAGADO:
                     System.out.println("El nodo no se ha encendido");
-                    servicio.apagar=true;
+                    servicio.setApagar(true);
                     break;
                 case ControladorApp.MODO_SESION_INICIADA:
                     servicio.modoSesionIniciada();
