@@ -13,7 +13,26 @@
 </head>
 
 <body>
-    <h1>Hello, again!</h1>
+    <h1>Hello, again!</a></h1>
+    <button onclick="goToIndex();">Ir a Index</button>
+    <div id="result"></div>
+
+    <script type="text/javascript">
+        function goToIndex () {
+            javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html");
+        };
+
+        var jsConnector = {
+            showResult: function (result) {
+                document.getElementById('result').innerHTML = result;
+            }
+        };
+
+        function getJsConnector() {
+            return jsConnector;
+        };
+    </script>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
