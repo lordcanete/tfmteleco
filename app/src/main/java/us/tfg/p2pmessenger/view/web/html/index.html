@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <h1>Hello, <a href="../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/">world!</a></h1>
+    <h1>Hello, <a href="helloagain.html">world!</a></h1>
     <div><input id="input" type="text"></div>
     <button onclick="sendToJava();">to lower case</button>
     <div id="result"></div>
@@ -22,7 +22,7 @@
         function sendToJava () {
             var s = document.getElementById('input').value;
             //javaConnector.toLowerCase(s);
-            javaConnector.cambiarPagina();
+            javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/helloagain.html");
         };
 
         var jsConnector = {

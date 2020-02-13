@@ -39,6 +39,42 @@ public class VistaGUI extends Application
     private JSObject javascriptConnector;
     /** for communication from the Javascript engine. */
     private JavaConnector javaConnector = new JavaConnector();
+    private WebView webView;
+    private WebEngine webEngine;
+    private Scene scene;
+
+
+    //Setters & Getters
+    public WebView getWebView(){
+        return this.webView;
+    }
+    public void setWebView(WebView paramWebView){
+        this.webView = paramWebView;
+    }
+    public WebEngine getWebEngine(){
+        return this.webEngine;
+    }
+    public void setWebEngine(WebEngine paramWebEngine){
+        this.webEngine = paramWebEngine;
+    }
+    public Scene getScene(){
+        return this.scene;
+    }
+    public void setScene(Scene paramScene){
+        this.scene = paramScene;
+    }
+    public JSObject getJavascriptConnector(){
+        return this.javascriptConnector;
+    }
+    public void setJavascriptConnector(JSObject paramJavascriptConnector){
+        this.javascriptConnector = paramJavascriptConnector;
+    }
+    public JavaConnector getJavatConnector(){
+        return this.javaConnector;
+    }
+    public void setJavaConnector(JavaConnector paramJavaConnector){
+        this.javaConnector = paramJavaConnector;
+    }
     
     @Override
     public void start(Stage primaryStage) throws Exception {       
@@ -46,8 +82,8 @@ public class VistaGUI extends Application
 
         URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
-        WebView webView = new WebView();
-        final WebEngine webEngine = webView.getEngine();
+        webView = new WebView();
+        webEngine = webView.getEngine();
 
         // set up the listener
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -60,13 +96,11 @@ public class VistaGUI extends Application
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
 
                 /*Aqui hay que iniciar el servicio y generar los listener para interactuar con el frontend*/
-                VistaConsolaPublic servicio = new VistaConsolaPublic("10.0.2.4", 9001);
-                servicio.getApp().onCreateEntorno();
-                servicio.getApp().onStart();
+                
             }
         });
 
-        Scene scene = new Scene(webView, 450, 800);
+        scene = new Scene(webView, 450, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -138,8 +172,15 @@ public class VistaGUI extends Application
                 javascriptConnector.call("showResult", value.toLowerCase());
             }
         }
-        public void cambiarPagina(){
-
+        public void cargarPagina(String rutaPagina){         
+            try {
+                URL url = new File(rutaPagina).toURI().toURL();
+                webEngine.load(url.toString());
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+             
+     
         }
     }
 
