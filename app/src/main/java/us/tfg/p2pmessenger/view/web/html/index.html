@@ -8,14 +8,32 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilo-tfg.css">
 
-    <title>Hello, world!</title>
+    <title>US-P2PMessenger</title>
 </head>
 
-<body>
-    <h1>Prueba de comunicación FrontEnd - BackEnd</h1>
-    <p>Navegaremos a otra página? :O</p>
-    <button type="button" class="btn btn-primary" onclick="goToHelloAgain();">Vamos!</button>
+<body class="d-flex align-items-center justify-content-center">
+    <div class="container card row p-5 shadow-sm">
+        <img class="col-8 col-md-4 mx-auto" src="../img/Logo_US.png"/>
+        <h1 class="text-center">P2P Messenger</h1>
+        <form class="col-12">
+            <div class="form-group">
+                <label for="ipPastry">Dirección IP</label>
+                <input type="text" class="form-control" id="ipPastry" placeholder="Introduzca la IP de la red Pastry">
+            </div>
+            <div class="form-group">
+                <label for="portPastry">Puerto</label>
+                <input type="text" class="form-control" id="portPastry" placeholder="Introduzca el puerto de la red Pastry">
+            </div>
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" onclick="botonSignIn();">Entrar</button>
+            </div>
+            
+        </form>
+
+    </div>
+
 
     <script type="text/javascript">
         function goToHelloAgain () {
