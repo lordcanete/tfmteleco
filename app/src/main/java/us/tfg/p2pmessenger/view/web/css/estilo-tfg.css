@@ -4,3 +4,21 @@ html,body {
     overflow: hidden !important;
 }
 
+#pagAppWindow_bloqueConversacionContacto {
+    height: 10% !important;
+}
+
+#pagAppWindow_bloqueConversacionListaMensajes{    
+    
+}
+
+#pagAppWindow_bloqueConversacionEnviarMensaje{
+    
+}
+
+#pagAppWindow_bloqueIzquierdoNavbar{
+    height: 10% !important;
+}
+
+#pagAppWindow_bloqueIzquierdoConversaciones{
+}

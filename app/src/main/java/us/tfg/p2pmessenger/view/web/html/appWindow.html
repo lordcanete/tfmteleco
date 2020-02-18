@@ -9,29 +9,51 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilo-tfg.css">
+    <link href="../font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <title>US-P2PMessenger</title>
 </head>
 
 <body>
     <div id="main" class="row h-100">
-        <div id="panel-izquierdo" class="col-6 h-100"></div>
-        <div id="panel-derecho" class="col-6 h-100"></div>
+        <div id="panel-izquierdo" class="col-5 h-100 border position-relative m-0 p-0 d-flex flex-column">
+            <div id="pagAppWindow_bloqueIzquierdoNavbar" class="border d-flex align-items-center p-1">
+                <img class="h-100" src="../img/Logo_US.png"/>
+                <div class="ml-auto">
+                    <i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i>
+                    <i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i>
+                </div>               
+
+            </div>
+            <div id="pagAppWindow_bloqueIzquierdoConversaciones" class="border flex-grow-1">                
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje border justify-content-between">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha">Fecha</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="panel-derecho" class="col-7 h-100 border position-relative m-0 p-0 d-flex flex-column"> 
+            <div id="pagAppWindow_bloqueConversacionContacto" class="border">
+
+            </div>
+            <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1">
+
+            </div>
+            <div id="pagAppWindow_bloqueConversacionEnviarMensaje" class="border">
+                <form class="form-inline">                    
+                    <div class="form-group m-1 flex-grow-1">
+                      <label for="pagAppWindow_formFieldMensaje" class="sr-only">Mensaje</label>
+                      <input type="text" class="form-control flex-grow-1" id="pagAppWindow_formFieldMensaje" placeholder="Escribe tu mensaje...">
+                    </div>
+                    <button type="button" class="btn btn-success m-1">Enviar</button>
+                  </form>
+            </div>
+        </div>
     </div>
-
-
-    <script type="text/javascript">
-
-        var jsConnector = {
-            showResult: function (result) {
-                document.getElementById('result').innerHTML = result;
-            }
-        };
-
-        function getJsConnector() {
-            return jsConnector;
-        };
-    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
