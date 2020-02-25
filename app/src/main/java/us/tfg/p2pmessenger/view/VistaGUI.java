@@ -100,7 +100,7 @@ public class VistaGUI extends Application
             }
         });
 
-        scene = new Scene(webView, 600, 600);
+        scene = new Scene(webView, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
