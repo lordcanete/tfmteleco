@@ -6,6 +6,7 @@ html,body {
 
 #pagAppWindow_bloqueConversacionContacto {
     height: 10% !important;
+    background-color: #fef5f6;
 }
 
 #pagAppWindow_bloqueConversacionListaMensajes{    
@@ -18,7 +19,39 @@ html,body {
 
 #pagAppWindow_bloqueIzquierdoNavbar{
     height: 10% !important;
+    background-color: #fef5f6;
 }
 
 #pagAppWindow_bloqueIzquierdoConversaciones{
+}
+
+.conversacionBoxUltimoMensaje {
+    position: relative !important;
+}
+
+.conversacionBoxUltimoMensajeFecha{
+    position: absolute !important;
+    right: 1%;
+}
+
+.conversacionBoxAbierta {
+    /*background-color: #fef9f0;*/
+    background-color: #efe3e5;
+}
+
+.mensajeBoxRecibido {
+    background-color: #f9dca6;
+}
+
+.mensajeBoxEnviado {
+    background-color: #ef95a3;
+}
+
+.mensajeBoxContenido{
+    overflow-wrap: break-word;
+}
+
+#pagAppWindow_capaAgenda{
+    z-index: 99999999;
+    background-color: #fcfcfdba;
 }
