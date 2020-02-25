@@ -147,31 +147,10 @@ public class VistaGUI extends Application
         servicio.getApp().onDestroy();*/
         
     }
-    /*
-    public void cargarPagina(String rutaPagina, WebEngine we){
-         
-        try {
-            url = new File(rutaPagina).toURI().toURL();
-            we.load(url.toString());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-         
- 
-    }*/
 
+    /*Clase para conectar el FrontEnd Web con el BackEnd Java*/
     public class JavaConnector {
-        /**
-         * called when the JS side wants a String to be converted.
-         *
-         * @param value
-         *         the String to convert
-         */
-        public void toLowerCase(String value) {
-            if (null != value) {
-                javascriptConnector.call("showResult", value.toLowerCase());
-            }
-        }
+
         public void cargarPagina(String rutaPagina){         
             try {
                 URL url = new File(rutaPagina).toURI().toURL();
@@ -179,8 +158,6 @@ public class VistaGUI extends Application
             } catch (Exception e){
                 e.printStackTrace();
             }
-             
-     
         }
     }
 
