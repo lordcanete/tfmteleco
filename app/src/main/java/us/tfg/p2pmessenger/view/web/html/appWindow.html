@@ -190,10 +190,10 @@
 
         
         <div id="pagAppWindow_capaAgenda" class="h-100 w-100 d-flex align-items-center justify-content-center position-absolute">
-            <div id="pagAppWindow_PanelAgenda" class="card row p-1 shadow-sm">
-                <h4>Contactos</h4>
+            <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
+                <h2 class="m-2 mb-4">Contactos</h2>
                 <div id="pagAppWindow_PanelAgendaAgregarContacto">
-                    <h6>Nuevo contacto</h6>
+                    <h6 class="ml-2 mb-1">Nuevo contacto</h6>
                     <form class="form-inline">                                            
                         <div class="form-group m-1">
                           <label for="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" class="sr-only">Alias</label>
@@ -203,19 +203,125 @@
                             <label for="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" class="sr-only">ID Usuario</label>
                             <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" placeholder="ID Usuario">
                           </div>
-                        <button type="button" class="btn btn-success m-1">Enviar</button>
+                        <button type="button" class="btn btn-success m-1">Guardar</button>
                       </form>
                 </div>
-                <div id="pagAppWindow_PanelAgendaListaContactos" class="overflow-auto border m-1">
-                    <div class="contactoBox border col-12 p-1">
+                <div id="pagAppWindow_PanelAgendaListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
+                    <div class="contactoBox border p-1 position-relative">
                         <div class="contactoBoxAlias font-weight-bold">
                             Alias
                         </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic small">
-                            ID - Usuario
-                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
                         
                     </div>
+
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>      
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>
+
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>  
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>
+
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i>
+                        </div>                      
+                        
+                    </div>         
+                    
+                    
+
+                    
                 </div>
             </div>
         </div>
