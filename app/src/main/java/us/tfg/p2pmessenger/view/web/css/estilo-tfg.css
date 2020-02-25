@@ -16,6 +16,13 @@ html,body {
 #pagAppWindow_bloqueConversacionEnviarMensaje{
     
 }
+#panel-izquierdo{
+    z-index: 0;
+}
+
+#panel-derecho{
+    z-index: 0;
+}
 
 #pagAppWindow_bloqueIzquierdoNavbar{
     height: 10% !important;
