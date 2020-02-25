@@ -1,19 +1,18 @@
 var idCapaAgenda ="#pagAppWindow_capaAgenda"
-
-function ocultarElemento(elementoId){
-    $(elementoId).addClass("d-none");
-    $(elementoId).removeClass("d-flex");
-}
-
-function mostrarElemento(elementoId){
-    $(elementoId).addClass("d-flex");
-    $(elementoId).removeClass("d-none");
-}
-
+var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
+var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
 function ocultarCapaAgenda(){
-    ocultarElemento(idCapaAgenda);
+    $(idCapaAgenda).addClass("d-none");
+    $(idCapaAgenda).removeClass("d-flex");
+    /*Parche para evitar que salga el scrollbar en JavaFX browser*/
+    $(idListaConversaciones).addClass("overflow-auto");
+    $(idListaMensajesConversacion).addClass("overflow-auto");
 }
 
 function mostrarCapaAgenda(){
-    mostrarElemento(idCapaAgenda);
+    /*Parche para evitar que salga el scrollbar en JavaFX browser*/
+    $(idListaConversaciones).removeClass("overflow-auto");
+    $(idListaMensajesConversacion).removeClass("overflow-auto");
+    $(idCapaAgenda).addClass("d-flex");
+    $(idCapaAgenda).removeClass("d-none");
 }
