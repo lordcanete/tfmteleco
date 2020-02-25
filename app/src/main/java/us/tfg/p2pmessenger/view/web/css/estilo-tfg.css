@@ -17,11 +17,11 @@ html,body {
     
 }
 #panel-izquierdo{
-    z-index: 0;
+    z-index: 0 !important;
 }
 
 #panel-derecho{
-    z-index: 0;
+    z-index: 0 !important;
 }
 
 #pagAppWindow_bloqueIzquierdoNavbar{
