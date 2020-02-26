@@ -60,7 +60,12 @@ html,body {
 
 #pagAppWindow_capaAgenda{
     z-index: 99999999;
-    background-color: #f8f9fad9;
+    background-color: #6c757ddb;
+}
+
+#pagAppWindow_capaAbrirConversacion {
+    z-index: 99999999;
+    background-color: #6c757ddb;
 }
 
 .iconosOpcionesContacto{
@@ -69,8 +74,9 @@ html,body {
 }
 
 .iconoCerrarVentana{
-    right: -2%;
-    top: -2%;
+    right: 1%;
+    top: 1%;
+    padding: 0;
     z-index: 999999;
 }
 

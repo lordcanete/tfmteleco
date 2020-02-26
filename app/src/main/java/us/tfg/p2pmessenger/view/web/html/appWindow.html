@@ -20,7 +20,7 @@
             <div id="pagAppWindow_bloqueIzquierdoNavbar" class="border d-flex align-items-center p-1">
                 <img class="h-100" src="../img/Logo_US.png"/>
                 <div class="ml-auto">
-                    <button class="bg-transparent border-0 btn-noFocus"><i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i></button>
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="mostrarCapaAbrirConversacion()"><i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i></button>
                     <button class="bg-transparent border-0 btn-noFocus" onclick="mostrarCapaAgenda()"><i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i></button>
                 </div>               
 
@@ -189,9 +189,9 @@
         </div>
 
         
-        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 d-flex align-items-center justify-content-center position-absolute">
+        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 d-none align-items-center justify-content-center position-absolute">
             <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
-                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="ocultarCapaAgenda()"><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></button>
+                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="ocultarCapaAgenda()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
                 <h2 class="m-2 mb-4">Contactos</h2>
                 <div id="pagAppWindow_PanelAgendaAgregarContacto">
                     <h6 class="ml-2 mb-1">Nuevo contacto</h6>
@@ -220,6 +220,127 @@
                         </div>                      
                         
                     </div>      
+                    
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <div id="pagAppWindow_capaAbrirConversacion" class="h-100 w-100 d-flex align-items-center justify-content-center position-absolute">
+            <div id="pagAppWindow_PanelAbrirConversacion" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
+                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="ocultarCapaAbrirConversacion()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
+                <h2 class="m-2 mb-4 mr-5">Nueva conversación</h2>
+                <div id="pagAppWindow_PanelAbrirConversacionListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div> 
+                    </div>     
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>    
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>    
                     
                     
 

@@ -80,7 +80,7 @@ public class VistaGUI extends Application
     public void start(Stage primaryStage) throws Exception {       
 
 
-        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/appWindow.html").toURI().toURL();
+        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
 
         webView = new WebView();
         webEngine = webView.getEngine();
@@ -159,6 +159,7 @@ public class VistaGUI extends Application
                 e.printStackTrace();
             }
         }
+
     }
 
     public static void main(String args[])
