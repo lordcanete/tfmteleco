@@ -83,3 +83,12 @@ html,body {
 .btn-noFocus:focus{
     outline: none !important;
 }
+
+.scrollbarInvisible::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Hide scrollbar for IE and Edge */
+.scrollbarInvisible {
+    -ms-overflow-style: none !important;
+}
