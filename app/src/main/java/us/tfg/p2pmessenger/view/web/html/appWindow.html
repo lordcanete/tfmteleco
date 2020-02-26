@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilo-tfg.css">
+    <link href="../font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title>US-P2PMessenger</title>
+</head>
+
+<body>
+    <div id="main" class="row h-100 w-100 m-0">
+        <div id="panel-izquierdo" class="col-5 h-100 position-relative m-0 p-0 d-flex flex-column">
+            <div id="pagAppWindow_bloqueIzquierdoNavbar" class="border d-flex align-items-center p-1">
+                <img class="h-100" src="../img/Logo_US.png"/>
+                <div class="ml-auto">
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_mostrarCapaAbrirConversacion()"><i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i></button>
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_mostrarCapaAgenda()"><i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i></button>
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickCerrarSesion()"><i class="fa fa-sign-out fa-2x text-muted m-1" aria-hidden="true"></i></button>
+                </div>               
+
+            </div>
+            <div id="pagAppWindow_bloqueIzquierdoConversaciones" class="border flex-grow-1 overflow-auto scrollbarInvisible">                
+                <div class="conversacionBox border col-12 p-1 conversacionBoxAbierta">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+
+
+
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+                <div class="conversacionBox border col-12 p-1">
+                    <div class="conversacionBoxRemitente font-weight-bold">
+                        Usuario
+                    </div>
+                    <div class="conversacionBoxUltimoMensaje pl-1">
+                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-flex flex-column"> 
+            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex align-items-center p-4 border">
+                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span>
+            </div>
+            <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1 overflow-auto scrollbarInvisible">
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivEnviado d-flex justify-content-end col-12 px-2 py-1">
+                    <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje enviado</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivEnviado d-flex justify-content-end col-12 px-2 py-1">
+                    <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje enviado</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivEnviado d-flex justify-content-end col-12 px-2 py-1">
+                    <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje enviado</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivEnviado d-flex justify-content-end col-12 px-2 py-1">
+                    <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje enviado</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1">
+                    <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje recibido dfñadfd dlskfjasdalñdskfjasdlfasddfdsfadsf</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+                <div class="mensajeDivEnviado d-flex justify-content-end col-12 px-2 py-1">
+                    <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm">
+                        <div class="mensajeBoxContenido text-wrap text-left">Mensaje enviado</div>
+                        <div class="mensajeBoxFecha text-right small font-italic text-muted">Fecha</div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div id="pagAppWindow_bloqueConversacionEnviarMensaje" class="border">
+                <form class="form-inline">                    
+                    <div class="form-group m-1 flex-grow-1">
+                      <label for="pagAppWindow_formFieldMensaje" class="sr-only">Mensaje</label>
+                      <input type="text" class="form-control flex-grow-1" id="pagAppWindow_formFieldMensaje" placeholder="Escribe tu mensaje...">
+                    </div>
+                    <button type="button" class="btn btn-success m-1">Enviar</button>
+                  </form>
+            </div>
+        </div>
+
+        
+        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 d-none align-items-center justify-content-center position-absolute">
+            <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
+                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_ocultarCapaAgenda()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
+                <h2 class="m-2 mb-4">Contactos</h2>
+                <div id="pagAppWindow_PanelAgendaAgregarContacto">
+                    <h6 class="ml-2 mb-1">Nuevo contacto</h6>
+                    <form class="form-inline">                                            
+                        <div class="form-group m-1">
+                          <label for="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" class="sr-only">Alias</label>
+                          <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" placeholder="Alias">
+                        </div>
+                        <div class="form-group m-1">
+                            <label for="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" class="sr-only">ID Usuario</label>
+                            <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" placeholder="ID Usuario">
+                          </div>
+                        <button type="button" class="btn btn-success m-1">Guardar</button>
+                      </form>
+                </div>
+                <div id="pagAppWindow_PanelAgendaListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>     
+                        <div class="position-absolute iconosOpcionesContacto">
+                            <button class="bg-transparent border-0 btn-noFocus"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
+                        </div>                      
+                        
+                    </div>      
+                    
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <div id="pagAppWindow_capaAbrirConversacion" class="h-100 w-100 d-none align-items-center justify-content-center position-absolute">
+            <div id="pagAppWindow_PanelAbrirConversacion" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
+                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_ocultarCapaAbrirConversacion()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
+                <h2 class="m-2 mb-4 mr-5">Nueva conversación</h2>
+                <div id="pagAppWindow_PanelAbrirConversacionListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div> 
+                    </div>     
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>    
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>   
+                    <div class="contactoBox border p-1 position-relative">
+                        <div class="contactoBoxAlias font-weight-bold">
+                            Alias
+                        </div>
+                        <div class="contactoBoxUsuario pl-1 font-italic">
+                            <span class="small">ID - Usuario</span>
+                        </div>                     
+                        
+                    </div>    
+                    
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/appWindow.js"></script>
+</body>
+
+</html>

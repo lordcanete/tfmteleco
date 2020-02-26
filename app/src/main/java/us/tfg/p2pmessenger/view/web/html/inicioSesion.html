@@ -17,21 +17,23 @@
     <div class="container card row p-5 shadow-sm">
         <img class="col-8 col-md-4 mx-auto" src="../img/Logo_US.png"/>
         <h1 class="text-center">P2P Messenger</h1>
-        <h5>Conectar a red Pastry</h5>
+        <h5>Iniciar sesión</h5>
         <form class="col-12">
             <div class="form-group">
-                <label for="pagConectaPastry_formFieldIP">Dirección IP</label>
-                <input type="text" class="form-control" id="pagConectaPastry_formFieldIP" placeholder="Introduzca la IP de la red Pastry">
+                <label for="pagInicioSesion_formFieldUser">Usuario</label>
+                <input type="text" class="form-control" id="pagInicioSesion_formFieldUser" placeholder="Introduzca su nombre de usuario">                
             </div>
             <div class="form-group">
-                <label for="pagConectaPastry_formFieldPort">Puerto</label>
-                <input type="text" class="form-control" id="pagConectaPastry_formFieldPort" placeholder="Introduzca el puerto de la red Pastry">
+                <label for="pagInicioSesion_formFieldPass">Contraseña</label>
+                <input type="password" class="form-control" id="pagInicioSesion_formFieldPass" placeholder="Introduzca su contraseña">
             </div>
-            <small id="errorFormDireccionPastry" class="form-text text-danger text-center m-1 d-none">Error al agregar la dirección de Pastry</small>
+            <small id="errorFormInicioSesionUsuario" class="m-1 form-text text-danger text-center d-none">Usuario o contraseña incorrectos</small>
             <div class="col-12 text-center">
-                <button type="button" class="btn btn-primary" onclick="pagConectaPastry_onClickConectar();">Conectar</button>
+                <button type="button" class="btn btn-primary" onclick="pagInicioSesion_onClickAutenticar();">Entrar</button>
             </div>
-            
+            <div class="col-12 text-center">
+                <small id="sugerenciaRegistro" class="form-text text-muted">¿No estás registrado? <span class="btn-link" onclick="pagInicioSesion_onClickRegistrar()">Regístrate</span></small>
+            </div>
             
         </form>
 
@@ -42,7 +44,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/index.js"></script>
+    <script src="../js/inicioSesion.js"></script>
 </body>
 
 </html>

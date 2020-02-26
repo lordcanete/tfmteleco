@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <h1>Yiiihaaaa! :)</a></h1>    
+    <button type="button" class="btn btn-danger" onclick="goToIndex();">Volver</button>
+
+    <script type="text/javascript">
+        function goToIndex () {
+            javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html");
+        };
+
+        var jsConnector = {
+            showResult: function (result) {
+                document.getElementById('result').innerHTML = result;
+            }
+        };
+
+        function getJsConnector() {
+            return jsConnector;
+        };
+    </script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+</body>
+
+</html>

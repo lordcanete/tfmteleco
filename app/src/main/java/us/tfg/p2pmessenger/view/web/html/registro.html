@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilo-tfg.css">
+
+    <title>US-P2PMessenger</title>
+</head>
+
+<body class="d-flex align-items-center justify-content-center">
+    <div class="container card row p-5 shadow-sm">
+        <img class="col-8 col-md-4 mx-auto" src="../img/Logo_US.png"/>
+        <h1 class="text-center">P2P Messenger</h1>
+        <h5>Registro de nuevo usuario</h5>
+        <form class="col-12">
+            <div class="form-group">
+                <label for="pagRegistro_formFieldUser">Usuario</label>
+                <input type="text" class="form-control" id="pagRegistro_formFieldUser" placeholder="Introduzca un nombre de usuario">
+                <small id="errorFormRegistroUsuario" class="form-text text-danger m-1 d-none">El usuario ya existe. Por favor, seleccione otro nombre de usuario</small>
+            </div>
+            <div class="form-group">
+                <label for="pagRegistro_formFieldPass">Contraseña</label>
+                <input type="password" class="form-control" id="pagRegistro_formFieldPass" placeholder="Introduzca una contraseña">
+            </div>
+            <div class="form-group">
+                <label for="pagRegistro_formFieldPassConfirm">Confirmar contraseña</label>
+                <input type="password" class="form-control" id="pagRegistro_formFieldPassConfirm" placeholder="Introduzca de nuevo la contraseña">
+                <small id="errorFormRegistroConfirmarPass" class="form-text text-danger m-1 d-none">La contraseña y la confirmación de contraseña no coinciden. Por favor, vuelva a introducirlas </small>
+            </div>
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" onclick="pagRegistro_onClickRegistrar();">Registrarse</button>
+            </div>
+            <div class="col-12 text-center">
+                <small id="sugerenciaRegistro" class="form-text text-muted">¿Ya estás registrado? <span class="btn-link" onclick="pagRegistro_onClickIniciarSesion()">Inicia sesión</span></small>
+                
+            </div>
+            
+        </form>
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/registro.js"></script>
+</body>
+
+</html>

@@ -17,10 +17,7 @@ import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 
-/**
- * Created by FPiriz on 21/6/17.
- */
-public class VistaConsola implements Vista
+public class VistaConsolaPublic implements Vista
 {
     private ControladorApp app;
 
@@ -32,106 +29,59 @@ public class VistaConsola implements Vista
 
     private ArrayList<Conversacion> conversaciones;
 
-    //acabara convirtiendose en variable 'static final'
     private int puerto;
     private String ip;
+    
+    //Setters & Getters para acceder desde instancias
+    public ControladorApp getApp(){
+        return this.app;
+    }
+    public void setApp(ControladorApp paramApp){
+        this.app = paramApp;
+    }
+    public boolean getEsperar(){
+        return this.esperar;
+    }
+    public void setEsperar(boolean paramEsperar){
+        this.esperar = paramEsperar;
+    }
+    public boolean getApagar(){
+        return this.apagar;
+    }
+    public void setApagar(boolean paramApagar){
+        this.apagar = paramApagar;
+    }
 
-    // 4euros dni original y copia y fam numerosa jueves 7/09 -> 8:45
-    public VistaConsola(String ip, int puerto)
+    public ArrayList<Conversacion> getConversaciones(){
+        return this.conversaciones;
+    }
+    public void set(ArrayList<Conversacion> paramConversaciones){
+        this.conversaciones = paramConversaciones;
+    }
+
+    public int getPuerto(){
+        return this.puerto;
+    }
+    public void setPuerto(int paramPuerto){
+        this.puerto = paramPuerto;
+    }
+    
+    public String getIp(){
+        return this.ip;
+    }
+    public void set(String paramIp){
+        this.ip = paramIp;
+    }
+    
+    //Constructor
+    public VistaConsolaPublic(String ip, int puerto)
     {
         this.puerto=puerto;
         this.ip=ip;
         app = new ControladorConsolaImpl(ip, puerto,this);
-    }   
-    public static void main(String args[])
-    {
-        //        TreeSet<String> algorithms = new TreeSet<>();
-        //        for (Provider provider : Security.getProviders())
-        //            for (Provider.VistaConsola service : provider.getServices())
-        //                if (service.getType().equals("Signature"))
-        //                    algorithms.add(service.getAlgorithm());
-        //        for (String algorithm : algorithms)
-        //            System.out.println(algorithm);
-
-        String name = "";
-        //        ArrayList<String> argumentos=new ArrayList<>();
-        //        argumentos.addAll(Arrays.asList(args));
-
-        String hint = null;
-        String usuario = null;
-        //        String puerto=null;
-
-        /*
-        if(argumentos.indexOf("--hint")!=-1)
-            hint=argumentos.get(argumentos.indexOf("--hint")+1);
-        if(argumentos.indexOf("--nombre")!=-1)
-            nombre=argumentos.get(argumentos.indexOf("--nombre")+1);
-        if(argumentos.indexOf("--puerto")!=-1)
-            puerto=argumentos.get(argumentos.indexOf("--puerto")+1);
-        */
-        if (args.length < 1)
-            System.out.println("usage -> java -cp ... us.tfg.p2pmessenger.view.VistaConsola puertoEscucha [ip]");
-        else
-        {
-            int puerto = Integer.parseInt(args[0]);
-            String ip = null;
-            if (args.length > 1) {
-                ip = args[1];
-            }
-            VistaConsola servicio = new VistaConsola(ip, puerto);
-
-            servicio.app.onCreateEntorno();
-            servicio.app.onStart();
-
-            if(servicio.app.getError()!=0)
-            {
-                servicio.procesaError();
-            }
-            /*
-            servicio.creaApp(Integer.parseInt(puerto));
-            int error=0;
-
-            error=servicio.conectaApp(hint,nombre);
-
-            System.out.println("Error = "+error);
-
-         */
-            while (!servicio.apagar)
-            {
-
-                switch (servicio.app.getModo())
-                {
-                    case ControladorApp.MODO_APAGADO:
-                        System.out.println("El nodo no se ha encendido");
-                        servicio.apagar=true;
-                        break;
-                    case ControladorApp.MODO_SESION_INICIADA:
-                        servicio.modoSesionIniciada();
-                        break;
-                    case ControladorApp.MODO_NECESARIA_DIRECION:
-                        servicio.modoNuevaDireccion();
-                        break;
-                    case ControladorApp.MODO_INICIO_SESION:
-                        servicio.modoInicioSesion();
-                        break;
-                    case ControladorApp.MODO_REGISTRO:
-                        servicio.modoRegistro();
-                        break;
-                }
-
-            }
-            System.out.println("Cerrando scanner");
-            scanner.close();
-            System.out.println("onStop");
-            servicio.app.onStop();
-            System.out.println("onDestroy");
-            servicio.app.onDestroy();
-        }
-
-        System.out.println("Fin de la aplicacion");
-    }
-
-    private void listarGrupos()
+    }  
+    
+    public void listarGrupos()
     {
         ArrayList<Grupo> grupos = app.obtenerGrupos();
         if (grupos != null)
@@ -148,17 +98,17 @@ public class VistaConsola implements Vista
         }
     }
 
-    private boolean compruebaNombre(String usu)
+    public boolean compruebaNombre(String usu)
     {
         return this.app.buscaUsuario(usu).estaVacio();
     }
 
-    private void nuevoContacto(String nombreUsu, String alias)
+    public void nuevoContacto(String nombreUsu, String alias)
     {
         app.nuevoContacto(nombreUsu,alias);
     }
 
-    private void imprimeListaContactos()
+    public void imprimeListaContactos()
     {
         ArrayList<Contacto> contactos=app.obtenerContactos();
         if(contactos!=null)
@@ -174,7 +124,7 @@ public class VistaConsola implements Vista
             System.out.println("Error al obtener los contactos guardados");
     }
 
-    private void imprimeConversacionesAbiertas()
+    public void imprimeConversacionesAbiertas()
     {
         this.conversaciones=app.obtenerConversacionesAbiertas();
         if(this.conversaciones!=null)
@@ -188,7 +138,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void abandonaGrupo(Id nombre)
+    public void abandonaGrupo(Id nombre)
     {
         try
         {
@@ -200,7 +150,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void modoSesionIniciada()
+    public void modoSesionIniciada()
     {
         try
         {
@@ -336,8 +286,6 @@ public class VistaConsola implements Vista
                         }
                         else
                             opcion=-1;
-                        //                        if(id!=null)
-                        //                            servicio.abandonaGrupo(id);
                         break;
                     case 8:
                         System.out.println("Los contactos guardados son:");
@@ -367,14 +315,6 @@ public class VistaConsola implements Vista
                             if (compruebaNombre(usu))
                             {
                                 System.out.println("El nombre " + usu + " esta disponible");
-                                // System.out.println("Establecer como nombre de usuario? [yes/no]");
-                                // boolean establecer=scanner.nextBoolean();
-                                // if(establecer)
-                                // {
-                                //     System.out.println("Estableciendo "+usu);
-                                // }
-                                //servicio.detieneNodo();
-                                //servicio.conectaApp(hint,usu);
                             } else
                             {
                                 System.out.println(
@@ -480,7 +420,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void modoInicioSesion()
+    public void modoInicioSesion()
     {
         boolean continuar = true;
         while (continuar)
@@ -557,7 +497,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void modoNuevaDireccion()
+    public void modoNuevaDireccion()
     {
         boolean continuar=true;
         while(continuar)
@@ -622,7 +562,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void modoRegistro()
+    public void modoRegistro()
     {
         boolean disponible = false;
         try
@@ -677,7 +617,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void modoMensajes()
+    public void modoMensajes()
     {
         boolean seguir = true;
         String msg = "";
@@ -858,7 +798,7 @@ public class VistaConsola implements Vista
         }
     }
 
-    private void conectaAGrupo(String id,String privateKeyString)
+    public void conectaAGrupo(String id,String privateKeyString)
     {
         if (this.app.getModo()== ControladorApp.MODO_SESION_INICIADA)
         {
@@ -906,7 +846,6 @@ public class VistaConsola implements Vista
     {
         System.out.println("Enviando: error "+error+" -> "+mensaje);
     }
-    //todo elimiar al terminar (puerta trasera)
 
     @Override
     public void setSeguir(boolean seguir)
@@ -920,6 +859,3 @@ public class VistaConsola implements Vista
         System.out.println(respuesta);
     }
 }
-
-
-
