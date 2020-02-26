@@ -19,17 +19,31 @@ function ocultarCapa(idCapa){
     $(idListaMensajesConversacion).addClass("overflow-auto");
 }
 
-function ocultarCapaAgenda(){
+function pagAppWindow_ocultarCapaAgenda(){
     ocultarCapa(idCapaAgenda);    
 }
 
-function mostrarCapaAgenda(){
+function pagAppWindow_mostrarCapaAgenda(){
     mostrarCapa(idCapaAgenda);   
 }
 
-function ocultarCapaAbrirConversacion(){
+function pagAppWindow_ocultarCapaAbrirConversacion(){
     ocultarCapa(idCapaAbrirConversacion);    
 }
-function mostrarCapaAbrirConversacion(){
+function pagAppWindow_mostrarCapaAbrirConversacion(){
     mostrarCapa(idCapaAbrirConversacion);   
 }
+
+function pagAppWindow_onClickCerrarSesion () {
+    javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/inicioSesion.html");
+};
+
+var jsConnector = {
+    showResult: function (result) {
+        document.getElementById('result').innerHTML = result;
+    }
+};
+
+function getJsConnector() {
+    return jsConnector;
+};
