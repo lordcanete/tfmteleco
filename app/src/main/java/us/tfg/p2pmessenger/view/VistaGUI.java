@@ -129,6 +129,7 @@ public class VistaGUI extends Application
         if (args.length < 1){
             System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha"+
             "\nWindows -> java -cp \"../../lib/*\" --module-path \"C:\\directorioJavaFX\\lib\" --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha\n");
+            System.exit(0);
         } else
         {
             Application.launch(VistaGUI.class, args);       
