@@ -1,0 +1,1 @@
+java -cp "../../lib/*" --module-path $Env:JFX_LIB --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI
