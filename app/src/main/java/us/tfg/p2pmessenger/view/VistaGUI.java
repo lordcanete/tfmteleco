@@ -106,45 +106,7 @@ public class VistaGUI extends Application
 
         // now load the page
         webEngine.load(url.toString());
-        /*
-        VistaConsolaPublic servicio = new VistaConsolaPublic("10.0.2.4", 9001);
-        servicio.getApp().onCreateEntorno();
-        servicio.getApp().onStart();
-
-        if(servicio.getApp().getError()!=0)
-        {
-            servicio.procesaError();
-        }
-        while (!servicio.getApagar())
-        {
-
-            switch (servicio.getApp().getModo())
-            {
-                case ControladorApp.MODO_APAGADO:
-                    System.out.println("El nodo no se ha encendido");
-                    servicio.setApagar(true);
-                    break;
-                case ControladorApp.MODO_SESION_INICIADA:
-                    servicio.modoSesionIniciada();
-                    break;
-                case ControladorApp.MODO_NECESARIA_DIRECION:
-                    servicio.modoNuevaDireccion();
-                    break;
-                case ControladorApp.MODO_INICIO_SESION:
-                    servicio.modoInicioSesion();
-                    break;
-                case ControladorApp.MODO_REGISTRO:
-                    servicio.modoRegistro();
-                    break;
-            }
-
-        }
-        System.out.println("Cerrando scanner");
-        servicio.scanner.close();
-        System.out.println("onStop");
-        servicio.getApp().onStop();
-        System.out.println("onDestroy");
-        servicio.getApp().onDestroy();*/
+        
         
     }
 
@@ -164,7 +126,13 @@ public class VistaGUI extends Application
 
     public static void main(String args[])
     {
-        Application.launch(VistaGUI.class, args);       
+        if (args.length < 1){
+            System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha"+
+            "\nWindows -> java -cp \"../../lib/*\" --module-path \"C:\\directorioJavaFX\\lib\" --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha\n");
+        } else
+        {
+            Application.launch(VistaGUI.class, args);       
+        }
        
     }
 }
