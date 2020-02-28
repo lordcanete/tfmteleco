@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -16,7 +17,7 @@ import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
-import us.tfg.p2pmessenger.view.VistaConsola;
+import us.tfg.p2pmessenger.view.VistaConsolaPublic;
 
 
 import javafx.application.Application;
@@ -78,6 +79,21 @@ public class VistaGUI extends Application
     
     @Override
     public void start(Stage primaryStage) throws Exception {       
+        Parameters params = getParameters();
+        List<String> listParams = params.getRaw();
+        int puerto = Integer.parseInt(listParams.get(0));
+        String ip = null;
+        if (listParams.size()>1){
+            ip = listParams.get(1);
+        }
+
+        VistaConsolaPublic servicio = new VistaConsolaPublic(ip,puerto);
+        servicio.appOnCreateEntorno();
+        servicio.appOnStart();
+        if(servicio.appGetError()!=0) {
+            servicio.procesaError();
+            System.exit(0);
+        }
 
 
         URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
@@ -127,8 +143,8 @@ public class VistaGUI extends Application
     public static void main(String args[])
     {
         if (args.length < 1){
-            System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha"+
-            "\nWindows -> java -cp \"../../lib/*\" --module-path \"C:\\directorioJavaFX\\lib\" --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha\n");
+            System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]"+
+            "\nWindows -> java -cp \"../../lib/*\" --module-path \"C:\\directorioJavaFX\\lib\" --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]\n");
             System.exit(0);
         } else
         {

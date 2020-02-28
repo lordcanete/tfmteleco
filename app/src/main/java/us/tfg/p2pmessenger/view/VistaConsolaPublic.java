@@ -858,4 +858,15 @@ public class VistaConsolaPublic implements Vista
     {
         System.out.println(respuesta);
     }
+
+    public void appOnCreateEntorno(){
+        this.app.onCreateEntorno();
+    }
+    public void appOnStart(){
+        this.app.onStart();
+    }
+    public int appGetError(){
+        return this.app.getError();
+        
+    }
 }
