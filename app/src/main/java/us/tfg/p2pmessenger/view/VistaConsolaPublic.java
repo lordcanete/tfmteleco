@@ -869,4 +869,19 @@ public class VistaConsolaPublic implements Vista
         return this.app.getError();
         
     }
+    public void appOnStop(){
+        this.app.onStop();
+    }
+    public void appOnDestroy(){
+        this.app.onDestroy();
+    }
+    public int appGetModo()
+    {
+        return this.app.getModo();
+    }
+    public boolean appNuevaDireccionArranque(String ip, int port){
+        return this.app.nuevaDireccionArranque(ip,port);
+    }
+
+
 }

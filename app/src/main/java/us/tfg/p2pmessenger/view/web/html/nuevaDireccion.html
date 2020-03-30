@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilo-tfg.css">
+
+    <title>US-P2PMessenger</title>
+</head>
+
+<body class="d-flex align-items-center justify-content-center">
+    <div class="container card row p-5 shadow-sm">
+        <img class="col-8 col-md-4 mx-auto" src="../img/Logo_US.png"/>
+        <h1 class="text-center">P2P Messenger</h1>
+        <h5>Conectar a red Pastry</h5>
+        <form class="col-12">
+            <div class="form-group">
+                <label for="pagConectaPastry_formFieldIP">Dirección IP</label>
+                <input type="text" class="form-control" id="pagConectaPastry_formFieldIP" placeholder="Introduzca la IP de la red Pastry">
+            </div>
+            <div class="form-group">
+                <label for="pagConectaPastry_formFieldPort">Puerto</label>
+                <input type="text" class="form-control" id="pagConectaPastry_formFieldPort" placeholder="Introduzca el puerto de la red Pastry">
+            </div>
+            <small id="errorFormDireccionPastry" class="form-text text-danger text-center m-1 d-none"></small>
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" onclick="pagConectaPastry_onClickConectar();">Conectar</button>
+            </div>
+            
+            
+            
+        </form>
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/nuevaDireccion.js"></script>
+</body>
+
+</html>

@@ -35,7 +35,8 @@ import java.net.URL;
  */
 public class VistaGUI extends Application
 {
-    
+    public static final String RUTA_HTML = "../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/";
+    public static final String ERROR_DIRARRANQUE = "Error al tratar de conectar con la red Pastry";
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
     /** for communication from the Javascript engine. */
@@ -43,6 +44,9 @@ public class VistaGUI extends Application
     private WebView webView;
     private WebEngine webEngine;
     private Scene scene;
+    private VistaConsolaPublic servicio;
+    private int puerto;
+    private String ip;
 
 
     //Setters & Getters
@@ -76,27 +80,28 @@ public class VistaGUI extends Application
     public void setJavaConnector(JavaConnector paramJavaConnector){
         this.javaConnector = paramJavaConnector;
     }
+    public String getIP(){
+        return this.ip;
+    }
+    public void setIP(String paramIp){
+        this.ip = paramIp;
+    }
+    public int getPuerto(){
+        return this.puerto;
+    }
+    public void setPuerto(int paramPuerto){
+        this.puerto = paramPuerto;
+    }
     
     @Override
     public void start(Stage primaryStage) throws Exception {       
         Parameters params = getParameters();
         List<String> listParams = params.getRaw();
-        int puerto = Integer.parseInt(listParams.get(0));
-        String ip = null;
+        puerto = Integer.parseInt(listParams.get(0));
+        ip = null;    
         if (listParams.size()>1){
             ip = listParams.get(1);
-        }
-
-        VistaConsolaPublic servicio = new VistaConsolaPublic(ip,puerto);
-        servicio.appOnCreateEntorno();
-        servicio.appOnStart();
-        if(servicio.appGetError()!=0) {
-            servicio.procesaError();
-            System.exit(0);
-        }
-
-
-        URL url = new File("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/index.html").toURI().toURL();
+        }    
 
         webView = new WebView();
         webEngine = webView.getEngine();
@@ -107,36 +112,90 @@ public class VistaGUI extends Application
                 // set an interface object named 'javaConnector' in the web engine's page
                 JSObject window = (JSObject) webEngine.executeScript("window");
                 window.setMember("javaConnector", javaConnector);
-
                 // get the Javascript connector object. 
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
-
-                /*Aqui hay que iniciar el servicio y generar los listener para interactuar con el frontend*/
-                
             }
         });
 
         scene = new Scene(webView, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        
+        URL url = new File(RUTA_HTML + "index.html").toURI().toURL();       
         // now load the page
         webEngine.load(url.toString());
-        
-        
+
     }
 
     /*Clase para conectar el FrontEnd Web con el BackEnd Java*/
     public class JavaConnector {
 
-        public void cargarPagina(String rutaPagina){         
+        public void cargarPagina(String pagina){         
             try {
-                URL url = new File(rutaPagina).toURI().toURL();
+                URL url = new File(RUTA_HTML + pagina).toURI().toURL();
                 webEngine.load(url.toString());
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
+
+        public void iniciarServicio(){
+            servicio = new VistaConsolaPublic(ip,puerto);
+            servicio.appOnCreateEntorno();
+            servicio.appOnStart();
+            if(servicio.appGetError()!=0) {
+                servicio.procesaError();
+                servicio.appOnStop();
+                servicio.appOnDestroy();
+                System.exit(0);
+            } else{
+                javascriptConnector.call("comprobarEstadoCallback");
+            }
+        }
+
+        public void comprobarEstado(){            
+            switch (servicio.appGetModo())
+            {
+                case ControladorApp.MODO_APAGADO:
+                    System.out.println("MODO_APAGADO");
+                    break;
+                case ControladorApp.MODO_SESION_INICIADA:
+                    System.out.println("MODO_SESION_INICIADA");                
+                    break;
+                case ControladorApp.MODO_NECESARIA_DIRECION:  
+                    System.out.println("MODO NECESARIA DIRECCION");
+                    cargarPagina("nuevaDireccion.html");
+                    break;
+                case ControladorApp.MODO_INICIO_SESION:
+                    System.out.println("MODO_INICIO_SESION");
+                    break;
+                case ControladorApp.MODO_REGISTRO:
+                    System.out.println("MODO_REGISTRO");
+                    break;
+            }  
+        }
+
+        public void conectarPastry(String inputIp, int inputPuerto){
+            try
+            {
+                if(servicio.appNuevaDireccionArranque(ip, puerto)){
+                    servicio.appOnStart();
+                    if (servicio.appGetError() != 0)
+                    {
+                        servicio.procesaError();
+                    }else{
+                        javascriptConnector.call("comprobarEstadoCallback");
+                    }
+                }else {
+                    javascriptConnector.call("errorAlertCallback", VistaGUI.ERROR_DIRARRANQUE);
+                }                
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+
 
     }
 
