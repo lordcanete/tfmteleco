@@ -168,11 +168,18 @@ public class VistaGUI extends Application
                     break;
                 case ControladorApp.MODO_INICIO_SESION:
                     System.out.println("MODO_INICIO_SESION");
+                    cargarPagina("inicioSesion.html");
                     break;
                 case ControladorApp.MODO_REGISTRO:
                     System.out.println("MODO_REGISTRO");
+                    cargarPagina("registro.html");
                     break;
             }  
+        }
+
+        public void accederRegistroUsuario(){
+            servicio.appSetModo(ControladorApp.MODO_REGISTRO);
+            javascriptConnector.call("comprobarEstadoCallback");
         }
 
         public void conectarPastry(String inputIp, int inputPuerto){

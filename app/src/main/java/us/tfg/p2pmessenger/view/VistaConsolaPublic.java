@@ -882,6 +882,10 @@ public class VistaConsolaPublic implements Vista
     public boolean appNuevaDireccionArranque(String ip, int port){
         return this.app.nuevaDireccionArranque(ip,port);
     }
+    public void appSetModo(int mode){
+        System.out.println("APPSETMODO" + Integer.toString(mode));
+        this.app.setModo(mode);
+    }
 
 
 }
