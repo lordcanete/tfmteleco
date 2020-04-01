@@ -887,8 +887,15 @@ public class VistaConsolaPublic implements Vista
         this.app.setModo(mode);
     }
 
-    public void appRegistrarUsuario(String usuario, String passwd){
-        this.app.registrarUsuario(usuario, passwd);
+    public boolean appRegistrarUsuario(String usuario, String passwd){
+        boolean error = false;
+        try{
+            this.app.registrarUsuario(usuario, passwd);
+        }catch(Exception e){
+            error = true;
+        }
+        return error;
+        
     }
 
 }

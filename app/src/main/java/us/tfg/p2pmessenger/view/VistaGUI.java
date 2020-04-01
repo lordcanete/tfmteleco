@@ -210,20 +210,24 @@ public class VistaGUI extends Application
         }
 
         public void registrarUsuario(String usuario, String passwd){
-            boolean disponible = false;            
+            boolean disponible = false;   
+            boolean errorRegistro = false;         
             try
             {
                 disponible = servicio.compruebaNombre(usuario);
                 if(disponible){
-                    servicio.appRegistrarUsuario(usuario, passwd);
-                    servicio.appOnStart();
-                    if(servicio.appGetError()!=0) {
-                        servicio.procesaError();
-                        javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
-                    } else{
-                        javascriptConnector.call("notificarUsuarioCreadoCorrectamente");
-                        javascriptConnector.call("comprobarEstadoCallback");
-                    }
+                    errorRegistro = servicio.appRegistrarUsuario(usuario, passwd);
+                    if (!errorRegistro){
+                        servicio.appOnStart();
+                        if(servicio.appGetError()!=0) {
+                            servicio.procesaError();
+                            javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
+                        } else{
+                            javascriptConnector.call("notificarUsuarioCreadoCorrectamente");
+                            javascriptConnector.call("comprobarEstadoCallback");
+                        }
+                    }                    
+                    
                 }else{
                     System.out.println("Nombre de usuario " + usuario + " en uso");
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONODISPONIBLE);
