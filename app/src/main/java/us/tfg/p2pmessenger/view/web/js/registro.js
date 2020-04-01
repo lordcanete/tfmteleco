@@ -34,7 +34,7 @@ var jsConnector = {
         javaConnector.comprobarEstado();
     },
     notificarError: function(mensajeError){
-        mostrarBloqueError(mensajeError);
+        mostrarBloqueNotificacionError(mensajeError);
     },
     notificarUsuarioCreadoCorrectamente: function(){
         mostrarBloqueNotificacionOK();
