@@ -178,8 +178,12 @@ public class VistaGUI extends Application
         }
 
         public void accederRegistroUsuario(){
-            servicio.appSetModo(ControladorApp.MODO_REGISTRO);
-            System.out.println("Pasa el setModoRegistro y pasa a llamar comprobarEstadoCallback");
+            servicio.appSetModo(ControladorApp.MODO_REGISTRO);            
+            javascriptConnector.call("comprobarEstadoCallback");
+        }
+
+        public void accederInicioSesion(){
+            servicio.appSetModo(ControladorApp.MODO_INICIO_SESION);            
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
