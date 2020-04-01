@@ -37,6 +37,8 @@ public class VistaGUI extends Application
 {
     public static final String RUTA_HTML = "../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/";
     public static final String ERROR_DIRARRANQUE = "Error al tratar de conectar con la red Pastry";
+    public static final String ERROR_CREACIONUSUARIO = "Error al crear el usuario";
+    public static final String ERROR_USUARIONODISPONIBLE = "El usuario ya existe. Por favor, seleccione otro nombre de usuario";
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
     /** for communication from the Javascript engine. */
@@ -203,6 +205,33 @@ public class VistaGUI extends Application
                 }                
             } catch (Exception e)
             {
+                e.printStackTrace();
+            }
+        }
+
+        public void registrarUsuario(String usuario, String passwd){
+            boolean disponible = false;            
+            try
+            {
+                disponible = servicio.compruebaNombre(usuario);
+                if(disponible){
+                    servicio.appRegistrarUsuario(usuario, passwd);
+                    servicio.appOnStart();
+                    if(servicio.appGetError()!=0) {
+                        servicio.procesaError();
+                        javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
+                    } else{
+                        javascriptConnector.call("notificarUsuarioCreadoCorrectamente");
+                        javascriptConnector.call("comprobarEstadoCallback");
+                    }
+                }else{
+                    System.out.println("Nombre de usuario " + usuario + " en uso");
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONODISPONIBLE);
+                }
+            } catch (Exception e)
+            {
+                System.out.println("Error al crear un usuario nuevo");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
                 e.printStackTrace();
             }
         }

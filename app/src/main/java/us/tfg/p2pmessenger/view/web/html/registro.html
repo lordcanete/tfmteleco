@@ -13,7 +13,7 @@
     <title>US-P2PMessenger</title>
 </head>
 
-<body class="d-flex align-items-center justify-content-center">
+<body class="d-flex align-items-center justify-content-center position-relative">
     <div class="container card row p-5 shadow-sm">
         <img class="col-8 col-md-4 mx-auto" src="../img/Logo_US.png"/>
         <h1 class="text-center">P2P Messenger</h1>
@@ -42,6 +42,23 @@
             </div>
             
         </form>
+
+    </div>
+    <div id="pagRegistro_bloqueNotificacionError" class="d-none">
+        <div class="row h-100">
+            <form class="col-12 col-lg-6 justify-content-center align-self-center m-auto bg-white p-5 text-center rounded">
+                <h4 id="pagRegistro_mensajeNotificacionError" class="mb-3"></h4>
+                <button id="pagRegistro_botonCerrarNotificacionError" type="button" class="btn btn-danger" onclick="pagRegistro_onClickCerrarNotificacionError();">OK</button>
+            </form>
+        </div>
+
+    </div>
+    <div id="pagRegistro_bloqueNotificacionOK" class="d-none">
+        <div class="row h-100">
+            <form class="col-12 col-lg-6 justify-content-center align-self-center m-auto bg-white p-5 text-center rounded">
+                <h4 id="pagRegistro_mensajeNotificacionOK" class="mb-3">Usuario creado correctamente. <br> Redirigiendo a Inicio de Sesión...</h4>                
+            </form>
+        </div>
 
     </div>
 
