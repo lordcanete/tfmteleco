@@ -179,13 +179,14 @@ public class VistaGUI extends Application
 
         public void accederRegistroUsuario(){
             servicio.appSetModo(ControladorApp.MODO_REGISTRO);
+            System.out.println("Pasa el setModoRegistro y pasa a llamar comprobarEstadoCallback");
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
         public void conectarPastry(String inputIp, int inputPuerto){
             try
             {
-                if(servicio.appNuevaDireccionArranque(ip, puerto)){
+                if(servicio.appNuevaDireccionArranque(ip, puerto)){                    
                     servicio.appOnStart();
                     if (servicio.appGetError() != 0)
                     {
