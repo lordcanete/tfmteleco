@@ -691,11 +691,8 @@ public class ManejadorBBDDConsola
             pstmt.setInt(2, puerto);
 
             pstmt.executeUpdate();
-            System.out.println("Ejecutada insercion direccion ok en BBDD");
         } catch (Exception e)
         {
-            ok=false;
-            System.out.println("Error al insertar direccion ok en BBDD");
             throw e;
         }
         return ok;
