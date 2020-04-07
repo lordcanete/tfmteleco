@@ -3,8 +3,8 @@ const PATRON_BLOQUES = "pagRegistro_bloque";
 async function pagRegistro_onClickRegistrar () {
     var usuario = $("#pagRegistro_formFieldUser").val();
     var passwd = $("#pagRegistro_formFieldPass").val();
-    await mostrarBloqueNotificacionCargando();
-    javaConnector.registrarUsuario(usuario, passwd);
+    mostrarBloqueNotificacionCargando();
+    await javaConnector.registrarUsuario(usuario, passwd);
 };
 
 function pagRegistro_onClickIniciarSesion () {
