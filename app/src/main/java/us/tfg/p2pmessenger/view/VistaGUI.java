@@ -192,6 +192,7 @@ public class VistaGUI extends Application
         public void conectarPastry(String inputIp, int inputPuerto){
             try
             {
+                System.out.println("IP recibida del conector: "+inputIp);
                 if(servicio.appNuevaDireccionArranque(ip, puerto)){                    
                     servicio.appOnStart();
                     if (servicio.appGetError() != 0)

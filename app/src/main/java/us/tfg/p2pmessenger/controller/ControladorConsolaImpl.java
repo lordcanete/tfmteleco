@@ -1978,7 +1978,7 @@ public class ControladorConsolaImpl implements ControladorApp
         try
         {
             this.db.insertarDireccion(InetAddress.getByName(ip), puerto);
-            System.out.println("Insertada direccion OK");
+            System.out.println("Insertada direccion OK: "+ip);
         } catch (Exception e)
         {
             vista.excepcion(e);

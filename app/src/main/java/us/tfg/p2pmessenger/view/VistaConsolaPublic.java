@@ -880,6 +880,7 @@ public class VistaConsolaPublic implements Vista
         return this.app.getModo();
     }
     public boolean appNuevaDireccionArranque(String ip, int port){
+        System.out.println("IP a guardar: "+ip);
         return this.app.nuevaDireccionArranque(ip,port);
     }
     public void appSetModo(int mode){
