@@ -224,7 +224,6 @@ public class VistaGUI extends Application
                             javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
                         } else{
                             javascriptConnector.call("notificarUsuarioCreadoCorrectamente");
-                            javascriptConnector.call("comprobarEstadoCallback");
                         }
                     }                    
                     
