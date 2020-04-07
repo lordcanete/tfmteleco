@@ -1,7 +1,7 @@
 const PATRON_BLOQUES = "pagRegistro_bloque";
 
 function pagRegistro_onClickRegistrar () {
-    ocultarBloques(PATRON_BLOQUES);
+    ocultarBloqueNotificacion("pagRegistro_bloqueNotificacionConfirmarContrasena");
     /*var usuario = $("#pagRegistro_formFieldUser").val();
     var passwd = $("#pagRegistro_formFieldPass").val();    
     javaConnector.registrarUsuario(usuario, passwd);*/
