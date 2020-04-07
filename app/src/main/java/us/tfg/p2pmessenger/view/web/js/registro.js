@@ -14,7 +14,7 @@ function pagRegistro_onClickIniciarSesion () {
 };
 
 function pagRegistro_onClickCerrarNotificacionError(){
-    ocultarBloqueNotificacionError();
+    ocultarBloqueNotificacion(idBloque_notifError);
 }
 
 function mostrarBloqueNotificacion(idBloque, idUbicacionMensaje = null, mensaje = null){
