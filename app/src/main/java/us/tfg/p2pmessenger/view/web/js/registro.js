@@ -1,10 +1,9 @@
 const PATRON_BLOQUES = "pagRegistro_bloque";
 
-async function pagRegistro_onClickRegistrar () {
+function pagRegistro_onClickRegistrar () {
     var usuario = $("#pagRegistro_formFieldUser").val();
-    var passwd = $("#pagRegistro_formFieldPass").val();
-    mostrarBloqueNotificacionCargando();
-    await javaConnector.registrarUsuario(usuario, passwd);
+    var passwd = $("#pagRegistro_formFieldPass").val();    
+    javaConnector.registrarUsuario(usuario, passwd);
 };
 
 function pagRegistro_onClickIniciarSesion () {
@@ -63,6 +62,9 @@ function ocultarBloqueNotificacion(idBloque){
 var jsConnector = {
     comprobarEstadoCallback: function () {
         javaConnector.comprobarEstado();
+    },
+    notificarCargando: function(){
+        mostrarBloqueNotificacionCargando();
     },
     notificarError: function(mensajeError){
         mostrarBloqueNotificacionError(mensajeError);
