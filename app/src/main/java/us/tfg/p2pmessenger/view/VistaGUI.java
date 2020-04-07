@@ -214,7 +214,7 @@ public class VistaGUI extends Application
             boolean errorRegistro = false;         
             try
             {
-                javascriptConnector.notificarCargando();
+                javascriptConnector.call("notificarCargando");
                 disponible = servicio.compruebaNombre(usuario);
                 if(disponible){
                     errorRegistro = servicio.appRegistrarUsuario(usuario, passwd);
