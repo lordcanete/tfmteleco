@@ -1,9 +1,10 @@
 const PATRON_BLOQUES = "pagRegistro_bloque";
 
 function pagRegistro_onClickRegistrar () {
-    var usuario = $("#pagRegistro_formFieldUser").val();
+    ocultarBloques(PATRON_BLOQUES);
+    /*var usuario = $("#pagRegistro_formFieldUser").val();
     var passwd = $("#pagRegistro_formFieldPass").val();    
-    javaConnector.registrarUsuario(usuario, passwd);
+    javaConnector.registrarUsuario(usuario, passwd);*/
 };
 
 function pagRegistro_onClickIniciarSesion () {
