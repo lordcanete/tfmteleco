@@ -39,6 +39,9 @@ public class VistaGUI extends Application
     public static final String ERROR_DIRARRANQUE = "Error al tratar de conectar con la red Pastry";
     public static final String ERROR_CREACIONUSUARIO = "Error al crear el usuario";
     public static final String ERROR_USUARIONODISPONIBLE = "El usuario ya existe. Por favor, seleccione otro nombre de usuario";
+    public static final String ERROR_INICIOSESION = "Error al iniciar sesión. Por favor, inténtelo de nuevo";
+    public static final String ERROR_CREDENCIALESNOVALIDAS = "Usuario o contraseña no válidos. Por favor, inténtelo de nuevo.";
+    
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
     /** for communication from the Javascript engine. */
@@ -162,7 +165,8 @@ public class VistaGUI extends Application
                     System.out.println("MODO_APAGADO");
                     break;
                 case ControladorApp.MODO_SESION_INICIADA:
-                    System.out.println("MODO_SESION_INICIADA");                
+                    System.out.println("MODO_SESION_INICIADA");   
+                    cargarPagina("appWindow.html");
                     break;
                 case ControladorApp.MODO_NECESARIA_DIRECION:  
                     System.out.println("MODO NECESARIA DIRECCION");
@@ -209,26 +213,26 @@ public class VistaGUI extends Application
             }
         }
 
-        public void registrarUsuario(String usuario, String passwd){
+        public void registrarUsuario(String inputUsuario, String inputPasswd){
             boolean disponible = false;   
             boolean errorRegistro = false;         
             try
             {
-                disponible = servicio.compruebaNombre(usuario);
+                disponible = servicio.compruebaNombre(inputUsuario);
                 if(disponible){
-                    errorRegistro = servicio.appRegistrarUsuario(usuario, passwd);
+                    errorRegistro = servicio.appRegistrarUsuario(inputUsuario, inputPasswd);
                     if (!errorRegistro){
                         servicio.appOnStart();
                         if(servicio.appGetError()!=0) {
                             servicio.procesaError();
                             javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
                         } else{
-                            javascriptConnector.call("notificarUsuarioCreadoCorrectamente");
+                            javascriptConnector.call("comprobarEstadoCallback");
                         }
                     }                    
                     
                 }else{
-                    System.out.println("Nombre de usuario " + usuario + " en uso");
+                    System.out.println("Nombre de usuario " + inputUsuario + " en uso");
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONODISPONIBLE);
                 }
             } catch (Exception e)
@@ -238,6 +242,33 @@ public class VistaGUI extends Application
                 e.printStackTrace();
             }
         }
+
+        public void iniciarSesion(String inputUsuario, String inputPasswd){
+            try
+            {
+                JsonObject contenidoJson = Json.createObjectBuilder()
+                                                .add("usuario", inputUsuario)
+                                                .add("contrasena", inputPasswd)
+                                                .build();
+
+                GestorFicherosConsola gfich = new GestorFicherosConsola();
+                gfich.escribirAFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO,
+                        contenidoJson.toString().getBytes(), false);
+
+                servicio.appOnStart();
+                if(servicio.appGetError()!=0) {
+                    servicio.procesaError();
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_CREDENCIALESNOVALIDAS);
+                } else{
+                    javascriptConnector.call("comprobarEstadoCallback");
+                }
+            } catch (Exception e)
+            {
+                System.out.println("Error al iniciar sesion");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_INICIOSESION);            
+                e.printStackTrace();
+            }
+        }       
 
 
 

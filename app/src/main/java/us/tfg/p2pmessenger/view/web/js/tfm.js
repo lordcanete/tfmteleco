@@ -2,10 +2,6 @@ var jsConnector = {
     notificarError: function(mensajeError){
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensajeError);
     },
-    notificarUsuarioCreadoCorrectamente: function(){        
-        mostrarBloqueNotificacion(idBloque_notifOk);
-        this.comprobarEstadoCallback();
-    },
     comprobarEstadoCallback: function () {
         javaConnector.comprobarEstado();
     }
