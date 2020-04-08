@@ -21,7 +21,7 @@ function validarFormularioConectaPastry(ip, puerto){
     var validacion = false;
     //Fuente validacion IP: https://www.w3resource.com/javascript/form/ip-address-validation.php    
     var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    if(ip.value.match(ipformat) && (puerto>=0 && puerto<=65535))
+    if(ipformat.test(ip) && (puerto>=0 && puerto<=65535))
     {        
         validacion = true;
     }
