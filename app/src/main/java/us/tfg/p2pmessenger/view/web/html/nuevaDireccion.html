@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/estilo-tfg.css">
+    <link rel="stylesheet" href="../css/estilo-tfm.css">
 
     <title>US-P2PMessenger</title>
 </head>
@@ -27,7 +27,6 @@
                 <label for="pagConectaPastry_formFieldPort">Puerto</label>
                 <input type="text" class="form-control" id="pagConectaPastry_formFieldPort" placeholder="Introduzca el puerto de la red Pastry">
             </div>
-            <small id="errorFormDireccionPastry" class="form-text text-danger text-center m-1 d-none"></small>
             <div class="col-12 text-center">
                 <button type="button" class="btn btn-primary" onclick="pagConectaPastry_onClickConectar();">Conectar</button>
             </div>
@@ -37,6 +36,12 @@
         </form>
 
     </div>
+    <div id="pagConectaPastry_bloqueNotificacionError" class="capaNotificaciones d-none align-items-center">        
+        <div class="shadow-sm p-5 text-center bg-white m-auto col-11 col-md-6">
+                <h4 id="pagConectaPastry_mensajeNotificacionError" class="mb-3"></h4>
+                <button id="pagConectaPastry_botonCerrarNotificacionError" type="button" class="btn btn-danger" onclick="pagConectaPastry_onClickCerrarNotificacionError();">OK</button>
+            </div>
+    </div>
 
 
     <!-- Optional JavaScript -->
@@ -44,6 +49,7 @@
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/nuevaDireccion.js"></script>
+    <script src="../js/tfm.js"></script>
 </body>
 
 </html>

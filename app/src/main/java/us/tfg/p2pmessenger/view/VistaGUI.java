@@ -201,7 +201,7 @@ public class VistaGUI extends Application
                         javascriptConnector.call("comprobarEstadoCallback");
                     }
                 }else {
-                    javascriptConnector.call("errorAlertCallback", VistaGUI.ERROR_DIRARRANQUE);
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_DIRARRANQUE);
                 }                
             } catch (Exception e)
             {

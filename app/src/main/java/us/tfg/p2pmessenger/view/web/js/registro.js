@@ -16,34 +16,3 @@ function pagRegistro_onClickIniciarSesion () {
 function pagRegistro_onClickCerrarNotificacionError(){
     ocultarBloqueNotificacion(idBloque_notifError);
 }
-
-function mostrarBloqueNotificacion(idBloque, idUbicacionMensaje = null, mensaje = null){
-    if (idUbicacionMensaje != null && mensaje != null){
-        $(idUbicacionMensaje).text(mensaje);
-    }
-
-    $(idBloque).addClass("d-flex");
-    $(idBloque).removeClass("d-none");
-}
-
-function ocultarBloqueNotificacion(idBloque){
-    $(idBloque).addClass("d-none");
-    $(idBloque).removeClass("d-flex");
-}
-
-var jsConnector = {
-    comprobarEstadoCallback: function () {
-        javaConnector.comprobarEstado();
-    },
-    notificarError: function(mensajeError){
-        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensajeError);
-    },
-    notificarUsuarioCreadoCorrectamente: function(){        
-        mostrarBloqueNotificacionOK(idBloque_notifOk);
-        this.comprobarEstadoCallback();
-    }
-};
-
-function getJsConnector() {
-    return jsConnector;
-};
