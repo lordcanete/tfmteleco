@@ -268,7 +268,13 @@ public class VistaGUI extends Application
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_INICIOSESION);            
                 e.printStackTrace();
             }
-        }       
+        } 
+        
+        public void cerrarSesion(){
+            servicio.appGuardarLlavero();
+            servicio.appCerrarSesion();
+            javascriptConnector.call("comprobarEstadoCallback");
+        }
 
 
 

@@ -898,4 +898,12 @@ public class VistaConsolaPublic implements Vista
         
     }
 
+    public void appGuardarLlavero(){
+        this.app.guardarLlavero();
+    }
+
+    public void appCerrarSesion(){
+        this.app.cerrarSesion();
+    }    
+
 }
