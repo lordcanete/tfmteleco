@@ -1,5 +1,5 @@
-var idBloque_notifError = "#errorFormDireccionPastry";
-var idBloque_textoError = "#errorFormDireccionPastry";
+var idBloque_notifError = "#pagConectaPastry_bloqueNotificacionError";
+var idBloque_textoError = "#pagConectaPastry_mensajeNotificacionError";
 
 function pagConectaPastry_onClickConectar () {
     var ip = $("#pagConectaPastry_formFieldIP").val();
