@@ -21,8 +21,6 @@ function pagInicioSesion_onClickCerrarNotificacionError(){
 
 function validarFormularioInicioSesion(usuario, passwd){
     var validacion = false;
-    var usuarioTrim = usuario.trim();
-    var passwdTrim = passwd.trim();
     if (!(usuario.trim() == "") && !(passwd.trim() == "")) {
         validacion = true;
     } 
