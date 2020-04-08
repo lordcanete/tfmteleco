@@ -3,7 +3,7 @@ var jsConnector = {
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensajeError);
     },
     notificarUsuarioCreadoCorrectamente: function(){        
-        mostrarBloqueNotificacionOK(idBloque_notifOk);
+        mostrarBloqueNotificacion(idBloque_notifOk);
         this.comprobarEstadoCallback();
     },
     comprobarEstadoCallback: function () {
