@@ -4,6 +4,7 @@ var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
 var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
+var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias"
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 
@@ -83,5 +84,23 @@ function pagAppWindow_onClickAbrirAgenda(){
 
 function pagAppWindow_onClickCerrarNotificacionError(){
     ocultarBloqueNotificacion(idBloque_notifError);
+}
+
+function pagAppWindow_onClickGuardarContacto(){
+    var usuario = $("#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario").val();
+    var alias = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias").val();    
+    if(validarFormularioCrearContacto(usuario, alias)){
+        javaConnector.crearContacto(usuario, alias);
+    }else{
+        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
+    }
+}
+
+function validarFormularioCrearContacto(usuario, alias){
+    var validacion = false;
+    if (!(usuario.trim() == "") && !(passwd.trim() == "")) {
+        validacion = true;
+    } 
+    return validacion;
 }
 

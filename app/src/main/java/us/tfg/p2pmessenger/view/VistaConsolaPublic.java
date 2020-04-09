@@ -910,5 +910,8 @@ public class VistaConsolaPublic implements Vista
         return this.app.obtenerContactos();
     }
     
+    public void appNuevoContacto(String usuario, String alias){
+        this.app.nuevoContacto(usuario, alias);
+    }
 
 }

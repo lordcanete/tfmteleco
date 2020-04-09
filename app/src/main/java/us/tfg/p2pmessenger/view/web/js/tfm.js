@@ -9,8 +9,8 @@ var jsConnector = {
         var listaContactosJson = JSON.parse(listaContactosJsonString);
         pagAppWindow_mostrarCapaAgenda(listaContactosJson);
     },
-    refrescarUsuarios: function(){
-        
+    actualizarPanelAgenda: function(){
+        pagAppWindow_mostrarAgendaActualizada();
     }
 };
 
