@@ -33,3 +33,7 @@ function ocultarBloqueNotificacion(idBloque){
     $(idBloque).addClass("d-none");
     $(idBloque).removeClass("d-flex");
 }
+
+function limpiarTextoInput(id){
+    $(id).val("");
+}

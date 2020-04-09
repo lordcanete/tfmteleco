@@ -61,7 +61,7 @@ function pagAppWindow_crearContactoBoxAgenda(contactoJson) {
     return contactoBoxAgenda;
   }
 
-function pagAppWindow_mostrarAgendaActualizada(){
+function pagAppWindow_mostrarAgendaActualizada(){    
     javaConnector.obtenerListaContactos();
 }
 
@@ -99,13 +99,11 @@ function pagAppWindow_onClickGuardarContacto(){
 }
 
 function limpiarFormularioNuevoContacto(){
-    limpiarTextoCampo(idInput_CrearContactoAlias);
-    limpiarTextoCampo(idInput_CrearContactoUsuario);
+    limpiarTextoInput(idInput_CrearContactoAlias);
+    limpiarTextoInput(idInput_CrearContactoUsuario);
 }
 
-function limpiarTextoCampo(id){
-    $(id).text("");
-}
+
 
 function validarFormularioCrearContacto(usuario, alias){
     var validacion = false;
