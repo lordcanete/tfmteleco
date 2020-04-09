@@ -47,6 +47,8 @@ public class VistaGUI extends Application
     public static final String ERROR_INICIOSESION = "Error al iniciar sesión. Por favor, inténtelo de nuevo";
     public static final String ERROR_CREDENCIALESNOVALIDAS = "Usuario o contraseña no válidos. Por favor, inténtelo de nuevo.";
     public static final String ERROR_OBTENERLISTACONTACTOS = "Ocurrió un error al obtener los contactos guardados";
+    public static final String ERROR_USUARIONOEXISTENTE = "El usuario introducido no existe";
+    public static final String ERROR_CREARCONTACTO = "Error al crear el contacto";
     
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
@@ -321,8 +323,7 @@ public class VistaGUI extends Application
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_CREARCONTACTO); 
             }*/
             
-        }
-        
+        }       
 
 
 

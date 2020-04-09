@@ -27,8 +27,11 @@ function pagAppWindow_ocultarCapaAgenda(){
     ocultarCapa(idCapaAgenda);    
 }
 
-function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
-    
+function pagAppWindow_mostrarCapaAgenda(){
+     
+}
+
+function refrescarContactosAgenda(){      
     var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
     panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
