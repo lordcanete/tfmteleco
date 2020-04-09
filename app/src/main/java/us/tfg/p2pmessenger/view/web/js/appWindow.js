@@ -27,15 +27,23 @@ function pagAppWindow_ocultarCapaAgenda(){
     ocultarCapa(idCapaAgenda);    
 }
 
-function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
+function pagAppWindow_mostrarCapaAgenda(){
+     
+}
+
+function refrescarContactosAgenda(){
+    var listaContactosJson = javaConnector.obtenerListaContactos();    
+    if(listaContactosJson != null){
+        var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
+        panelAgendaListaContactos.empty();
+        listaContactosJson.forEach(function(contactoJson) { 
+            var contactoBoxAgenda = crearContactoBoxAgenda(contactoJson);
+            panelAgendaListaContactos.append(contactoBoxAgenda);        
+        }); 
+    }else{
+        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, "Error al obtener los contactos");
+    }
     
-    var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
-    panelAgendaListaContactos.empty();
-    listaContactosJson.forEach(function(contactoJson) { 
-        var contactoBoxAgenda = crearContactoBoxAgenda(contactoJson);
-        panelAgendaListaContactos.append(contactoBoxAgenda);        
-    });    
-    mostrarCapa(idCapaAgenda);   
 }
 
 function crearContactoBoxAgenda(contactoJson) {
@@ -71,7 +79,8 @@ function pagAppWindow_onClickNuevaConversacion(){
 }
 
 function pagAppWindow_onClickAbrirAgenda(){
-    javaConnector.obtenerListaContactos();        
+    refrescarContactosAgenda();       
+    mostrarCapa(idCapaAgenda);  
 }
 
 function pagAppWindow_onClickCerrarNotificacionError(){

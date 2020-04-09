@@ -47,6 +47,8 @@ public class VistaGUI extends Application
     public static final String ERROR_INICIOSESION = "Error al iniciar sesión. Por favor, inténtelo de nuevo";
     public static final String ERROR_CREDENCIALESNOVALIDAS = "Usuario o contraseña no válidos. Por favor, inténtelo de nuevo.";
     public static final String ERROR_OBTENERLISTACONTACTOS = "Ocurrió un error al obtener los contactos guardados";
+    public static final String ERROR_USUARIONOEXISTENTE = "El usuario introducido no existe";
+    public static final String ERROR_CREARCONTACTO = "Error al crear el contacto";
     
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
@@ -282,7 +284,7 @@ public class VistaGUI extends Application
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
-        public void obtenerListaContactos(){
+        public JsonArray obtenerListaContactos(){
             ArrayList<Contacto> contactos=servicio.appObtenerContactos();
             JsonArrayBuilder listaContactosJsonBuilder = Json.createArrayBuilder();
             JsonArray listaContactosJson = null;
@@ -296,15 +298,32 @@ public class VistaGUI extends Application
                                                 .add("usuario", contacto.getUsuario().getNombre()).build());
                 }                
                 listaContactosJson = listaContactosJsonBuilder.build();                
-                System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
-                javascriptConnector.call("abrirPanelAgenda", listaContactosJson.toString());
+                /*System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
+                javascriptConnector.call("abrirPanelAgenda", listaContactosJson.toString());*/
             }
-            else
+            /*else
             {
                 System.out.println("Error al obtener los contactos guardados");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
-            }
+            }*/
+            return listaContactosJson;
                 
+        }
+
+        public void crearContacto(inputUsuario, inputAlias){
+            try{
+                existeUsuario = !servicio.compruebaNombre(inputUsuario);
+                if(existeUsuario){
+                    servicio.appNuevoContacto(inputUsuario, inputAlias);
+                    javascriptConnector.call("contactoCreadoOK");
+                }else{
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONOEXISTENTE); 
+                }
+                
+            }catch(Exception e){
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_CREARCONTACTO); 
+            }
+            
         }
 
 
