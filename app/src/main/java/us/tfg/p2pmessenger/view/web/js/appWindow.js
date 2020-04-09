@@ -5,7 +5,7 @@ var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 
-var mockup_jsonContactos = "";
+var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
@@ -28,15 +28,14 @@ function pagAppWindow_ocultarCapaAgenda(){
 }
 
 function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
-    var contactos = JSON.stringify(listaContactosJson);
-    /*var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
+    
+    var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
     panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
         var contactoBoxAgenda = crearContactoBoxAgenda(contactoJson);
-        panelAgendaListaContactos.appendChild(contactoBoxAgenda);        
-    });*/
-    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, contactos);
-    //mostrarCapa(idCapaAgenda);   
+        panelAgendaListaContactos.append(contactoBoxAgenda);        
+    });    
+    mostrarCapa(idCapaAgenda);   
 }
 
 function crearContactoBoxAgenda(contactoJson) {
@@ -44,14 +43,14 @@ function crearContactoBoxAgenda(contactoJson) {
     var usuario = contactoJson.usuario;
     var plantilla = $("#contactoBoxAgendaPlantilla");
   
-    var contactoBoxAgenda = plantilla.cloneNode(true);
-    contactoBoxAgenda.id = "contactoBoxAgenda-" + usuario;
-    contactoBoxAgenda.removeClass("d-none");
+    var contactoBoxAgenda = plantilla.clone(true);
+    contactoBoxAgenda.attr("id","contactoBoxAgenda-" + usuario);
+    contactoBoxAgenda.removeClass("d-none");    
 
-    var aliasElement = contactoBoxAgenda.querySelector(".contactoBoxAlias");
-    aliasElement.innerText = alias;    
-    var usuarioElement = contactoBoxAgenda.querySelector(".contactoBoxUsuario span");
-    usuarioElement.innerText = usuario;   
+    var aliasElement = contactoBoxAgenda.find(".contactoBoxAlias");
+    aliasElement.text(alias);    
+    var usuarioElement = contactoBoxAgenda.find(".contactoBoxUsuario span");
+    usuarioElement.text(usuario);   
   
     return contactoBoxAgenda;
   }
