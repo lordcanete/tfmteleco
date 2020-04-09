@@ -337,6 +337,7 @@ public class VistaGUI extends Application
             {
                 for (Contacto contacto : contactos)
                 {
+                    System.out.println("usuario a buscar: " + usuario + "\nusuario comparando: "+contacto.getUsuario().getNombre());
                    if(contacto.getUsuario().getNombre() == usuario){
                         idUsuario = contacto.getId();
                    }
