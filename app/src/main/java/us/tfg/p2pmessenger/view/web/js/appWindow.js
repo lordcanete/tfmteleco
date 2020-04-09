@@ -32,13 +32,13 @@ function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
     var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
     panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
-        var contactoBoxAgenda = crearContactoBoxAgenda(contactoJson);
+        var contactoBoxAgenda = pagAppWindow_crearContactoBoxAgenda(contactoJson);
         panelAgendaListaContactos.append(contactoBoxAgenda);        
     });    
     mostrarCapa(idCapaAgenda);   
 }
 
-function crearContactoBoxAgenda(contactoJson) {
+function pagAppWindow_crearContactoBoxAgenda(contactoJson) {
     var alias = contactoJson.alias;
     var usuario = contactoJson.usuario;
     var plantilla = $("#contactoBoxAgendaPlantilla");
@@ -54,6 +54,10 @@ function crearContactoBoxAgenda(contactoJson) {
   
     return contactoBoxAgenda;
   }
+
+function pagAppWindow_mostrarAgendaActualizada(){
+    javaConnector.obtenerListaContactos();
+}
 
 function pagAppWindow_ocultarCapaAbrirConversacion(){
     ocultarCapa(idCapaAbrirConversacion);    
@@ -71,7 +75,7 @@ function pagAppWindow_onClickNuevaConversacion(){
 }
 
 function pagAppWindow_onClickAbrirAgenda(){
-    javaConnector.obtenerListaContactos();        
+    pagAppWindow_mostrarAgendaActualizada();        
 }
 
 function pagAppWindow_onClickCerrarNotificacionError(){

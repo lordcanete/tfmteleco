@@ -307,6 +307,23 @@ public class VistaGUI extends Application
                 
         }
 
+        public void crearContacto(String inputUsuario, String inputAlias){
+            /*try{
+                existeUsuario = !servicio.compruebaNombre(inputUsuario);
+                if(existeUsuario){
+                    servicio.appNuevoContacto(inputUsuario, inputAlias);
+                    javascriptConnector.call("contactoCreadoOK");
+                }else{
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONOEXISTENTE); 
+                }
+                
+            }catch(Exception e){
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_CREARCONTACTO); 
+            }*/
+            
+        }
+        
+
 
 
     }
