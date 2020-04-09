@@ -49,6 +49,7 @@ public class VistaGUI extends Application
     public static final String ERROR_OBTENERLISTACONTACTOS = "Ocurrió un error al obtener los contactos guardados";
     public static final String ERROR_USUARIONOEXISTENTE = "El usuario introducido no existe";
     public static final String ERROR_CREARCONTACTO = "Error al crear el contacto";
+    public static final String ERROR_ELIMINARCONTACTO = "Error al eliminar el contacto";
     
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
@@ -328,6 +329,34 @@ public class VistaGUI extends Application
             }
             
         }       
+
+        public void eliminarContacto(String usuario){
+            ArrayList<Contacto> contactos=servicio.appObtenerContactos();
+            Id idUsuario  = null;
+            if(contactos!=null)
+            {
+                for (Contacto contacto : contactos)
+                {
+                   if(contacto.getUsuario().getNombre() == usuario){
+                        idUsuario = contacto.getId();
+                   }
+                }
+                if (idUsuario != null){
+                    servicio.appEliminaContacto(idUsuario.toStringFull());
+                    javascriptConnector.call("actualizarPanelAgenda");
+                }
+                else{
+                    System.out.println("Error al eliminar contacto");
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_ELIMINARCONTACTO); 
+                }                               
+                
+            }
+            else
+            {
+                System.out.println("Error al obtener los contactos guardados");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
+            }
+        }
 
 
 

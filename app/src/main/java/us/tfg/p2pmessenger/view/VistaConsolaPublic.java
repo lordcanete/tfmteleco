@@ -914,4 +914,8 @@ public class VistaConsolaPublic implements Vista
         this.app.nuevoContacto(usuario, alias);
     }
 
+    public void appEliminaContacto(String id){
+        this.app.eliminaContacto(id);
+    }
+
 }

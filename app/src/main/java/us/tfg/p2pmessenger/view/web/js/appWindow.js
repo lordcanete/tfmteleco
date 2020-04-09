@@ -31,11 +31,11 @@ function pagAppWindow_ocultarCapaAgenda(){
 }
 
 function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
-    refrescarContactosAgenda(listaContactosJson);
+    pagAppWindow_refrescarContactosAgenda(listaContactosJson);
     mostrarCapa(idCapaAgenda); 
 }
 
-function refrescarContactosAgenda(listaContactosJson){      
+function pagAppWindow_refrescarContactosAgenda(listaContactosJson){      
     var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
     panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
@@ -81,6 +81,7 @@ function pagAppWindow_onClickNuevaConversacion(){
 }
 
 function pagAppWindow_onClickAbrirAgenda(){
+    //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
     pagAppWindow_mostrarAgendaActualizada();        
 }
 
@@ -91,25 +92,35 @@ function pagAppWindow_onClickCerrarNotificacionError(){
 function pagAppWindow_onClickGuardarContacto(){
     var usuario = $("#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario").val();
     var alias = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias").val();    
-    if(validarFormularioCrearContacto(usuario, alias)){
+    if(pagAppWindow_validarFormularioCrearContacto(usuario, alias)){
         javaConnector.crearContacto(usuario, alias);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
     }
 }
 
-function limpiarFormularioNuevoContacto(){
+function pagAppWindow_onClickEliminarContacto(item){
+    var idContactoBoxAgenda = item.parentElement.parentElement.id;
+    var idUsuario = idContactoBoxAgenda.substring(18);
+    javaConnector.eliminarContacto(idUsuario);
+
+}
+
+function pagAppWindow_limpiarFormularioNuevoContacto(){
     limpiarTextoInput(idInput_CrearContactoAlias);
     limpiarTextoInput(idInput_CrearContactoUsuario);
 }
 
 
 
-function validarFormularioCrearContacto(usuario, alias){
+function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     var validacion = false;
     if (!(usuario.trim() == "") && !(alias.trim() == "")) {
         validacion = true;
     } 
     return validacion;
 }
+
+
+
 
