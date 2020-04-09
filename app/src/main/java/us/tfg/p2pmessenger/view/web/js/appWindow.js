@@ -47,7 +47,7 @@ function pagAppWindow_onClickNuevaConversacion(){
 function pagAppWindow_onClickAbrirAgenda(){
     var contactos = javaConnector.obtenerListaContactos();    
     var myJSON = JSON.parse(contactos);
-    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, myJSON);
+    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, JSON.stringify(myJSON));
 }
 
 function pagAppWindow_onClickCerrarNotificacionError(){
