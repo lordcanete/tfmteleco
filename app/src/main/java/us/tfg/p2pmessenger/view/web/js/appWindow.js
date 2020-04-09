@@ -28,7 +28,8 @@ function pagAppWindow_ocultarCapaAgenda(){
 }
 
 function pagAppWindow_mostrarCapaAgenda(){
-     
+    refrescarContactosAgenda();
+    mostrarCapa(idCapaAgenda); 
 }
 
 function refrescarContactosAgenda(){      
@@ -37,8 +38,7 @@ function refrescarContactosAgenda(){
     listaContactosJson.forEach(function(contactoJson) { 
         var contactoBoxAgenda = pagAppWindow_crearContactoBoxAgenda(contactoJson);
         panelAgendaListaContactos.append(contactoBoxAgenda);        
-    });    
-    mostrarCapa(idCapaAgenda);   
+    });          
 }
 
 function pagAppWindow_crearContactoBoxAgenda(contactoJson) {
