@@ -46,7 +46,7 @@ function pagAppWindow_onClickNuevaConversacion(){
 
 function pagAppWindow_onClickAbrirAgenda(){
     var contactos = javaConnector.obtenerListaContactos();    
-    var myJSON = JSON.stringify(contactos);
+    var myJSON = JSON.parse(contactos);
     mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, myJSON);
 }
 
