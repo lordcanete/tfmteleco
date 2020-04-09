@@ -906,4 +906,9 @@ public class VistaConsolaPublic implements Vista
         this.app.cerrarSesion();
     }    
 
+    public ArrayList<Contacto> appObtenerContactos(){
+        return this.app.obtenerContactos();
+    }
+    
+
 }

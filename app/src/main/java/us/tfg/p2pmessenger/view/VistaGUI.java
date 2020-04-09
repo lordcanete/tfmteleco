@@ -277,11 +277,24 @@ public class VistaGUI extends Application
         }
 
         public String obtenerListaContactos(){
-            JsonObject contenidoJson = Json.createObjectBuilder()
-                                                .add("usuario", "inputUsuario")
-                                                .add("alias", "inputAlias")
-                                                .build();
-            return contenidoJson.toString();
+            ArrayList<Contacto> contactos=servicio.appObtenerContactos();
+            JsonObject listaContactosJson = new JSONObject();
+            JsonObject contactoJson;
+            if(contactos!=null)
+            {
+                for (Contacto contacto : contactos)
+                {
+                    System.out.println("alias: "contacto.getAlias()+" usuario: "+contacto.getUsuario().getNombre());                    
+                    contactoJson = new JSONObject();
+                    contactoJson.put("alias", contacto.getAlias());
+                    contactoJson.put("usuario", contacto.getUsuario().getNombre());
+                    listaContactosJson.accumulate("contactos", contactoJson);
+                }
+                System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
+            }
+            else
+                System.out.println("Error al obtener los contactos guardados");
+            return listaContactosJson.toString();
         }
 
 
