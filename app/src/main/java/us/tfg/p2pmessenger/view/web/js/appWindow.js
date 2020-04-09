@@ -5,6 +5,8 @@ var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 
+var mockup_jsonContactos = "";
+
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
     $(idListaConversaciones).removeClass("overflow-auto");
@@ -26,14 +28,15 @@ function pagAppWindow_ocultarCapaAgenda(){
 }
 
 function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
-    var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
+    var contactos = JSON.stringify(listaContactosJson);
+    /*var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
     panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
         var contactoBoxAgenda = crearContactoBoxAgenda(contactoJson);
         panelAgendaListaContactos.appendChild(contactoBoxAgenda);        
-    });
-    //mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, contactos);
-    mostrarCapa(idCapaAgenda);   
+    });*/
+    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, contactos);
+    //mostrarCapa(idCapaAgenda);   
 }
 
 function crearContactoBoxAgenda(contactoJson) {
