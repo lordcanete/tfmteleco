@@ -209,8 +209,7 @@ public class ControladorConsolaImpl implements ControladorApp
 
         int mode = getModo();
         if (mode == MODO_APAGADO || mode == MODO_NECESARIA_DIRECION)
-        {
-
+        {            
             try
             {
                 direccionArranque = db.getDireccionesDeArranque();
@@ -229,7 +228,7 @@ public class ControladorConsolaImpl implements ControladorApp
         this.modo = mode;
 
         if (mode == MODO_INICIO_SESION)
-        {
+        {            
             GestorFicherosConsola gfich = new GestorFicherosConsola();
             if (gfich.existeFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO))
             {
@@ -291,7 +290,7 @@ public class ControladorConsolaImpl implements ControladorApp
         this.modo = mode;
 
         if (mode == MODO_REGISTRO || mode == MODO_SESION_INICIADA)
-        {
+        {            
             try
             {
                 direccionArranque = db.getDireccionesDeArranque();

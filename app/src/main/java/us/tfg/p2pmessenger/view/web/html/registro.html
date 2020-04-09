@@ -8,12 +8,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/estilo-tfg.css">
+    <link rel="stylesheet" href="../css/estilo-tfm.css">
 
     <title>US-P2PMessenger</title>
 </head>
 
-<body class="d-flex align-items-center justify-content-center">
+<body class="d-flex align-items-center justify-content-center position-relative">
     <div class="container card row p-5 shadow-sm">
         <img class="col-8 col-md-4 mx-auto" src="../img/Logo_US.png"/>
         <h1 class="text-center">P2P Messenger</h1>
@@ -44,6 +44,18 @@
         </form>
 
     </div>
+    <div id="pagRegistro_bloqueNotificacionError" class="capaNotificaciones d-none align-items-center">        
+        <div class="shadow-sm p-5 text-center bg-white m-auto col-11 col-lg-8">
+                <h4 id="pagRegistro_mensajeNotificacionError" class="mb-3">Por favor, proporcione un usuario y una contraseña. Además, el campo \"Confirmar contraseña\" debe coincidir con el campo \"Contraseña\"</h4>
+                <button id="pagRegistro_botonCerrarNotificacionError" type="button" class="btn btn-danger" onclick="pagRegistro_onClickCerrarNotificacionError();">OK</button>
+            </div>
+    </div>
+    <div id="pagRegistro_bloqueNotificacionOK" class="capaNotificaciones d-none align-items-center">        
+        <div class="shadow-sm p-5 text-center bg-white m-auto col-11 col-lg-8">
+            <h4 id="pagRegistro_mensajeNotificacionOK">Usuario creado correctamente. <br> Redirigiendo a Inicio de Sesión...</h4>                        
+        </div>
+            
+    </div>
 
 
     <!-- Optional JavaScript -->
@@ -51,6 +63,7 @@
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/registro.js"></script>
+    <script src="../js/tfm.js"></script>    
 </body>
 
 </html>

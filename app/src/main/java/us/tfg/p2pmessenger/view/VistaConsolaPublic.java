@@ -858,4 +858,64 @@ public class VistaConsolaPublic implements Vista
     {
         System.out.println(respuesta);
     }
+
+    public void appOnCreateEntorno(){
+        this.app.onCreateEntorno();
+    }
+    public void appOnStart(){
+        this.app.onStart();
+    }
+    public int appGetError(){
+        return this.app.getError();
+        
+    }
+    public void appOnStop(){
+        this.app.onStop();
+    }
+    public void appOnDestroy(){
+        this.app.onDestroy();
+    }
+    public int appGetModo()
+    {
+        return this.app.getModo();
+    }
+    public boolean appNuevaDireccionArranque(String ip, int port){
+        return this.app.nuevaDireccionArranque(ip,port);
+    }
+    public void appSetModo(int mode){
+        System.out.println("APPSETMODO" + Integer.toString(mode));
+        this.app.setModo(mode);
+    }
+
+    public boolean appRegistrarUsuario(String usuario, String passwd){
+        boolean error = false;
+        try{
+            this.app.registrarUsuario(usuario, passwd);
+        }catch(Exception e){
+            error = true;
+        }
+        return error;
+        
+    }
+
+    public void appGuardarLlavero(){
+        this.app.guardarLlavero();
+    }
+
+    public void appCerrarSesion(){
+        this.app.cerrarSesion();
+    }    
+
+    public ArrayList<Contacto> appObtenerContactos(){
+        return this.app.obtenerContactos();
+    }
+    
+    public void appNuevoContacto(String usuario, String alias){
+        this.app.nuevoContacto(usuario, alias);
+    }
+
+    public void appEliminaContacto(String id){
+        this.app.eliminaContacto(id);
+    }
+
 }

@@ -1,7 +1,14 @@
 var idCapaAgenda ="#pagAppWindow_capaAgenda"
 var idCapaAbrirConversacion ="#pagAppWindow_capaAbrirConversacion"
 var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
-var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
+var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes"
+var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias"
+var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario"
+var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
+var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
+var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias"
+
+var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
@@ -23,8 +30,39 @@ function pagAppWindow_ocultarCapaAgenda(){
     ocultarCapa(idCapaAgenda);    
 }
 
-function pagAppWindow_mostrarCapaAgenda(){
-    mostrarCapa(idCapaAgenda);   
+function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
+    pagAppWindow_refrescarContactosAgenda(listaContactosJson);
+    mostrarCapa(idCapaAgenda); 
+}
+
+function pagAppWindow_refrescarContactosAgenda(listaContactosJson){      
+    var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
+    panelAgendaListaContactos.empty();
+    listaContactosJson.forEach(function(contactoJson) { 
+        var contactoBoxAgenda = pagAppWindow_crearContactoBoxAgenda(contactoJson);
+        panelAgendaListaContactos.append(contactoBoxAgenda);        
+    });          
+}
+
+function pagAppWindow_crearContactoBoxAgenda(contactoJson) {
+    var alias = contactoJson.alias;
+    var usuario = contactoJson.usuario;
+    var plantilla = $("#contactoBoxAgendaPlantilla");
+  
+    var contactoBoxAgenda = plantilla.clone(true);
+    contactoBoxAgenda.attr("id","contactoBoxAgenda-" + usuario);
+    contactoBoxAgenda.removeClass("d-none");    
+
+    var aliasElement = contactoBoxAgenda.find(".contactoBoxAlias");
+    aliasElement.text(alias);    
+    var usuarioElement = contactoBoxAgenda.find(".contactoBoxUsuario span");
+    usuarioElement.text(usuario);   
+  
+    return contactoBoxAgenda;
+  }
+
+function pagAppWindow_mostrarAgendaActualizada(){    
+    javaConnector.obtenerListaContactos();
 }
 
 function pagAppWindow_ocultarCapaAbrirConversacion(){
@@ -35,15 +73,54 @@ function pagAppWindow_mostrarCapaAbrirConversacion(){
 }
 
 function pagAppWindow_onClickCerrarSesion () {
-    javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/inicioSesion.html");
+    javaConnector.cerrarSesion();
 };
 
-var jsConnector = {
-    showResult: function (result) {
-        document.getElementById('result').innerHTML = result;
+function pagAppWindow_onClickNuevaConversacion(){
+
+}
+
+function pagAppWindow_onClickAbrirAgenda(){
+    //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
+    pagAppWindow_mostrarAgendaActualizada();        
+}
+
+function pagAppWindow_onClickCerrarNotificacionError(){
+    ocultarBloqueNotificacion(idBloque_notifError);
+}
+
+function pagAppWindow_onClickGuardarContacto(){
+    var usuario = $("#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario").val();
+    var alias = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias").val();    
+    if(pagAppWindow_validarFormularioCrearContacto(usuario, alias)){
+        javaConnector.crearContacto(usuario, alias);
+    }else{
+        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
     }
-};
+}
 
-function getJsConnector() {
-    return jsConnector;
-};
+function pagAppWindow_onClickEliminarContacto(item){
+    var idContactoBoxAgenda = item.parentElement.parentElement.id;
+    var idUsuario = idContactoBoxAgenda.substring(18);
+    javaConnector.eliminarContacto(idUsuario);
+
+}
+
+function pagAppWindow_limpiarFormularioNuevoContacto(){
+    limpiarTextoInput(idInput_CrearContactoAlias);
+    limpiarTextoInput(idInput_CrearContactoUsuario);
+}
+
+
+
+function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
+    var validacion = false;
+    if (!(usuario.trim() == "") && !(alias.trim() == "")) {
+        validacion = true;
+    } 
+    return validacion;
+}
+
+
+
+

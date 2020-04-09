@@ -92,3 +92,12 @@ html,body {
 .scrollbarInvisible {
     -ms-overflow-style: none !important;
 }
+
+.capaNotificaciones{
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(128,128,128, 0.2);
+    z-index: 99999999 !important;
+    
+}

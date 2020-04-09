@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/estilo-tfg.css">
+    <link rel="stylesheet" href="../css/estilo-tfm.css">
 
     <title>US-P2PMessenger</title>
 </head>
@@ -27,7 +27,6 @@
                 <label for="pagInicioSesion_formFieldPass">Contraseña</label>
                 <input type="password" class="form-control" id="pagInicioSesion_formFieldPass" placeholder="Introduzca su contraseña">
             </div>
-            <small id="errorFormInicioSesionUsuario" class="m-1 form-text text-danger text-center d-none">Usuario o contraseña incorrectos</small>
             <div class="col-12 text-center">
                 <button type="button" class="btn btn-primary" onclick="pagInicioSesion_onClickAutenticar();">Entrar</button>
             </div>
@@ -38,6 +37,14 @@
         </form>
 
     </div>
+    <div id="pagInicioSesion_bloqueNotificacionError" class="capaNotificaciones d-none align-items-center">        
+        <div class="shadow-sm p-5 text-center bg-white m-auto col-11 col-lg-8">
+                <h4 id="pagInicioSesion_mensajeNotificacionError" class="mb-3"></h4>
+                <button id="pagInicioSesion_botonCerrarNotificacionError" type="button" class="btn btn-danger" onclick="pagInicioSesion_onClickCerrarNotificacionError();">OK</button>
+            </div>
+    </div>
+
+    
 
 
     <!-- Optional JavaScript -->
@@ -45,6 +52,7 @@
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/inicioSesion.js"></script>
+    <script src="../js/tfm.js"></script>    
 </body>
 
 </html>

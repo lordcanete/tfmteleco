@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/estilo-tfg.css">
+    <link rel="stylesheet" href="../css/estilo-tfm.css">
     <link href="../font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <title>US-P2PMessenger</title>
@@ -20,8 +20,8 @@
             <div id="pagAppWindow_bloqueIzquierdoNavbar" class="border d-flex align-items-center p-1">
                 <img class="h-100" src="../img/Logo_US.png"/>
                 <div class="ml-auto">
-                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_mostrarCapaAbrirConversacion()"><i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i></button>
-                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_mostrarCapaAgenda()"><i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i></button>
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickNuevaConversacion()"><i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i></button>
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickAbrirAgenda()"><i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i></button>
                     <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickCerrarSesion()"><i class="fa fa-sign-out fa-2x text-muted m-1" aria-hidden="true"></i></button>
                 </div>               
 
@@ -277,26 +277,11 @@
                             <label for="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" class="sr-only">ID Usuario</label>
                             <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" placeholder="ID Usuario">
                           </div>
-                        <button type="button" class="btn btn-success m-1">Guardar</button>
+                        <button type="button" class="btn btn-success m-1" onclick="pagAppWindow_onClickGuardarContacto()">Guardar</button>
                       </form>
                 </div>
                 <div id="pagAppWindow_PanelAgendaListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>     
-                        <div class="position-absolute iconosOpcionesContacto">
-                            <button class="bg-transparent border-0 btn-noFocus"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
-                        </div>                      
                         
-                    </div>      
-                    
-                    
-
-                    
                 </div>
             </div>
         </div>
@@ -307,7 +292,7 @@
                 <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_ocultarCapaAbrirConversacion()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
                 <h2 class="m-2 mb-4 mr-5">Nueva conversación</h2>
                 <div id="pagAppWindow_PanelAbrirConversacionListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
-                    <div class="contactoBox border p-1 position-relative">
+                    <!--<div class="contactoBox border p-1 position-relative">
                         <div class="contactoBoxAlias font-weight-bold">
                             Alias
                         </div>
@@ -323,104 +308,32 @@
                             <span class="small">ID - Usuario</span>
                         </div>                     
                         
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>    
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>    
-                    
-                    
-
+                    </div>   !-->
                     
                 </div>
             </div>
         </div>
+
+
+        <div id="pagAppWindow_bloqueNotificacionError" class="capaNotificaciones d-none align-items-center">        
+            <div class="shadow-sm p-5 text-center bg-white m-auto col-11 col-lg-8">
+                    <h4 id="pagAppWindow_mensajeNotificacionError" class="mb-3"></h4>
+                    <button id="pagAppWindow_botonCerrarNotificacionError" type="button" class="btn btn-danger" onclick="pagAppWindow_onClickCerrarNotificacionError();">OK</button>
+                </div>
+        </div>
+
+        <div id="contactoBoxAgendaPlantilla" class="contactoBox border p-1 position-relative d-none">
+            <div class="contactoBoxAlias font-weight-bold">
+                Alias
+            </div>
+            <div class="contactoBoxUsuario pl-1 font-italic">
+                <span class="small">ID - Usuario</span>
+            </div>     
+            <div class="position-absolute iconosOpcionesContacto">
+                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEliminarContacto(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
+            </div>                      
+            
+        </div> 
     </div>
 
     <!-- Optional JavaScript -->
@@ -428,6 +341,7 @@
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/appWindow.js"></script>
+    <script src="../js/tfm.js"></script>    
 </body>
 
 </html>

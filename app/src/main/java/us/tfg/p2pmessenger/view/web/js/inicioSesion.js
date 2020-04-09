@@ -1,17 +1,28 @@
+var idBloque_notifError = "#pagInicioSesion_bloqueNotificacionError";
+var idBloque_textoError = "#pagInicioSesion_mensajeNotificacionError";
+var mensaje_validacionKO = "Por favor, proporcione un usuario y una contraseña"
+
 function pagInicioSesion_onClickAutenticar () {
-    javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/appWindow.html");
-};
-
-function pagInicioSesion_onClickRegistrar () {
-    javaConnector.cargarPagina("../../app/src/main/java/us/tfg/p2pmessenger/view/web/html/registro.html");
-};
-
-var jsConnector = {
-    showResult: function (result) {
-        document.getElementById('result').innerHTML = result;
+    var usuario = $("#pagInicioSesion_formFieldUser").val();
+    var passwd = $("#pagInicioSesion_formFieldPass").val();        
+    if(validarFormularioInicioSesion(usuario, passwd)){
+        javaConnector.iniciarSesion(usuario, passwd);
+    }else{
+        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionKO);
     }
 };
 
-function getJsConnector() {
-    return jsConnector;
+function pagInicioSesion_onClickRegistrar () {
+    javaConnector.accederRegistroUsuario();
 };
+function pagInicioSesion_onClickCerrarNotificacionError(){
+    ocultarBloqueNotificacion(idBloque_notifError);
+}
+
+function validarFormularioInicioSesion(usuario, passwd){
+    var validacion = false;
+    if (!(usuario.trim() == "") && !(passwd.trim() == "")) {
+        validacion = true;
+    } 
+    return validacion;
+}
