@@ -310,7 +310,9 @@ public class VistaGUI extends Application
         }
 
         public void crearContacto(String inputUsuario, String inputAlias){
+            System.out.println("Entra a crearContacto");
             try{
+                System.out.println("Entra al try de crearContacto");
                 boolean existeUsuario = !servicio.compruebaNombre(inputUsuario);
                 if(existeUsuario){
                     System.out.println("El usuario existe.");
