@@ -26,13 +26,32 @@ function pagAppWindow_ocultarCapaAgenda(){
 }
 
 function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
-    var contactos = "-Lista contactos-|| ";
+    var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
+    panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
-        contactos = contactos + "Alias: " + contactoJson.alias + "Usuario: " + contactoJson.usuario + " || ";
+        var contactoBoxAgenda = crearContactoBoxAgenda(contactoJson);
+        panelAgendaListaContactos.appendChild(contactoBoxAgenda);        
     });
-    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, contactos);
-    //mostrarCapa(idCapaAgenda);   
+    //mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, contactos);
+    mostrarCapa(idCapaAgenda);   
 }
+
+function crearContactoBoxAgenda(contactoJson) {
+    var alias = contactoJson.alias;
+    var usuario = contactoJson.usuario;
+    var plantilla = $("#contactoBoxAgendaPlantilla");
+  
+    var contactoBoxAgenda = plantilla.cloneNode(true);
+    contactoBoxAgenda.id = "contactoBoxAgenda-" + usuario;
+    contactoBoxAgenda.removeClass("d-none");
+
+    var aliasElement = contactoBoxAgenda.querySelector(".contactoBoxAlias");
+    aliasElement.innerText = alias;    
+    var usuarioElement = contactoBoxAgenda.querySelector(".contactoBoxUsuario span");
+    usuarioElement.innerText = usuario;   
+  
+    return contactoBoxAgenda;
+  }
 
 function pagAppWindow_ocultarCapaAbrirConversacion(){
     ocultarCapa(idCapaAbrirConversacion);    
