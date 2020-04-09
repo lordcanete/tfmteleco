@@ -90,7 +90,8 @@ function pagAppWindow_onClickGuardarContacto(){
     var usuario = $("#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario").val();
     var alias = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias").val();    
     if(validarFormularioCrearContacto(usuario, alias)){
-        javaConnector.crearContacto(usuario, alias);
+        javaConnector.obtenerListaContactos();
+        //javaConnector.crearContacto(usuario, alias);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
     }
