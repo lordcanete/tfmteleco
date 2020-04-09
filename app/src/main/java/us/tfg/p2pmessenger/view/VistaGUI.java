@@ -127,12 +127,6 @@ public class VistaGUI extends Application
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
             }
         });
-        //Activar Firebug para depurar javascript
-        webEngine.documentProperty().addListener(new ChangeListener<Document>() {
-            @Override public void changed(ObservableValue<? extends Document> prop, Document oldDoc, Document newDoc) {
-              enableFirebug(webEngine);
-            }
-          });
 
         scene = new Scene(webView, 800, 800);
         primaryStage.setScene(scene);
@@ -142,14 +136,6 @@ public class VistaGUI extends Application
         // now load the page
         webEngine.load(url.toString());
 
-    }
-
-    /**
-     * Enables Firebug Lite for debugging a webEngine.
-     * @param engine the webEngine for which debugging is to be enabled.
-     */
-    private static void enableFirebug(final WebEngine engine) {
-        engine.executeScript("if (!document.getElementById('FirebugLite')){E = document['createElement' + 'NS'] && document.documentElement.namespaceURI;E = E ? document['createElement' + 'NS'](E, 'script') : document['createElement']('script');E['setAttribute']('id', 'FirebugLite');E['setAttribute']('src', 'https://getfirebug.com/' + 'firebug-lite.js' + '#startOpened');E['setAttribute']('FirebugLite', '4');(document['getElementsByTagName']('head')[0] || document['getElementsByTagName']('body')[0]).appendChild(E);E = new Image;E['setAttribute']('src', 'https://getfirebug.com/' + '#startOpened');}"); 
     }
 
     /*Clase para conectar el FrontEnd Web con el BackEnd Java*/
