@@ -90,8 +90,7 @@ function pagAppWindow_onClickGuardarContacto(){
     var usuario = $("#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario").val();
     var alias = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias").val();    
     if(validarFormularioCrearContacto(usuario, alias)){
-        javaConnector.obtenerListaContactos();
-        //javaConnector.crearContacto(usuario, alias);
+        javaConnector.crearContacto(usuario, alias);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
     }
@@ -99,7 +98,7 @@ function pagAppWindow_onClickGuardarContacto(){
 
 function validarFormularioCrearContacto(usuario, alias){
     var validacion = false;
-    if (!(usuario.trim() == "") && !(passwd.trim() == "")) {
+    if (!(usuario.trim() == "") && !(alias.trim() == "")) {
         validacion = true;
     } 
     return validacion;
