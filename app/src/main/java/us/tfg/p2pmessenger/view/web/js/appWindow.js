@@ -1,7 +1,9 @@
 var idCapaAgenda ="#pagAppWindow_capaAgenda"
 var idCapaAbrirConversacion ="#pagAppWindow_capaAbrirConversacion"
 var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
-var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
+var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes"
+var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias"
+var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias"
@@ -94,6 +96,15 @@ function pagAppWindow_onClickGuardarContacto(){
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
     }
+}
+
+function limpiarFormularioNuevoContacto(){
+    limpiarTextoCampo(idInput_CrearContactoAlias);
+    limpiarTextoCampo(idInput_CrearContactoUsuario);
+}
+
+function limpiarTextoCampo(id){
+    $(id).text("");
 }
 
 function validarFormularioCrearContacto(usuario, alias){
