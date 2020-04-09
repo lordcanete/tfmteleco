@@ -9,6 +9,7 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonArray;
 
 import rice.p2p.commonapi.Id;
 import us.tfg.p2pmessenger.controller.ControladorApp;
@@ -279,17 +280,18 @@ public class VistaGUI extends Application
 
         public String obtenerListaContactos(){
             ArrayList<Contacto> contactos=servicio.appObtenerContactos();
-            JsonArrayBuilder listaContactosJson = Json.createArrayBuilder();
+            JsonArrayBuilder listaContactosJsonBuilder = Json.createArrayBuilder();
+            JsonArray listaContactosJson = null;
             if(contactos!=null)
             {
                 for (Contacto contacto : contactos)
                 {
                     System.out.println("alias: "+contacto.getAlias()+" usuario: "+contacto.getUsuario().getNombre());                    
-                    listaContactosJson.add(Json.createObjectBuilder()
+                    listaContactosJsonBuilder.add(Json.createObjectBuilder()
                                                 .add("alias", contacto.getAlias())
                                                 .add("usuario", contacto.getUsuario().getNombre()).build());
-                }
-                listaContactosJson.build();
+                }                
+                listaContactosJson = listaContactosJsonBuilder.build();
                 System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
             }
             else
