@@ -27,8 +27,8 @@ function pagAppWindow_ocultarCapaAgenda(){
 
 function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
     var contactos = "-Lista contactos-|| ";
-    listaContactosJson.forEach(function(obj) { 
-        contactos = contactos + "Alias: " + listaContactosJson.alias + "Usuario: " + listaContactosJson.usuario + " || ";
+    listaContactosJson.forEach(function(contactoJson) { 
+        contactos = contactos + "Alias: " + contactoJson.alias + "Usuario: " + contactoJson.usuario + " || ";
     });
     mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, contactos);
     //mostrarCapa(idCapaAgenda);   
