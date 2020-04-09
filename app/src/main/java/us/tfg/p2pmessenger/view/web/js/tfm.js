@@ -4,6 +4,10 @@ var jsConnector = {
     },
     comprobarEstadoCallback: function () {
         javaConnector.comprobarEstado();
+    },
+    abrirPanelAgenda: function(listaContactosJsonString){
+        var listaContactosJson = JSON.parse(listaContactosJsonString);
+        pagAppWindow_mostrarCapaAgenda(listaContactosJson);
     }
 };
 

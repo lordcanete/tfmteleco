@@ -25,7 +25,8 @@ function pagAppWindow_ocultarCapaAgenda(){
     ocultarCapa(idCapaAgenda);    
 }
 
-function pagAppWindow_mostrarCapaAgenda(){
+function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
+    
     mostrarCapa(idCapaAgenda);   
 }
 
@@ -45,11 +46,10 @@ function pagAppWindow_onClickNuevaConversacion(){
 }
 
 function pagAppWindow_onClickAbrirAgenda(){
-    var contactos = javaConnector.obtenerListaContactos();    
-    var myJSON = JSON.parse(contactos);
-    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, JSON.stringify(myJSON));
+    javaConnector.obtenerListaContactos();        
 }
 
 function pagAppWindow_onClickCerrarNotificacionError(){
     ocultarBloqueNotificacion(idBloque_notifError);
 }
+

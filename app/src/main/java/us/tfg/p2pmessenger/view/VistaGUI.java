@@ -29,6 +29,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import org.w3c.dom.Document;
 
 import java.io.File;
 import java.net.URL;
@@ -43,6 +46,7 @@ public class VistaGUI extends Application
     public static final String ERROR_USUARIONODISPONIBLE = "El usuario ya existe. Por favor, seleccione otro nombre de usuario";
     public static final String ERROR_INICIOSESION = "Error al iniciar sesión. Por favor, inténtelo de nuevo";
     public static final String ERROR_CREDENCIALESNOVALIDAS = "Usuario o contraseña no válidos. Por favor, inténtelo de nuevo.";
+    public static final String ERROR_OBTENERLISTACONTACTOS = "Ocurrió un error al obtener los contactos guardados";
     
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
@@ -123,6 +127,12 @@ public class VistaGUI extends Application
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
             }
         });
+        //Activar Firebug para depurar javascript
+        webEngine.documentProperty().addListener(new ChangeListener<Document>() {
+            @Override public void changed(ObservableValue<? extends Document> prop, Document oldDoc, Document newDoc) {
+              enableFirebug(webEngine);
+            }
+          });
 
         scene = new Scene(webView, 800, 800);
         primaryStage.setScene(scene);
@@ -132,6 +142,14 @@ public class VistaGUI extends Application
         // now load the page
         webEngine.load(url.toString());
 
+    }
+
+    /**
+     * Enables Firebug Lite for debugging a webEngine.
+     * @param engine the webEngine for which debugging is to be enabled.
+     */
+    private static void enableFirebug(final WebEngine engine) {
+        engine.executeScript("if (!document.getElementById('FirebugLite')){E = document['createElement' + 'NS'] && document.documentElement.namespaceURI;E = E ? document['createElement' + 'NS'](E, 'script') : document['createElement']('script');E['setAttribute']('id', 'FirebugLite');E['setAttribute']('src', 'https://getfirebug.com/' + 'firebug-lite.js' + '#startOpened');E['setAttribute']('FirebugLite', '4');(document['getElementsByTagName']('head')[0] || document['getElementsByTagName']('body')[0]).appendChild(E);E = new Image;E['setAttribute']('src', 'https://getfirebug.com/' + '#startOpened');}"); 
     }
 
     /*Clase para conectar el FrontEnd Web con el BackEnd Java*/
@@ -278,7 +296,7 @@ public class VistaGUI extends Application
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
-        public String obtenerListaContactos(){
+        public void obtenerListaContactos(){
             ArrayList<Contacto> contactos=servicio.appObtenerContactos();
             JsonArrayBuilder listaContactosJsonBuilder = Json.createArrayBuilder();
             JsonArray listaContactosJson = null;
@@ -291,12 +309,16 @@ public class VistaGUI extends Application
                                                 .add("alias", contacto.getAlias())
                                                 .add("usuario", contacto.getUsuario().getNombre()).build());
                 }                
-                listaContactosJson = listaContactosJsonBuilder.build();
+                listaContactosJson = listaContactosJsonBuilder.build();                
                 System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
+                javascriptConnector.call("abrirPanelAgenda", listaContactosJson.toString());
             }
             else
+            {
                 System.out.println("Error al obtener los contactos guardados");
-            return listaContactosJson.toString();
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
+            }
+                
         }
 
 
