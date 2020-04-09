@@ -276,6 +276,14 @@ public class VistaGUI extends Application
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
+        public JsonObject obtenerListaContactos(){
+            JsonObject contenidoJson = Json.createObjectBuilder()
+                                                .add("usuario", "inputUsuario")
+                                                .add("alias", "inputAlias")
+                                                .build();
+            return contenidoJson;
+        }
+
 
 
     }

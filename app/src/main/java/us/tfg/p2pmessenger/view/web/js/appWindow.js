@@ -2,6 +2,8 @@ var idCapaAgenda ="#pagAppWindow_capaAgenda"
 var idCapaAbrirConversacion ="#pagAppWindow_capaAbrirConversacion"
 var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
 var idListaMensajesConversacion = "pagAppWindow_bloqueConversacionListaMensajes"
+var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
+var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
@@ -37,3 +39,17 @@ function pagAppWindow_mostrarCapaAbrirConversacion(){
 function pagAppWindow_onClickCerrarSesion () {
     javaConnector.cerrarSesion();
 };
+
+function pagAppWindow_onClickNuevaConversacion(){
+
+}
+
+function pagAppWindow_onClickAbrirAgenda(){
+    var contactos = javaConnector.obtenerListaContactos();    
+    var myJSON = JSON.stringify(contactos);
+    mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, myJSON);
+}
+
+function pagAppWindow_onClickCerrarNotificacionError(){
+    ocultarBloqueNotificacion(idBloque_notifError);
+}
