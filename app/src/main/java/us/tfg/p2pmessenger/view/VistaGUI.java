@@ -313,9 +313,11 @@ public class VistaGUI extends Application
             try{
                 boolean existeUsuario = !servicio.compruebaNombre(inputUsuario);
                 if(existeUsuario){
+                    System.out.println("El usuario existe.");
                     servicio.appNuevoContacto(inputUsuario, inputAlias);
                     javascriptConnector.call("actualizarPanelAgenda");
                 }else{
+                    System.out.println("El usuario existe.");
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONOEXISTENTE); 
                 }
                 
