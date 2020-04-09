@@ -27,12 +27,12 @@ function pagAppWindow_ocultarCapaAgenda(){
     ocultarCapa(idCapaAgenda);    
 }
 
-function pagAppWindow_mostrarCapaAgenda(){
-    refrescarContactosAgenda();
+function pagAppWindow_mostrarCapaAgenda(listaContactosJson){
+    refrescarContactosAgenda(listaContactosJson);
     mostrarCapa(idCapaAgenda); 
 }
 
-function refrescarContactosAgenda(){      
+function refrescarContactosAgenda(listaContactosJson){      
     var panelAgendaListaContactos = $("#pagAppWindow_PanelAgendaListaContactos");
     panelAgendaListaContactos.empty();
     listaContactosJson.forEach(function(contactoJson) { 
