@@ -150,16 +150,17 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     return conversacionBox;
 }
 
-function pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fecha){
-    var fechaFormateada = Date.parse(fecha);
+function pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fechaUltimoMensajeMiliseconds){
+    var fechaUltimoMensaje = new Date(fechaUltimoMensajeMiliseconds);
     var hoy = new Date();
+    var fechaUltimoMensajeFormateada = "";
 
-    if(fechaFormateada.setHours(0,0,0,0) == hoy.setHours(0,0,0,0)) {
-        fechaFormateada = fechaFormateada.getHours() + ":" + fechaFormateada.getMinutes();
+    if(fechaUltimoMensaje.getDate() == hoy.getDate() && fechaUltimoMensaje.getMonth() == hoy.getMonth() && fechaUltimoMensaje.getFullYear() == hoy.getFullYear()) {
+        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getHours() + ":" + fechaUltimoMensaje.getMinutes();
     }else{
-        fechaFormateada = fechaFormateada.getDate() + "/" + fechaFormateada.getMonth() + "/" + fechaFormateada.getFullYear();
+        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getDate() + "/" + (fechaUltimoMensaje.getMonth()+1).toString() + "/" + fechaUltimoMensaje.getFullYear();
     }
-    return fechaFormateada;
+    return fechaUltimoMensajeFormateada;
 }
 
 function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
@@ -176,3 +177,7 @@ function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
 function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas();
 }
+
+$(function(){
+    pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(1583539777891);
+})

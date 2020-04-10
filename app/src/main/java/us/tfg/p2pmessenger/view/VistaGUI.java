@@ -299,7 +299,7 @@ public class VistaGUI extends Application
                     listaConversacionesJsonBuilder.add(Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
                                                 .add("ultimoMensaje", conversacion.getMensaje())
-                                                .add("fechaUltimoMensaje", conversacion.getFecha().toString())
+                                                .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente()).build());
                 }                
