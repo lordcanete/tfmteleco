@@ -108,9 +108,6 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
 }
 
 
-$(function(){
-    
-})
 
 
 
