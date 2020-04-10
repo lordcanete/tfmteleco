@@ -139,7 +139,7 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     var aliasRemitenteElement = conversacionBox.find(".conversacionBoxRemitente");
     aliasRemitenteElement.text(aliasRemitente);   
     var ultimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeTexto");
-    ultimoMensajeElement.text(ultimoMensajeElement);  
+    ultimoMensajeElement.text(ultimoMensaje);  
     var fechaUltimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeFecha");
     fechaUltimoMensajeElement.text(fechaUltimoMensaje);  
   
