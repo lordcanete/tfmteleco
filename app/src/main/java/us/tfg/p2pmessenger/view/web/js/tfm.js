@@ -13,6 +13,9 @@ var jsConnector = {
     actualizarPanelAgenda: function(){
         pagAppWindow_limpiarFormularioNuevoContacto();
         pagAppWindow_mostrarAgendaActualizada();
+    },
+    actualizarPanelConversaciones: function(){
+        pagAppWindow_actualizarListaConversaciones();
     }
 };
 

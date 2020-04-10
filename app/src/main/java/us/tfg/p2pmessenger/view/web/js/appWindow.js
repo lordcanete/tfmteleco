@@ -5,7 +5,8 @@ var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldA
 var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
-var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias"
+var idBloque_listaConversacionesDefault = "#pagAppWindow_bloqueIzquierdoConversacionesDefault";
+var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 
@@ -107,6 +108,9 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     return validacion;
 }
 
+function pagAppWindow_actualizarListaConversaciones(){
+    ocultarBloqueNotificacion(idBloque_listaConversacionesDefault);
+}
 
 
 
