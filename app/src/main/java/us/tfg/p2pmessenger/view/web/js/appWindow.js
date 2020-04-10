@@ -109,7 +109,7 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
 
 
 $(function(){
-    alert("listo!");
+    
 })
 
 
