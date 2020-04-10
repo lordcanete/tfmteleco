@@ -178,6 +178,3 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas();
 }
 
-$(function(){
-    pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(1583539777891);
-})
