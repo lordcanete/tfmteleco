@@ -77,7 +77,7 @@ function pagAppWindow_onClickCerrarSesion () {
 };
 
 function pagAppWindow_onClickNuevaConversacion(){
-
+    pagAppWindow_mostrarCapaAbrirConversacion()
 }
 
 function pagAppWindow_onClickAbrirAgenda(){
