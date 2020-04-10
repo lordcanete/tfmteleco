@@ -7,6 +7,8 @@ var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var claseBloque_conversacionAbierta = ".conversacionBox";
 var idBloque_listaConversacionesDefault = "#pagAppWindow_bloqueIzquierdoConversacionesDefault";
+var const_MAXLENGTHMENSAJECONVERSACIONBOX = 10;
+var string_PUNTOSSUSPENSIVOS = "..."
 
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 
@@ -131,6 +133,8 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     var fechaUltimoMensaje = conversacionJson.fechaUltimoMensaje;
     var pendiente = conversacionJson.pendiente;
     var plantilla = $("#conversacionBoxPlantilla");
+    var ultimoMensajeFormateado = pagAppWindow_formateaUltimoMensajeParaConversacionBox(ultimoMensaje);
+    var fechaUltimoMensajeFormateada = pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fechaUltimoMensaje);
   
     var conversacionBox = plantilla.clone(true);
     conversacionBox.attr("id","conversacionBox-" + aliasRemitente);
@@ -139,11 +143,34 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     var aliasRemitenteElement = conversacionBox.find(".conversacionBoxRemitente");
     aliasRemitenteElement.text(aliasRemitente);   
     var ultimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeTexto");
-    ultimoMensajeElement.text(ultimoMensaje);  
+    ultimoMensajeElement.text(ultimoMensajeFormateado);  
     var fechaUltimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeFecha");
-    fechaUltimoMensajeElement.text(fechaUltimoMensaje);  
+    fechaUltimoMensajeElement.text(fechaUltimoMensajeFormateada);  
   
     return conversacionBox;
+  }
+
+  function pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fecha){
+    var fechaFormateada = Date.parse(fecha);
+    var hoy = new Date();
+
+    if(fechaFormateada.setHours(0,0,0,0) == hoy.setHours(0,0,0,0)) {
+        fechaFormateada = fechaFormateada.getHours() + ":" + fechaFormateada.getMinutes();
+    }else{
+        fechaFormateada = fechaFormateada.getDate() + "/" + fechaFormateada.getMonth() + "/" + fechaFormateada.getFullYear();
+    }
+    return fechaFormateada;
+  }
+
+  function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
+    var mensajeFormateado = mensaje.split(": ");
+    mensajeFormateado = mensajeFormateado.shift();
+    mensajeFormateado = mensajeFormateado.join(": ");
+    if (mensajeFormateado.length > const_MAXLENGTHMENSAJECONVERSACIONBOX){
+        mensajeFormateado = mensajeFormateado.substring(const_MAXLENGTHMENSAJECONVERSACIONBOX-string_PUNTOSSUSPENSIVOS.length)+string_PUNTOSSUSPENSIVOS;
+    }
+
+    return mensajeFormateado;
   }
 
   function onPageReady(){
