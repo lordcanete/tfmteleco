@@ -128,6 +128,7 @@ public class VistaGUI extends Application
                 window.setMember("javaConnector", javaConnector);
                 // get the Javascript connector object. 
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
+                webEngine.executeScript("onPageReady()");
             }
         });
 
@@ -176,7 +177,6 @@ public class VistaGUI extends Application
                 case ControladorApp.MODO_SESION_INICIADA:
                     System.out.println("MODO_SESION_INICIADA");   
                     cargarPagina("appWindow.html");
-                    javascriptConnector.call("actualizarPanedfdflConversaciones");
                     break;
                 case ControladorApp.MODO_NECESARIA_DIRECION:  
                     System.out.println("MODO NECESARIA DIRECCION");

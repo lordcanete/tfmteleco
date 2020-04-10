@@ -112,6 +112,9 @@ function pagAppWindow_actualizarListaConversaciones(){
     ocultarBloqueNotificacion(idBloque_listaConversacionesDefault);
 }
 
+function onPageReady(){
+    pagAppWindow_actualizarListaConversaciones();
+}
 
 
 
