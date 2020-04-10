@@ -126,21 +126,22 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
 }
 
 function pagAppWindow_crearConversacionBox(conversacionJson) {
-    var usuario = conversacionJson.usuario;
-    var mensaje = conversacionJson.mensaje;
-    var fechaMensaje = conversacionJson.fechaMensaje;
+    var aliasRemitente = conversacionJson.aliasRemitente;
+    var ultimoMensaje = conversacionJson.ultimoMensaje;
+    var fechaUltimoMensaje = conversacionJson.fechaUltimoMensaje;
+    var pendiente = conversacionJson.pendiente;
     var plantilla = $("#conversacionBoxPlantilla");
   
     var conversacionBox = plantilla.clone(true);
-    conversacionBox.attr("id","conversacionBox-" + usuario);
+    conversacionBox.attr("id","conversacionBox-" + aliasRemitente);
     conversacionBox.removeClass("d-none");    
       
-    var usuarioElement = conversacionBox.find(".conversacionBoxRemitente");
-    usuarioElement.text(usuario);   
-    var mensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeTexto");
-    mensajeElement.text(mensaje);  
-    var fechaMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeFecha");
-    fechaMensajeElement.text(fechaMensaje);  
+    var aliasRemitenteElement = conversacionBox.find(".conversacionBoxRemitente");
+    aliasRemitenteElement.text(aliasRemitente);   
+    var ultimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeTexto");
+    ultimoMensajeElement.text(ultimoMensajeElement);  
+    var fechaUltimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeFecha");
+    fechaUltimoMensajeElement.text(fechaUltimoMensaje);  
   
     return conversacionBox;
   }
