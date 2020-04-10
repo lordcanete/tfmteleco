@@ -20,39 +20,22 @@
             <div id="pagAppWindow_bloqueIzquierdoNavbar" class="border d-flex align-items-center p-1">
                 <img class="h-100" src="../img/Logo_US.png"/>
                 <div class="ml-auto">
-                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickNuevaConversacion()"><i class="fa fa-plus fa-2x text-muted m-1" aria-hidden="true"></i></button>
                     <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickAbrirAgenda()"><i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i></button>
                     <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickCerrarSesion()"><i class="fa fa-sign-out fa-2x text-muted m-1" aria-hidden="true"></i></button>
                 </div>               
 
             </div>
-            <div id="pagAppWindow_bloqueIzquierdoConversaciones" class="border flex-grow-1 overflow-auto scrollbarInvisible">                
-                <!-- <div class="conversacionBox border col-12 p-1 conversacionBoxAbierta">
-                    <div class="conversacionBoxRemitente font-weight-bold">
-                        Usuario
-                    </div>
-                    <div class="conversacionBoxUltimoMensaje pl-1">
-                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
-                    </div>
-                </div>
-                <div class="conversacionBox border col-12 p-1">
-                    <div class="conversacionBoxRemitente font-weight-bold">
-                        Usuario
-                    </div>
-                    <div class="conversacionBoxUltimoMensaje pl-1">
-                        <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
-                    </div>
-                </div>-->
-                <div class="bg-primary h-100 w-100">
-
-                </div>
-
-                
-
+            <div id="pagAppWindow_bloqueIzquierdoConversaciones" class="border flex-grow-1 overflow-auto scrollbarInvisible">                                
+                <div id="pagAppWindow_bloqueIzquierdoConversacionesDefault" class="bg-light h-100 w-100 text-center text-secondary d-flex align-items-center justify-content-center">
+                    <h6>Aquí se mostrarán tus conversaciones abiertas. <br>¡Prueba a escribirle a un contacto desde tu agenda!</h6>
+                </div>                
             </div>
         </div>
-        <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column"> 
-            Inicia una converación para verla aquí
+        <div id="panel-derecho-default" class="col-7 h-100 position-relative p-0 m-0 flex-column d-flex align-items-center justify-content-center"> 
+            <div class="bg-light text-center text-secondary w-75 h-75 d-flex align-items-center justify-content-center p-4 border shadow-sm">
+                <h6>Inicia una conversación para verla aquí</h6>
+            </div>
+            
         </div>
         <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-flex flex-column"> 
             <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex align-items-center p-4 border">
@@ -84,7 +67,7 @@
         </div>
 
         
-        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 d-none align-items-center justify-content-center position-absolute">
+        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 align-items-center justify-content-center position-absolute d-none">
             <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
                 <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_ocultarCapaAgenda()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
                 <h2 class="m-2 mb-4">Contactos</h2>
@@ -103,38 +86,10 @@
                       </form>
                 </div>
                 <div id="pagAppWindow_PanelAgendaListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
-                        
+                     
                 </div>
             </div>
-        </div>
-
-
-        <div id="pagAppWindow_capaAbrirConversacion" class="h-100 w-100 d-none align-items-center justify-content-center position-absolute">
-            <div id="pagAppWindow_PanelAbrirConversacion" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
-                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_ocultarCapaAbrirConversacion()"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
-                <h2 class="m-2 mb-4 mr-5">Nueva conversación</h2>
-                <div id="pagAppWindow_PanelAbrirConversacionListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
-                    <!--<div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div> 
-                    </div>     
-                    <div class="contactoBox border p-1 position-relative">
-                        <div class="contactoBoxAlias font-weight-bold">
-                            Alias
-                        </div>
-                        <div class="contactoBoxUsuario pl-1 font-italic">
-                            <span class="small">ID - Usuario</span>
-                        </div>                     
-                        
-                    </div>   !-->
-                    
-                </div>
-            </div>
-        </div>
+        </div>      
 
 
         <div id="pagAppWindow_bloqueNotificacionError" class="capaNotificaciones d-none align-items-center">        
@@ -153,6 +108,7 @@
                 <span class="small">ID - Usuario</span>
             </div>     
             <div class="position-absolute iconosOpcionesContacto">
+                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickAbrirConversacion(this);"><i class="fa fa-comment-o fa text-muted m-1" aria-hidden="true"></i></button>
                 <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEliminarContacto(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
             </div>                                  
         </div> 

@@ -1,5 +1,4 @@
 var idCapaAgenda ="#pagAppWindow_capaAgenda"
-var idCapaAbrirConversacion ="#pagAppWindow_capaAbrirConversacion"
 var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
 var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes"
 var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias"
@@ -65,20 +64,9 @@ function pagAppWindow_mostrarAgendaActualizada(){
     javaConnector.obtenerListaContactos();
 }
 
-function pagAppWindow_ocultarCapaAbrirConversacion(){
-    ocultarCapa(idCapaAbrirConversacion);    
-}
-function pagAppWindow_mostrarCapaAbrirConversacion(){
-    mostrarCapa(idCapaAbrirConversacion);   
-}
-
 function pagAppWindow_onClickCerrarSesion () {
     javaConnector.cerrarSesion();
 };
-
-function pagAppWindow_onClickNuevaConversacion(){
-    pagAppWindow_mostrarCapaAbrirConversacion()
-}
 
 function pagAppWindow_onClickAbrirAgenda(){
     //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
@@ -111,8 +99,6 @@ function pagAppWindow_limpiarFormularioNuevoContacto(){
     limpiarTextoInput(idInput_CrearContactoUsuario);
 }
 
-
-
 function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     var validacion = false;
     if (!(usuario.trim() == "") && !(alias.trim() == "")) {
@@ -121,6 +107,10 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     return validacion;
 }
 
+
+$(function(){
+    alert("listo!");
+})
 
 
 
