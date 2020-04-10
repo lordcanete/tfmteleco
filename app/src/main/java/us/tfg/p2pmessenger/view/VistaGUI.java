@@ -176,7 +176,7 @@ public class VistaGUI extends Application
                 case ControladorApp.MODO_SESION_INICIADA:
                     System.out.println("MODO_SESION_INICIADA");   
                     cargarPagina("appWindow.html");
-                    javascriptConnector.call("actualizarPanelConversaciones");
+                    javascriptConnector.call("actualizarPanedfdflConversaciones");
                     break;
                 case ControladorApp.MODO_NECESARIA_DIRECION:  
                     System.out.println("MODO NECESARIA DIRECCION");
