@@ -918,4 +918,8 @@ public class VistaConsolaPublic implements Vista
         this.app.eliminaContacto(id);
     }
 
+    public ArrayList<Conversacion> appObtenerConversacionesAbiertas(){
+        return this.app.obtenerConversacionesAbiertas();
+    }
+
 }

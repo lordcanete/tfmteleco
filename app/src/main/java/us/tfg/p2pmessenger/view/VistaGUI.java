@@ -50,6 +50,7 @@ public class VistaGUI extends Application
     public static final String ERROR_USUARIONOEXISTENTE = "El usuario introducido no existe";
     public static final String ERROR_CREARCONTACTO = "Error al crear el contacto";
     public static final String ERROR_ELIMINARCONTACTO = "Error al eliminar el contacto";
+    public static final String ERROR_OBTENERLISTACONVERSACIONESABIERTAS = "Error al obtener las conversaciones abiertas";
     
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
@@ -284,6 +285,33 @@ public class VistaGUI extends Application
             servicio.appGuardarLlavero();
             servicio.appCerrarSesion();
             javascriptConnector.call("comprobarEstadoCallback");
+        }
+
+        public void obtenerListaConversacionesAbiertas(){
+            ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
+            JsonArrayBuilder listaConversacionesJsonBuilder = Json.createArrayBuilder();
+            JsonArray listaConversacionesJson = null;
+            if(conversaciones!=null)
+            {
+                for (Conversacion conversacion : conversaciones)
+                {
+                    System.out.println(conversacion.toString());                    
+                    listaConversacionesJsonBuilder.add(Json.createObjectBuilder()
+                                                .add("aliasRemitente", conversacion.getAlias())                                          
+                                                .add("ultimoMensaje", conversacion.getMensaje())
+                                                .add("fechaUltimoMensaje", conversacion.getFecha().toString())
+                                                .add("tipo", conversacion.getTipo())
+                                                .add("pendiente", conversacion.isPendiente()).build());
+                }                
+                listaConversacionesJson = listaConversacionesJsonBuilder.build();                
+                System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
+                javascriptConnector.call("actualizarPanelConversaciones", listaConversacionesJson.toString());
+            }
+            else
+            {
+                System.out.println("Error al obtener las conversaciones abiertas");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONVERSACIONESABIERTAS); 
+            }
         }
 
         public void obtenerListaContactos(){

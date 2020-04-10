@@ -14,8 +14,9 @@ var jsConnector = {
         pagAppWindow_limpiarFormularioNuevoContacto();
         pagAppWindow_mostrarAgendaActualizada();
     },
-    actualizarPanelConversaciones: function(){
-        pagAppWindow_actualizarListaConversaciones();
+    actualizarPanelConversaciones: function(listaConversacionesJsonString){
+        var listaConversacionesJSON = JSON.parse(listaConversacionesJsonString);
+        pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON);
     }
 };
 
