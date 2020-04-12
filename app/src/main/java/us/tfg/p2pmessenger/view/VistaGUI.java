@@ -330,16 +330,31 @@ public class VistaGUI extends Application
         }
 
         public void obtenerMensajesConversacionSeleccionada(int primerMensaje, int ultimoMensaje){
-            System.out.println("obtenerMensajesConversacionSeleccionada");
-            ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(servicio.getConversacionAbierta(), primerMensaje, ultimoMensaje);
+            Conversacion conversacionAbierta = servicio.getConversacionAbierta();
+            ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(conversacionAbierta, primerMensaje, ultimoMensaje);
             JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
+            JsonObjectBuilder mensajeJsonBuilder = Json.createObjectBuilder();
             JsonArray listaMensajesJson = null;
+            JsonObject mensajeJson = null;
             if(mensajes!=null)
             {
                 for (Mensaje mensaje : mensajes)
                 {
-                    System.out.println(mensaje.toString());                     
+                    System.out.println(mensaje.toString());  
+                    mensajeJsonBuilder = Json.createObjectBuilder()
+                                                .add("contenido", mensaje.getContenido()) 
+                                                .add("fecha", mensaje.getFecha().getTime());                                                                    
+                    if(mensaje.getOrigen().toStringFull() == conversacionAbierta.getId().toStringFull()){
+                        mensajeJsonBuilder.add("sentidoRecepcion", true);
+                    }else{
+                        mensajeJsonBuilder.add("sentidoRecepcion", false);
+                    }
+                    mensajeJson = mensajeJsonBuilder.build();
+                    listaMensajesJsonBuilder.add(mensajeJson);                   
                 }   
+                listaMensajesJson = listaMensajesJsonBuilder.build();                
+                System.out.println("Mensajes a devolver en json: \n"+listaMensajesJson.toString());
+                javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionAbierta.getAlias());
             }else
             {
                 System.out.println("Error al obtener los mensajes de la conversación");

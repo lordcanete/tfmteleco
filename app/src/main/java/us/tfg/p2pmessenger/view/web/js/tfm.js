@@ -17,6 +17,10 @@ var jsConnector = {
     actualizarPanelConversaciones: function(listaConversacionesJsonString){
         var listaConversacionesJSON = JSON.parse(listaConversacionesJsonString);
         pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON);
+    },
+    actualizarPanelConversacionSeleccionada: function(listaMensajesJsonString, aliasRemitente){
+        var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
+        pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente);
     }
 };
 
@@ -28,12 +32,19 @@ function mostrarBloqueNotificacion(idBloque, idUbicacionMensaje = null, mensaje 
     if (idUbicacionMensaje != null && mensaje != null){
         $(idUbicacionMensaje).text(mensaje);
     }
+    mostrarBloque(idBloque);
+}
 
+function ocultarBloqueNotificacion(idBloque){
+    ocultarBloque(idBloque);
+}
+
+function mostrarBloque(idBloque){
     $(idBloque).addClass("d-flex");
     $(idBloque).removeClass("d-none");
 }
 
-function ocultarBloqueNotificacion(idBloque){
+function ocultarBloque(idBloque){
     $(idBloque).addClass("d-none");
     $(idBloque).removeClass("d-flex");
 }
