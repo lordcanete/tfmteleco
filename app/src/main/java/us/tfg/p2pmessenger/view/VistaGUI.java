@@ -330,6 +330,7 @@ public class VistaGUI extends Application
         }
 
         public void obtenerMensajesConversacionSeleccionada(int primerMensaje, int ultimoMensaje){
+            System.out.println("obtenerMensajesConversacionSeleccionada");
             ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(servicio.getConversacionAbierta(), primerMensaje, ultimoMensaje);
             JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
             JsonArray listaMensajesJson = null;
