@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonArray;
 
@@ -51,6 +52,8 @@ public class VistaGUI extends Application
     public static final String ERROR_CREARCONTACTO = "Error al crear el contacto";
     public static final String ERROR_ELIMINARCONTACTO = "Error al eliminar el contacto";
     public static final String ERROR_OBTENERLISTACONVERSACIONESABIERTAS = "Error al obtener las conversaciones abiertas";
+    public static final String ERROR_NOHAYCONVERSACIONESABIERTAS = "No hay conversaciones abiertas";
+    
     
     /** for communication to the Javascript engine. */
     private JSObject javascriptConnector;
@@ -287,21 +290,31 @@ public class VistaGUI extends Application
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
-        public void obtenerListaConversacionesAbiertas(){
+        public void obtenerListaConversacionesAbiertas(String aliasConversacionSeleccionada){
             ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
             JsonArrayBuilder listaConversacionesJsonBuilder = Json.createArrayBuilder();
+            JsonObjectBuilder conversacionJsonBuilder = Json.createObjectBuilder();
+            JsonObject conversacionJson = null;
             JsonArray listaConversacionesJson = null;
             if(conversaciones!=null)
             {
                 for (Conversacion conversacion : conversaciones)
                 {
-                    System.out.println(conversacion.toString());                    
-                    listaConversacionesJsonBuilder.add(Json.createObjectBuilder()
+                    System.out.println(conversacion.toString()); 
+
+                    conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
                                                 .add("ultimoMensaje", conversacion.getMensaje())
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
-                                                .add("pendiente", conversacion.isPendiente()).build());
+                                                .add("pendiente", conversacion.isPendiente());                                                                    
+                    if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
+                        conversacionJsonBuilder.add("seleccionada", true);
+                    }else{
+                        conversacionJsonBuilder.add("seleccionada", false);
+                    }
+                    conversacionJson = conversacionJsonBuilder.build();
+                    listaConversacionesJsonBuilder.add(conversacionJson);
                 }                
                 listaConversacionesJson = listaConversacionesJsonBuilder.build();                
                 System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
@@ -387,6 +400,7 @@ public class VistaGUI extends Application
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
             }
         }
+
 
 
 

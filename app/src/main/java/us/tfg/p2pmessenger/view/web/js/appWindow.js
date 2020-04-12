@@ -7,6 +7,8 @@ var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var claseBloque_conversacionAbierta = ".conversacionBox";
 var idBloque_listaConversacionesDefault = "#pagAppWindow_bloqueIzquierdoConversacionesDefault";
+var prefijoIdBloque_contactoBoxAgenda = "contactoBoxAgenda-";
+var prefijoIdBloque_conversacionBox = "conversacionBox-";
 var const_MAXLENGTHMENSAJECONVERSACIONBOX = 20;
 var string_PUNTOSSUSPENSIVOS = "..."
 
@@ -54,7 +56,7 @@ function pagAppWindow_crearContactoBoxAgenda(contactoJson) {
     var plantilla = $("#contactoBoxAgendaPlantilla");
   
     var contactoBoxAgenda = plantilla.clone(true);
-    contactoBoxAgenda.attr("id","contactoBoxAgenda-" + usuario);
+    contactoBoxAgenda.attr("id",prefijoIdBloque_contactoBoxAgenda + usuario);
     contactoBoxAgenda.removeClass("d-none");    
 
     var aliasElement = contactoBoxAgenda.find(".contactoBoxAlias");
@@ -99,6 +101,12 @@ function pagAppWindow_onClickEliminarContacto(item){
 
 }
 
+function pagAppWindow_onClickSeleccionarConversacion(item){
+    var aliasRemitente = item.id.substring(prefijoIdBloque_conversacionBox.length);
+    javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);    
+}
+
+
 function pagAppWindow_limpiarFormularioNuevoContacto(){
     limpiarTextoInput(idInput_CrearContactoAlias);
     limpiarTextoInput(idInput_CrearContactoUsuario);
@@ -137,7 +145,7 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     var fechaUltimoMensajeFormateada = pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fechaUltimoMensaje);
 
     var conversacionBox = plantilla.clone(true);
-    conversacionBox.attr("id","conversacionBox-" + aliasRemitente);
+    conversacionBox.attr("id",prefijoIdBloque_conversacionBox + aliasRemitente);
     conversacionBox.removeClass("d-none");    
         
     var aliasRemitenteElement = conversacionBox.find(".conversacionBoxRemitente");
@@ -175,6 +183,6 @@ function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
 }
 
 function onPageReady(){
-    javaConnector.obtenerListaConversacionesAbiertas();
+    javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
