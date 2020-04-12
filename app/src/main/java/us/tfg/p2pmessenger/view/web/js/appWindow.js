@@ -140,6 +140,7 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     var ultimoMensaje = conversacionJson.ultimoMensaje;
     var fechaUltimoMensaje = conversacionJson.fechaUltimoMensaje;
     var pendiente = conversacionJson.pendiente;
+    var seleccionada = conversacionJson.seleccionada;
     var plantilla = $("#conversacionBoxPlantilla");
     var ultimoMensajeFormateado = pagAppWindow_formateaUltimoMensajeParaConversacionBox(ultimoMensaje);
     var fechaUltimoMensajeFormateada = pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fechaUltimoMensaje);
@@ -154,6 +155,11 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     ultimoMensajeElement.text(ultimoMensajeFormateado);  
     var fechaUltimoMensajeElement = conversacionBox.find(".conversacionBoxUltimoMensajeFecha");
     fechaUltimoMensajeElement.text(fechaUltimoMensajeFormateada);  
+    if (seleccionada == true){
+        conversacionBox.addClass("conversacionBoxAbierta");
+    } else{
+        conversacionBox.removeClass("conversacionBoxAbierta");
+    }
 
     return conversacionBox;
 }
