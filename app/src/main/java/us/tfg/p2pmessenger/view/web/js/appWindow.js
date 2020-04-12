@@ -6,6 +6,7 @@ var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFiel
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var claseBloque_conversacionAbierta = "conversacionBoxAbierta";
+var claseBloque_conversacionBox = "conversacionBox";
 var prefijoSelectorClase = ".";
 var idBloque_listaConversacionesDefault = "#pagAppWindow_bloqueIzquierdoConversacionesDefault";
 var prefijoIdBloque_contactoBoxAgenda = "contactoBoxAgenda-";
@@ -131,7 +132,7 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
 function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON){
     var panelListaConversacionesAbiertas = $("#pagAppWindow_bloqueIzquierdoConversaciones");
     var hayConversacionSeleccionada = false;
-    panelListaConversacionesAbiertas.find(prefijoSelectorClase.concat(claseBloque_conversacionAbierta)).remove();
+    panelListaConversacionesAbiertas.find(prefijoSelectorClase.concat(claseBloque_conversacionBox)).remove();
     if(listaConversacionesJSON.length > 0){
         ocultarBloqueNotificacion(idBloque_listaConversacionesDefault);
         listaConversacionesJSON.forEach(function(conversacionJson) { 
