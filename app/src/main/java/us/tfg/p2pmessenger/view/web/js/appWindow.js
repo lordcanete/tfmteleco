@@ -15,6 +15,7 @@ var string_PUNTOSSUSPENSIVOS = "..."
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
+var mockup_jsonConversaciones = '[{"aliasRemitente":"canuto","ultimoMensaje":"canuto: joe que mal esto sa rayao","fechaUltimoMensaje":1586698750708,"tipo":2,"pendiente":false,"seleccionada":false},{"aliasRemitente":"canutito","ultimoMensaje":"canutito: Hola canete!","fechaUltimoMensaje":1586695475480,"tipo":2,"pendiente":false,"seleccionada":true}]'
 
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
@@ -192,3 +193,7 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
+
+$(function(){
+    pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
+})

@@ -43,7 +43,7 @@ html,body {
 
 .conversacionBoxAbierta {
     /*background-color: #fef9f0;*/
-    background-color: #efe3e5;
+    background-color: #efe3e5 !important;
 }
 
 .mensajeBoxRecibido {
