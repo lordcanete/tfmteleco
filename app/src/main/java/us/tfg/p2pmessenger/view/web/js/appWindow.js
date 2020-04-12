@@ -207,8 +207,8 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
-
+/*
 $(function(){
     pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
 
-})
+})*/
