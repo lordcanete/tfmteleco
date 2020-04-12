@@ -53,6 +53,7 @@ public class VistaGUI extends Application
     public static final String ERROR_ELIMINARCONTACTO = "Error al eliminar el contacto";
     public static final String ERROR_OBTENERLISTACONVERSACIONESABIERTAS = "Error al obtener las conversaciones abiertas";
     public static final String ERROR_NOHAYCONVERSACIONESABIERTAS = "No hay conversaciones abiertas";
+    public static final String ERROR_OBTENERMENSAJESCONVERSACION = "Error al obtener los mensajes de la conversación";
     
     
     /** for communication to the Javascript engine. */
@@ -310,6 +311,7 @@ public class VistaGUI extends Application
                                                 .add("pendiente", conversacion.isPendiente());                                                                    
                     if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
                         conversacionJsonBuilder.add("seleccionada", true);
+                        servicio.setConversacionAbierta(conversacion);
                     }else{
                         conversacionJsonBuilder.add("seleccionada", false);
                     }
@@ -325,6 +327,27 @@ public class VistaGUI extends Application
                 System.out.println("Error al obtener las conversaciones abiertas");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONVERSACIONESABIERTAS); 
             }
+        }
+
+        public void obtenerMensajesConversacionSeleccionada(int primerMensaje, int ultimoMensaje){
+            ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(servicio.getConversacionAbierta(), primerMensaje, ultimoMensaje);
+            JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
+            JsonArray listaMensajesJson = null;
+            if(mensajes!=null)
+            {
+                for (Mensaje mensaje : mensajes)
+                {
+                    System.out.println(mensaje.toString());                     
+                }   
+            }else
+            {
+                System.out.println("Error al obtener los mensajes de la conversación");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERMENSAJESCONVERSACION); 
+            }
+
+        }
+        public ArrayList<Mensaje> obtenerMensajesConversacion(Conversacion conversacion, int primerMensaje, int ultimoMensaje){
+            return servicio.appObtieneMensajes(conversacion.getId().toStringFull(), primerMensaje, ultimoMensaje, conversacion.getTipo());
         }
 
         public void obtenerListaContactos(){

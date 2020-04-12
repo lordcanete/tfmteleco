@@ -932,5 +932,10 @@ public class VistaConsolaPublic implements Vista
         return getConversaciones();
     }
 
+    public ArrayList<Mensaje> appObtieneMensajes(String idStringFull, int primerMensaje, int ultimoMensaje, int tipo){
+        return this.app.obtieneMensajes(idStringFull, primerMensaje, ultimoMensaje, tipo);
+        
+    }
+
 
 }
