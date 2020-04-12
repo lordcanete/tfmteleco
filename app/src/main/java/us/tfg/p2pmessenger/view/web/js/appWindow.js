@@ -22,7 +22,7 @@ var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuari
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 var mockup_jsonConversaciones = '[{"aliasRemitente":"canuto","ultimoMensaje":"canuto: joe que mal esto sa rayao","fechaUltimoMensaje":1586698750708,"tipo":2,"pendiente":false,"seleccionada":false},{"aliasRemitente":"canutito","ultimoMensaje":"canutito: Hola canete!","fechaUltimoMensaje":1586695475480,"tipo":2,"pendiente":false,"seleccionada":false}]'
-var mockup_jsonMensajes = '';
+var mockup_jsonMensajes = '[{"contenido":"joe que mal esto sa rayao","fecha":1586698748921,"sentidoRecepcion":false},{"contenido":"bueno vamos a ver si esto se va mostrando","fecha":1586715516660,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colega","fecha":1586715606287,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colega","fecha":1586715646005,"sentidoRecepcion":false},{"contenido":"nada esto sigue sin ir","fecha":1586715791948,"sentidoRecepcion":false},{"contenido":"eey ahora si","fecha":1586715826344,"sentidoRecepcion":false}]';
 
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
@@ -179,14 +179,14 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
     }else{
         plantilla = $("#mensajeDivEnviadoPlantilla");
     }
-    var fechaFormateada = pagAppWindow_formateaFechaUltimoMensajeParaMensajeBox(fechaUltimoMensaje);
+    var fechaFormateada = pagAppWindow_formateaFechaUltimoMensajeParaMensajeBox(fecha);
 
     var mensajeBox = plantilla.clone(true);
     mensajeBox.attr("id", prefijoIdBloque_mensajeBox + fecha);
     mensajeBox.removeClass("d-none"); 
     var contenidoElement = mensajeBox.find(".mensajeBoxContenido");
     contenidoElement.text(contenido);  
-    var fechaElement = conversacionBox.find(".mensajeBoxFecha");
+    var fechaElement = mensajeBox.find(".mensajeBoxFecha");
     fechaElement.text(fechaFormateada); 
     
     return mensajeBox;
@@ -221,7 +221,7 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     return conversacionBox;
 }
 
-function pagAppWindow_formateaFechaUltimoMensajeParaMensajeBox(fechaUltimoMensajeMilisecons){
+function pagAppWindow_formateaFechaUltimoMensajeParaMensajeBox(fechaUltimoMensajeMiliseconds){
     var fechaUltimoMensaje = new Date(fechaUltimoMensajeMiliseconds);
     var hoy = new Date();
     var fechaUltimoMensajeFormateada = "";
@@ -264,8 +264,8 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
-/*
+
 $(function(){
     pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-
-})*/
+    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes));
+})

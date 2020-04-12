@@ -343,7 +343,9 @@ public class VistaGUI extends Application
                     System.out.println(mensaje.toString());  
                     mensajeJsonBuilder = Json.createObjectBuilder()
                                                 .add("contenido", mensaje.getContenido()) 
-                                                .add("fecha", mensaje.getFecha().getTime());                                                                    
+                                                .add("fecha", mensaje.getFecha().getTime());  
+                    System.out.println("Origen: " + mensaje.getOrigen().toStringFull() + "\nDestino: "+conversacionAbierta.getId().toStringFull());
+                    System.out.println("Usando equalto: " + mensaje.getOrigen().equals(conversacionAbierta.getId()));
                     if(mensaje.getOrigen().toStringFull() == conversacionAbierta.getId().toStringFull()){
                         mensajeJsonBuilder.add("sentidoRecepcion", true);
                     }else{
