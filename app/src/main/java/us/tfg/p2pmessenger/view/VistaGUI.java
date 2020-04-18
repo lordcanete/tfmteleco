@@ -308,9 +308,11 @@ public class VistaGUI extends Application
                     System.out.println(conversacion.toString()); 
                     System.out.println("Fecha que devuelve nueva conversacion: " + conversacion.getFecha().getTime());
                     System.out.println("Ultimo mensaje que devuelve nueva conversacion: " + conversacion.getMensaje());
+                    String ultimoMensaje = conversacion.getMensaje() == null ? conversacion.getMensaje() : "";
+                    System.out.println("Ultimo mensaje despues de tratarlo condicionalmente: " + ultimoMensaje);
                     conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
-                                                .add("ultimoMensaje", conversacion.getMensaje() == null ? conversacion.getMensaje() : "")
+                                                .add("ultimoMensaje", ultimoMensaje)
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente());                                                                    
@@ -342,7 +344,7 @@ public class VistaGUI extends Application
                         } else{
                             conversacionJsonBuilder = Json.createObjectBuilder()
                                                     .add("aliasRemitente", nuevaConversacion.getAlias())                                          
-                                                    .add("ultimoMensaje", nuevaConversacion.getMensaje()==null ? nuevaConversacion.getMensaje() : "")
+                                                    .add("ultimoMensaje", "")
                                                     .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
                                                     .add("tipo", nuevaConversacion.getTipo())
                                                     .add("pendiente", nuevaConversacion.isPendiente())
