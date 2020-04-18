@@ -122,7 +122,7 @@ function pagAppWindow_onClickNuevaConversacion(item){
 function pagAppWindow_onClickSeleccionarConversacion(item){
     if(!item.classList.contains(claseBloque_conversacionAbierta)){
         var idBoxConversacion = item.id;        
-        var aliasRemitente = $(prefijoSelectorClase.concat(idBoxConversacion)).find(".conversacionBoxRemitente").text();
+        var aliasRemitente = $(prefijoSelectorId.concat(idBoxConversacion)).find(".conversacionBoxRemitente").text();
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);    
     }
     
