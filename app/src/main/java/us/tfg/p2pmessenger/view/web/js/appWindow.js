@@ -88,6 +88,9 @@ function pagAppWindow_onClickAbrirAgenda(){
     //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
     pagAppWindow_mostrarAgendaActualizada();        
 }
+function pagAppWindow_onClickCerrarAgenda(){
+    javaConnector.obtenerListaConversacionesAbiertas(null);
+}
 
 function pagAppWindow_onClickCerrarNotificacionError(){
     ocultarBloqueNotificacion(idBloque_notifError);
@@ -137,6 +140,8 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     } 
     return validacion;
 }
+
+
 
 function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON){
     var panelListaConversacionesAbiertas = $("#pagAppWindow_bloqueIzquierdoConversaciones");
