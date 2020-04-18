@@ -324,6 +324,7 @@ public class VistaGUI extends Application
                     listaConversacionesJsonBuilder.add(conversacionJson);
                 }   
                 if(aliasConversacionSeleccionada != null && !conversacionSeleccionadaAbierta) {
+                    System.out.println("Creando nueva conversacion");
                     ArrayList<Contacto> contactos = servicio.appObtenerContactos();
                     Contacto contactoNuevaConversacion = null;
                     for(Contacto contacto : contactos){
@@ -331,24 +332,32 @@ public class VistaGUI extends Application
                             contactoNuevaConversacion = contacto;
                         }
                     }
-                    nuevaConversacion = new Conversacion(contactoNuevaConversacion.getId(), new Date(),
+                    if(contactoNuevaConversacion != null){
+                        nuevaConversacion = new Conversacion(contactoNuevaConversacion.getId(), new Date(),
                                                                       contactoNuevaConversacion.getAlias(), Conversacion.TIPO_INDIVIDUAL);
-                    if (!servicio.appIniciarConversacion(contactoNuevaConversacion.getId().toStringFull()))
-                    {                        
-                        errorAbrirNuevaConversacion = true;
-                    } else{
-                        conversacionJsonBuilder = Json.createObjectBuilder()
-                                                .add("aliasRemitente", nuevaConversacion.getAlias())                                          
-                                                .add("ultimoMensaje", nuevaConversacion.getMensaje())
-                                                .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
-                                                .add("tipo", nuevaConversacion.getTipo())
-                                                .add("pendiente", nuevaConversacion.isPendiente())
-                                                .add("seleccionada", true);   
-                        conversacionSeleccionadaAbierta = true;                                                                 
-                        servicio.setConversacionAbierta(nuevaConversacion);                                                
-                        conversacionJson = conversacionJsonBuilder.build();
-                        listaConversacionesJsonBuilder.add(conversacionJson);   
+                        if (!servicio.appIniciarConversacion(contactoNuevaConversacion.getId().toStringFull()))
+                        {                        
+                            errorAbrirNuevaConversacion = true;
+                        } else{
+                            System.out.println("Fecha que devuelve nueva conversacion: " + nuevaConversacion.getFecha().getTime());
+                            System.out.println("Ultimo mensaje que devuelve nueva conversacion: " + conversacion.getMensaje());
+                            conversacionJsonBuilder = Json.createObjectBuilder()
+                                                    .add("aliasRemitente", nuevaConversacion.getAlias())                                          
+                                                    .add("ultimoMensaje", "")
+                                                    .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
+                                                    .add("tipo", nuevaConversacion.getTipo())
+                                                    .add("pendiente", nuevaConversacion.isPendiente())
+                                                    .add("seleccionada", true);   
+                            conversacionSeleccionadaAbierta = true;                                                                 
+                            servicio.setConversacionAbierta(nuevaConversacion);                                                
+                            conversacionJson = conversacionJsonBuilder.build();
+                            listaConversacionesJsonBuilder.add(conversacionJson);   
+                        }
                     }
+                    else{
+                        System.out.println("Error al obtener el contacto remitente");
+                    }
+                    
                 }        
                 listaConversacionesJson = listaConversacionesJsonBuilder.build();
                 if(nuevaConversacion != null){
