@@ -165,9 +165,11 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
         }); 
         if(hayConversacionSeleccionada){
             javaConnector.obtenerMensajesConversacionSeleccionada(const_PRIMERMENSAJEDEFAULT, const_ULTIMOMENSAJEDEFAULT);
+        }else{
+            mostrarBloque(idBloque_listaConversacionesDefault);
         }
     }else{
-        mostrarBloqueNotificacion(idBloque_listaConversacionesDefault);
+        mostrarBloque(idBloque_listaConversacionesDefault);
     }
     
 }
@@ -284,10 +286,7 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
-$('.conversacionBox div button').on('click', function(event){
-    //Evita que los eventos de los contenedores padre se ejecuten
-    event.stopPropagation();
-  });
+
 
 /*
 $(function(){

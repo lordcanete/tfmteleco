@@ -302,7 +302,6 @@ public class VistaGUI extends Application
             boolean errorAbrirNuevaConversacion = false;
             Conversacion nuevaConversacion = null;
 
-            System.out.println("alias pasado para obtenterListaConversacioneAbiertas: " + aliasConversacionSeleccionada);
             if(conversaciones!=null)
             {
                 for (Conversacion conversacion : conversaciones)
@@ -315,12 +314,8 @@ public class VistaGUI extends Application
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente());   
-                    System.out.println("alias param: " + aliasConversacionSeleccionada);
-                    System.out.println("conversacion alias: " + conversacion.getAlias());                    
                     if(aliasConversacionSeleccionada != null){
                         if(conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
-                            System.out.println("resultado 1: " + aliasConversacionSeleccionada != null);
-                            System.out.println("resultado 2: " + conversacion.getAlias().compareTo(aliasConversacionSeleccionada));
                             conversacionJsonBuilder.add("seleccionada", true);
                             conversacionSeleccionadaAbierta = true;
                             servicio.setConversacionSeleccionada(conversacion);
@@ -333,8 +328,6 @@ public class VistaGUI extends Application
                 }   
                 if(aliasConversacionSeleccionada != null && !conversacionSeleccionadaAbierta) {
                     System.out.println("Creando nueva conversacion");
-                    System.out.println("conversacionSeleccionadaAbierta: " + conversacionSeleccionadaAbierta);
-                    System.out.println("aliasConversacionSeleccionada: " + aliasConversacionSeleccionada);
                     ArrayList<Contacto> contactos = servicio.appObtenerContactos();
                     Contacto contactoNuevaConversacion = null;
                     for(Contacto contacto : contactos){
@@ -477,10 +470,8 @@ public class VistaGUI extends Application
                         System.out.println("Eliminando conversacion: " + idConversacion);                        
                         servicio.appEliminarConversacion(idConversacion);
                         if(conversacionSeleccionada == null || conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
-                            System.out.println("Entra por covnersacionSeleccionada null y conversacionSeleccionada es la misma que la que se borra");
                             obtenerListaConversacionesAbiertas(null);   
                         }else{
-                            System.out.println("Despues de eliminar, entra a mostrar conversaciones, con abierta: " + conversacionSeleccionada.getAlias());
                             obtenerListaConversacionesAbiertas(conversacionSeleccionada.getAlias());
                         }                        
                     }
