@@ -467,8 +467,10 @@ public class VistaGUI extends Application
                         System.out.println("Eliminando conversacion: " + idConversacion);                        
                         servicio.appEliminarConversacion(idConversacion);
                         if(conversacionSeleccionada != null && conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
+                            System.out.println("Entra por covnersacionSeleccionada null y conversacionSeleccionada es la misma que la que se borra");
                             obtenerListaConversacionesAbiertas(null);   
                         }else{
+                            System.out.println("Despues de eliminar, entra a mostrar conversaciones, con abierta: " + conversacionSeleccionada.getAlias());
                             obtenerListaConversacionesAbiertas(conversacionSeleccionada.getAlias());
                         }                        
                     }
