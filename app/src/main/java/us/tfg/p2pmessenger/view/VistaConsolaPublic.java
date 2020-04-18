@@ -32,6 +32,8 @@ public class VistaConsolaPublic implements Vista
 
     private int puerto;
     private String ip;
+
+    private JavaConnector conectorGUI;
     
     //Setters & Getters para acceder desde instancias
     public ControladorApp getApp(){
@@ -80,6 +82,14 @@ public class VistaConsolaPublic implements Vista
 
     public void setConversacionSeleccionada(Conversacion conversacion){
         this.conversacionSeleccionada = conversacion;
+    }
+
+    public JavaConnector getConectorGUI(){
+        return this.conectorGUI;
+    }
+
+    public void setConectorGUI(JavaConnector conector){
+        this.conectorGUI = conector;
     }
     
     //Constructor
@@ -825,6 +835,7 @@ public class VistaConsolaPublic implements Vista
     public void notificacion(String origen)
     {
         System.out.println("Notificacion: Nuevo mensaje de "+origen);
+        conectorGUI.notificarNuevoMensaje();
     }
 
     @Override
@@ -955,5 +966,7 @@ public class VistaConsolaPublic implements Vista
         }
         app.enviaMensaje(tipoMensaje, mensaje, getConversacionSeleccionada().getId(), getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO);
     }
+
+    
 
 }

@@ -170,6 +170,7 @@ public class VistaGUI extends Application
                 servicio.appOnDestroy();
                 System.exit(0);
             } else{
+                servicio.setConectorGUI(this);
                 javascriptConnector.call("comprobarEstadoCallback");
             }
         }
@@ -511,7 +512,11 @@ public class VistaGUI extends Application
 
         public void enviarMensajeAConversacionSeleccionada(String mensaje){
             servicio.appEnviarMensaje(mensaje);
-            javascriptConnector.call("actualizarPanelesTrasEnvioMensaje", servicio.getConversacionSeleccionada().getAlias());
+            javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
+        }
+
+        public void notificarNuevoMensaje(){
+            javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
         }
 
 
