@@ -310,7 +310,7 @@ public class VistaGUI extends Application
                     System.out.println("Ultimo mensaje que devuelve nueva conversacion: " + conversacion.getMensaje());
                     conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
-                                                .add("ultimoMensaje", conversacion.getMensaje()==null ? conversacion.getMensaje() : "")
+                                                .add("ultimoMensaje", "")
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente());                                                                    
