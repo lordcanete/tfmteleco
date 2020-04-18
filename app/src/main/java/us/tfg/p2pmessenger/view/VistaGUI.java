@@ -301,6 +301,8 @@ public class VistaGUI extends Application
             boolean conversacionSeleccionadaAbierta = false;
             boolean errorAbrirNuevaConversacion = false;
             Conversacion nuevaConversacion = null;
+
+            System.out.println("alias pasado para obtenterListaConversacioneAbiertas: " + aliasConversacionSeleccionada);
             if(conversaciones!=null)
             {
                 for (Conversacion conversacion : conversaciones)
