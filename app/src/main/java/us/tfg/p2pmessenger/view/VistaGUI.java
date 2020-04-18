@@ -316,7 +316,7 @@ public class VistaGUI extends Application
                     if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
                         conversacionJsonBuilder.add("seleccionada", true);
                         conversacionSeleccionadaAbierta = true;
-                        servicio.setConversacionAbierta(conversacion);
+                        servicio.setConversacionSeleccionada(conversacion);
                     }else{
                         conversacionJsonBuilder.add("seleccionada", false);
                     }
@@ -348,7 +348,7 @@ public class VistaGUI extends Application
                                                     .add("pendiente", nuevaConversacion.isPendiente())
                                                     .add("seleccionada", true);   
                             conversacionSeleccionadaAbierta = true;                                                                 
-                            servicio.setConversacionAbierta(nuevaConversacion);                                                
+                            servicio.setConversacionSeleccionada(nuevaConversacion);                                                
                             conversacionJson = conversacionJsonBuilder.build();
                             listaConversacionesJsonBuilder.add(conversacionJson);   
                         }
@@ -375,8 +375,8 @@ public class VistaGUI extends Application
         }
 
         public void obtenerMensajesConversacionSeleccionada(int primerMensaje, int ultimoMensaje){
-            Conversacion conversacionAbierta = servicio.getConversacionAbierta();
-            ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(conversacionAbierta, primerMensaje, ultimoMensaje);
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
+            ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(conversacionSeleccionada, primerMensaje, ultimoMensaje);
             JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
             JsonObjectBuilder mensajeJsonBuilder = Json.createObjectBuilder();
             JsonArray listaMensajesJson = null;
@@ -389,7 +389,7 @@ public class VistaGUI extends Application
                     mensajeJsonBuilder = Json.createObjectBuilder()
                                                 .add("contenido", mensaje.getContenido()) 
                                                 .add("fecha", mensaje.getFecha().getTime());                      
-                    if(mensaje.getOrigen().equals(conversacionAbierta.getId())){
+                    if(mensaje.getOrigen().equals(conversacionSeleccionada.getId())){
                         mensajeJsonBuilder.add("sentidoRecepcion", true);
                     }else{
                         mensajeJsonBuilder.add("sentidoRecepcion", false);
@@ -399,7 +399,7 @@ public class VistaGUI extends Application
                 }   
                 listaMensajesJson = listaMensajesJsonBuilder.build();                
                 System.out.println("Mensajes a devolver en json: \n"+listaMensajesJson.toString());
-                javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionAbierta.getAlias());
+                javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionSeleccionada.getAlias());
             }else
             {
                 System.out.println("Error al obtener los mensajes de la conversación");
@@ -458,24 +458,22 @@ public class VistaGUI extends Application
 
         public void eliminarConversacion(String idConversacion){
             ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
-            if(servicio.getConversacionAbierta() == null){
-                System.out.println("Conversacion abierta = null");
-            }else{
-                System.out.println("Conversacion abierta: " + servicio.getConversacionAbierta().getAlias());
-            }
-            /*
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
             if(conversaciones!=null)
             {
                 for (Conversacion conversacion : conversaciones)
                 {
                     if(conversacion.getId().toStringFull().compareTo(idConversacion) == 0){
-                        System.out.println("Eliminando conversacion: " + idConversacion);
-                        System.out.println("Conversacion abierta: " + servicio.getConversacionAbierta().getAlias());
+                        System.out.println("Eliminando conversacion: " + idConversacion);                        
                         servicio.appEliminarConversacion(idConversacion);
-                        obtenerListaConversacionesAbiertas(servicio.getConversacionAbierta().getAlias());   
+                        if(conversacionSeleccionada != null && conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
+                            obtenerListaConversacionesAbiertas(null);   
+                        }else{
+                            obtenerListaConversacionesAbiertas(conversacionSeleccionada.getAlias());
+                        }                        
                     }
                 }
-            }*/
+            }
                    
         }
 

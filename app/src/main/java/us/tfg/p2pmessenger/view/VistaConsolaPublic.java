@@ -28,7 +28,7 @@ public class VistaConsolaPublic implements Vista
     private boolean apagar;
 
     private ArrayList<Conversacion> conversaciones;
-    private Conversacion conversacionAbierta;
+    private Conversacion conversacionSeleccionada;
 
     private int puerto;
     private String ip;
@@ -74,12 +74,12 @@ public class VistaConsolaPublic implements Vista
         this.ip = paramIp;
     }
 
-    public Conversacion getConversacionAbierta(){
-        return this.conversacionAbierta;
+    public Conversacion getConversacionSeleccionada(){
+        return this.conversacionSeleccionada;
     }
 
-    public void setConversacionAbierta(Conversacion conversacion){
-        this.conversacionAbierta = conversacion;
+    public void setConversacionSeleccionada(Conversacion conversacion){
+        this.conversacionSeleccionada = conversacion;
     }
     
     //Constructor
