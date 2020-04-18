@@ -33,7 +33,7 @@ public class VistaConsolaPublic implements Vista
     private int puerto;
     private String ip;
 
-    private JavaConnector conectorGUI;
+    private VistaGUI.JavaConnector conectorGUI;
     
     //Setters & Getters para acceder desde instancias
     public ControladorApp getApp(){
@@ -84,11 +84,11 @@ public class VistaConsolaPublic implements Vista
         this.conversacionSeleccionada = conversacion;
     }
 
-    public JavaConnector getConectorGUI(){
+    public VistaGUI.JavaConnector getConectorGUI(){
         return this.conectorGUI;
     }
 
-    public void setConectorGUI(JavaConnector conector){
+    public void setConectorGUI(VistaGUI.JavaConnector conector){
         this.conectorGUI = conector;
     }
     
