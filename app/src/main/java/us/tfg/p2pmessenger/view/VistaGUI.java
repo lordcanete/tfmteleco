@@ -316,13 +316,15 @@ public class VistaGUI extends Application
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente());   
                     System.out.println("alias param: " + aliasConversacionSeleccionada);
-                    System.out.println("conversacion alias: " + conversacion.getAlias());
-                    System.out.println("resultado 1: " + aliasConversacionSeleccionada != null);
-                    System.out.println("resultado 2: " + conversacion.getAlias().compareTo(aliasConversacionSeleccionada));
-                    if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
-                        conversacionJsonBuilder.add("seleccionada", true);
-                        conversacionSeleccionadaAbierta = true;
-                        servicio.setConversacionSeleccionada(conversacion);
+                    System.out.println("conversacion alias: " + conversacion.getAlias());                    
+                    if(aliasConversacionSeleccionada != null){
+                        if(conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
+                            System.out.println("resultado 1: " + aliasConversacionSeleccionada != null);
+                            System.out.println("resultado 2: " + conversacion.getAlias().compareTo(aliasConversacionSeleccionada));
+                            conversacionJsonBuilder.add("seleccionada", true);
+                            conversacionSeleccionadaAbierta = true;
+                            servicio.setConversacionSeleccionada(conversacion);
+                        }                        
                     }else{
                         conversacionJsonBuilder.add("seleccionada", false);
                     }
