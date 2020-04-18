@@ -754,15 +754,18 @@ public class ControladorConsolaImpl implements ControladorApp
     @Override
     public void eliminaConversacion(String id)
     {
+        System.out.println("Control eliminaconversacion 1");
         Grupo g = null;
         try
         {
             g = db.obtenerGrupo(id, llavero.getClaveSimetrica(yo.getNombre()), yo.getNombre());
             if (g != null)
             {
+                System.out.println("Control eliminaconversacion 2");
                 abandonaGrupo(g.getId().toStringFull());
             } else
             {
+                System.out.println("Control eliminaconversacion 3");
                 db.borrarConversacionAbierta(id, yo.getNombre());
                 llavero.setClaveSimetrica(id + Llavero.EXTENSION_CLAVE_ENTRANTE, null);
                 llavero.setClaveSimetrica(id + Llavero.EXTENSION_CLAVE_SALIENTE, null);
@@ -770,6 +773,7 @@ public class ControladorConsolaImpl implements ControladorApp
 
         } catch (Exception e)
         {
+            System.out.println("Control eliminaconversacion 4");
             vista.excepcion(e);
         }
 
