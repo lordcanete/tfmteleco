@@ -21,6 +21,10 @@ var jsConnector = {
     actualizarPanelConversacionSeleccionada: function(listaMensajesJsonString, aliasRemitente){
         var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
         pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente);
+    }, 
+    mostrarNuevaConversacionAbierta : function(listaConversacionesJsonString){
+        ocultarBloque("pagAppWindow_capaAgenda");
+        this.actualizarPanelConversaciones(listaConversacionesJsonString);
     }
 };
 

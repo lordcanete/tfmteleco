@@ -8,6 +8,7 @@ var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var claseBloque_conversacionAbierta = "conversacionBoxAbierta";
 var claseBloque_conversacionBox = "conversacionBox";
 var prefijoSelectorClase = ".";
+var prefijoSelectorId = "#";
 var idBloque_listaConversacionesDefault = "#pagAppWindow_bloqueIzquierdoConversacionesDefault";
 var prefijoIdBloque_contactoBoxAgenda = "contactoBoxAgenda-";
 var prefijoIdBloque_conversacionBox = "conversacionBox-";
@@ -107,6 +108,12 @@ function pagAppWindow_onClickEliminarContacto(item){
     var idUsuario = idContactoBoxAgenda.substring(18);
     javaConnector.eliminarContacto(idUsuario);
 
+}
+
+function pagAppWindow_onClickNuevaConversacion(item){
+    var idContactoBoxAgenda = item.parentElement.parentElement.id;
+    var aliasUsuario = $(prefijoSelectorId.concat(idContactoBoxAgenda)).find(".contactoBoxAlias").text();
+    javaConnector.obtenerListaConversacionesAbiertas(aliasUsuario);
 }
 
 function pagAppWindow_onClickSeleccionarConversacion(item){
@@ -264,8 +271,9 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
-/*
+
 $(function(){
     pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
     pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes));
-})*/
+    pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
+})

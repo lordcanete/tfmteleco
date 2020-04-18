@@ -54,6 +54,7 @@ public class VistaGUI extends Application
     public static final String ERROR_OBTENERLISTACONVERSACIONESABIERTAS = "Error al obtener las conversaciones abiertas";
     public static final String ERROR_NOHAYCONVERSACIONESABIERTAS = "No hay conversaciones abiertas";
     public static final String ERROR_OBTENERMENSAJESCONVERSACION = "Error al obtener los mensajes de la conversación";
+    public static final String ERROR_ABRIRNUEVACONVERSACION = "Error al iniciar una nueva conversacion";
     
     
     /** for communication to the Javascript engine. */
@@ -297,6 +298,9 @@ public class VistaGUI extends Application
             JsonObjectBuilder conversacionJsonBuilder = Json.createObjectBuilder();
             JsonObject conversacionJson = null;
             JsonArray listaConversacionesJson = null;
+            boolean conversacionSeleccionadaAbierta = false;
+            boolean errorAbrirNuevaConversacion = false;
+            Conversacion nuevaConversacion = null;
             if(conversaciones!=null)
             {
                 for (Conversacion conversacion : conversaciones)
@@ -311,16 +315,54 @@ public class VistaGUI extends Application
                                                 .add("pendiente", conversacion.isPendiente());                                                                    
                     if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
                         conversacionJsonBuilder.add("seleccionada", true);
+                        conversacionSeleccionadaAbierta = true;
                         servicio.setConversacionAbierta(conversacion);
                     }else{
                         conversacionJsonBuilder.add("seleccionada", false);
                     }
                     conversacionJson = conversacionJsonBuilder.build();
                     listaConversacionesJsonBuilder.add(conversacionJson);
+                }   
+                if(aliasConversacionSeleccionada != null && !conversacionSeleccionadaAbierta) {
+                    ArrayList<Contacto> contactos = servicio.appObtenerContactos();
+                    Contacto contactoNuevaConversacion = null;
+                    for(Contacto contacto : contactos){
+                        if(contacto.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
+                            contactoNuevaConversacion = contacto;
+                        }
+                    }
+                    nuevaConversacion = new Conversacion(contactoNuevaConversacion.getId(), new Date(),
+                                                                      contactoNuevaConversacion.getAlias(), Conversacion.TIPO_INDIVIDUAL);
+                    if (!servicio.appIniciarConversacion(contactoNuevaConversacion.getId().toStringFull()))
+                    {                        
+                        errorAbrirNuevaConversacion = true;
+                    } else{
+                        conversacionJsonBuilder = Json.createObjectBuilder()
+                                                .add("aliasRemitente", nuevaConversacion.getAlias())                                          
+                                                .add("ultimoMensaje", nuevaConversacion.getMensaje())
+                                                .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
+                                                .add("tipo", nuevaConversacion.getTipo())
+                                                .add("pendiente", nuevaConversacion.isPendiente())
+                                                .add("seleccionada", true);   
+                        conversacionSeleccionadaAbierta = true;                                                                 
+                        servicio.setConversacionAbierta(nuevaConversacion);                                                
+                        conversacionJson = conversacionJsonBuilder.build();
+                        listaConversacionesJsonBuilder.add(conversacionJson);   
+                    }
+                }        
+                listaConversacionesJson = listaConversacionesJsonBuilder.build();
+                if(nuevaConversacion != null){
+                    if(!errorAbrirNuevaConversacion){
+                        System.out.println("Abriendo nueva conversacion. Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
+                        javascriptConnector.call("mostrarNuevaConversacionAbierta", listaConversacionesJson.toString());
+                    }else{
+                        System.out.println("Error al iniciar una nueva conversacion");  
+                        javascriptConnector.call("notificarError", VistaGUI.ERROR_ABRIRNUEVACONVERSACION);
+                    }
+                }else{                                    
+                    System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
+                    javascriptConnector.call("actualizarPanelConversaciones", listaConversacionesJson.toString());
                 }                
-                listaConversacionesJson = listaConversacionesJsonBuilder.build();                
-                System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
-                javascriptConnector.call("actualizarPanelConversaciones", listaConversacionesJson.toString());
             }
             else
             {

@@ -937,5 +937,9 @@ public class VistaConsolaPublic implements Vista
         
     }
 
+    public boolean appIniciarConversacion(String idFull) {
+        return app.iniciarConversacion(idFull);
+    }
+
 
 }
