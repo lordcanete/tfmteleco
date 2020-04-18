@@ -318,7 +318,7 @@ public class VistaGUI extends Application
                     System.out.println("alias param: " + aliasConversacionSeleccionada);
                     System.out.println("conversacion alias: " + conversacion.getAlias());
                     System.out.println("resultado 1: " + aliasConversacionSeleccionada != null);
-                    System.out.println("resultado 2: " + conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0);
+                    System.out.println("resultado 2: " + conversacion.getAlias().compareTo(aliasConversacionSeleccionada));
                     if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
                         conversacionJsonBuilder.add("seleccionada", true);
                         conversacionSeleccionadaAbierta = true;
