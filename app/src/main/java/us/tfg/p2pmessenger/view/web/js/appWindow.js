@@ -165,11 +165,18 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
         }); 
         if(hayConversacionSeleccionada){
             javaConnector.obtenerMensajesConversacionSeleccionada(const_PRIMERMENSAJEDEFAULT, const_ULTIMOMENSAJEDEFAULT);
+        }else{
+            pagAppWindow_reiniciarPanelConversacionSeleccionada();
         }
     }else{
         mostrarBloque(idBloque_listaConversacionesDefault);
     }
     
+}
+
+function pagAppWindow_reiniciarPanelConversacionSeleccionada(){
+    ocultarBloque(panelConversacionSeleccionada);
+    mostrarBloque(panelConversacionSeleccionadaDefault);
 }
 
 function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente){
