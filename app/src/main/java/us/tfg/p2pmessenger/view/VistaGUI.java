@@ -459,8 +459,8 @@ public class VistaGUI extends Application
         public void eliminarConversacion(String idConversacion){
             System.out.println("Eliminando conversacion: " + idConversacion);
             System.out.println("Conversacion abierta: " + servicio.getConversacionAbierta().getAlias());
-            servicio.appEliminarConversacion(idConversacion);
-            obtenerListaConversacionesAbiertas(servicio.getConversacionAbierta().getAlias());          
+            //servicio.appEliminarConversacion(idConversacion);
+            //obtenerListaConversacionesAbiertas(servicio.getConversacionAbierta().getAlias());          
         }
 
         public void eliminarContacto(String usuario){
