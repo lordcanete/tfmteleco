@@ -325,6 +325,8 @@ public class VistaGUI extends Application
                 }   
                 if(aliasConversacionSeleccionada != null && !conversacionSeleccionadaAbierta) {
                     System.out.println("Creando nueva conversacion");
+                    System.out.println("conversacionSeleccionadaAbierta: " + conversacionSeleccionadaAbierta);
+                    System.out.println("aliasConversacionSeleccionada: " + aliasConversacionSeleccionada);
                     ArrayList<Contacto> contactos = servicio.appObtenerContactos();
                     Contacto contactoNuevaConversacion = null;
                     for(Contacto contacto : contactos){
