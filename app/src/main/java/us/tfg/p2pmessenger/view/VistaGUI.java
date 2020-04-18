@@ -314,7 +314,11 @@ public class VistaGUI extends Application
                                                 .add("ultimoMensaje", conversacion.getMensaje() == null ? ": -" : conversacion.getMensaje())
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
-                                                .add("pendiente", conversacion.isPendiente());                                                                    
+                                                .add("pendiente", conversacion.isPendiente());   
+                    System.out.println("alias param: " + aliasConversacionSeleccionada);
+                    System.out.println("conversacion alias: " + conversacion.getAlias());
+                    System.out.println("resultado 1: " + aliasConversacionSeleccionada != null);
+                    System.out.println("resultado 2: " + conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0);
                     if(aliasConversacionSeleccionada != null && conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
                         conversacionJsonBuilder.add("seleccionada", true);
                         conversacionSeleccionadaAbierta = true;
