@@ -515,7 +515,7 @@ public class VistaGUI extends Application
             javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
         }
 
-        public void notificarNuevoMensaje(){
+        public void comprobarNotificaciones(){
             javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
         }
 

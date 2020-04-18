@@ -17,8 +17,8 @@ var prefijoIdBloque_mensajeBox = "mensajeBox-";
 var const_MAXLENGTHMENSAJECONVERSACIONBOX = 20;
 var const_PRIMERMENSAJEDEFAULT = 0;
 var const_ULTIMOMENSAJEDEFAULT = 20;
-var string_PUNTOSSUSPENSIVOS = "..."
-
+var string_PUNTOSSUSPENSIVOS = "...";
+var tiempoRefrescoNotificaciones = 5000;
 
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 
@@ -294,10 +294,13 @@ function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
     return mensajeFormateado;
 }
 
-
+function pagAppWindow_comprobarNotificaciones() {
+    javaConnector.comprobarNotificaciones();
+}
 
 function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
+    window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
 }
 
 
