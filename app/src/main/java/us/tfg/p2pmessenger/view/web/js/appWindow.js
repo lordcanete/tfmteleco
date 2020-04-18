@@ -165,8 +165,6 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
         }); 
         if(hayConversacionSeleccionada){
             javaConnector.obtenerMensajesConversacionSeleccionada(const_PRIMERMENSAJEDEFAULT, const_ULTIMOMENSAJEDEFAULT);
-        }else{
-            mostrarBloque(idBloque_listaConversacionesDefault);
         }
     }else{
         mostrarBloque(idBloque_listaConversacionesDefault);
