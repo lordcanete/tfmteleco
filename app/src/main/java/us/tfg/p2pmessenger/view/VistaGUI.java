@@ -306,7 +306,8 @@ public class VistaGUI extends Application
                 for (Conversacion conversacion : conversaciones)
                 {
                     System.out.println(conversacion.toString()); 
-
+                    System.out.println("Fecha que devuelve nueva conversacion: " + nuevaConversacion.getFecha().getTime());
+                    System.out.println("Ultimo mensaje que devuelve nueva conversacion: " + conversacion.getMensaje());
                     conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
                                                 .add("ultimoMensaje", conversacion.getMensaje())
