@@ -284,6 +284,11 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
+$('.conversacionBox div button').on('click', function(event){
+    //Evita que los eventos de los contenedores padre se ejecuten
+    event.stopPropagation();
+  });
+
 /*
 $(function(){
     pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
