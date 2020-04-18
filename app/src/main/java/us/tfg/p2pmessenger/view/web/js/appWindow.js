@@ -22,7 +22,7 @@ var string_PUNTOSSUSPENSIVOS = "..."
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
-var mockup_jsonConversaciones = '[{"aliasRemitente":"canuto","ultimoMensaje":": -","fechaUltimoMensaje":1586698750708,"tipo":2,"pendiente":false,"seleccionada":false},{"aliasRemitente":"canutito","ultimoMensaje":"canutito: Hola canete!","fechaUltimoMensaje":1586695475480,"tipo":2,"pendiente":false,"seleccionada":false}]'
+var mockup_jsonConversaciones = '[{"idConversacion":"A8070C4F9D211F752643D391F4CC3B679700A0F7","aliasRemitente":"ertiti","ultimoMensaje":": -","fechaUltimoMensaje":1587216642664,"tipo":2,"pendiente":false,"seleccionada":true},{"idConversacion":"A360332152C7EDA5D68A615F3BEC9213D997FEE6","aliasRemitente":"canuto","ultimoMensaje":"canuto: eey ahora si","fechaUltimoMensaje":1586715830279,"tipo":2,"pendiente":false,"seleccionada":false}]'
 var mockup_jsonMensajes = '[{"contenido":"joe que mal esto sa rayao","fecha":1586698748921,"sentidoRecepcion":false},{"contenido":"bueno vamos a ver si esto se va mostrando","fecha":1586715516660,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colega","fecha":1586715606287,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colega","fecha":1586715646005,"sentidoRecepcion":false},{"contenido":"nada esto sigue sin ir","fecha":1586715791948,"sentidoRecepcion":false},{"contenido":"eey ahora si","fecha":1586715826344,"sentidoRecepcion":false}]';
 
 function mostrarCapa(idCapa){
@@ -129,8 +129,8 @@ function pagAppWindow_onClickSeleccionarConversacion(item){
 }
 
 function pagAppWindow_onClickEliminarConversacion(item){
-    var aliasRemitente = item.id.substring(prefijoIdBloque_conversacionBox.length);
-    javaConnector.eliminarConversacion(aliasRemitente); 
+    var aliasConversacion = item.parentElement.parentElement.id.substring(prefijoIdBloque_conversacionBox.length);
+    javaConnector.eliminarConversacion(aliasConversacion); 
 }
 
 
