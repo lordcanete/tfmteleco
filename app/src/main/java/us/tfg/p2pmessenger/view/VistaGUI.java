@@ -457,10 +457,26 @@ public class VistaGUI extends Application
         }       
 
         public void eliminarConversacion(String idConversacion){
-            System.out.println("Eliminando conversacion: " + idConversacion);
-            System.out.println("Conversacion abierta: " + servicio.getConversacionAbierta().getAlias());
-            //servicio.appEliminarConversacion(idConversacion);
-            //obtenerListaConversacionesAbiertas(servicio.getConversacionAbierta().getAlias());          
+            ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
+            if(servicio.getConversacionAbierta() == null){
+                System.out.println("Conversacion abierta = null");
+            }else{
+                System.out.println("Conversacion abierta: " + servicio.getConversacionAbierta().getAlias());
+            }
+            /*
+            if(conversaciones!=null)
+            {
+                for (Conversacion conversacion : conversaciones)
+                {
+                    if(conversacion.getId().toStringFull().compareTo(idConversacion) == 0){
+                        System.out.println("Eliminando conversacion: " + idConversacion);
+                        System.out.println("Conversacion abierta: " + servicio.getConversacionAbierta().getAlias());
+                        servicio.appEliminarConversacion(idConversacion);
+                        obtenerListaConversacionesAbiertas(servicio.getConversacionAbierta().getAlias());   
+                    }
+                }
+            }*/
+                   
         }
 
         public void eliminarContacto(String usuario){
