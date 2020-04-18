@@ -108,7 +108,7 @@
                 Usuario                 
             </div>
             <div class="position-absolute iconosOpcionesConversacion">                    
-                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEliminarConversacion(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
+                <button class="bg-transparent border-0 btn-noFocus" onclick="event.stopPropagation(); pagAppWindow_onClickEliminarConversacion(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
             </div>
             <div class="conversacionBoxUltimoMensaje pl-1">
                 <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
