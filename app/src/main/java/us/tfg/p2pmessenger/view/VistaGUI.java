@@ -342,7 +342,7 @@ public class VistaGUI extends Application
                         } else{
                             conversacionJsonBuilder = Json.createObjectBuilder()
                                                     .add("aliasRemitente", nuevaConversacion.getAlias())                                          
-                                                    .add("ultimoMensaje", conversacion.getMensaje()==null ? conversacion.getMensaje() : "")
+                                                    .add("ultimoMensaje", nuevaConversacion.getMensaje()==null ? nuevaConversacion.getMensaje() : "")
                                                     .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
                                                     .add("tipo", nuevaConversacion.getTipo())
                                                     .add("pendiente", nuevaConversacion.isPendiente())
