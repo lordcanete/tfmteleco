@@ -271,9 +271,9 @@ function onPageReady(){
     javaConnector.obtenerListaConversacionesAbiertas(null);
 }
 
-
+/*
 $(function(){
     pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
     pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes));
     pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
-})
+})*/
