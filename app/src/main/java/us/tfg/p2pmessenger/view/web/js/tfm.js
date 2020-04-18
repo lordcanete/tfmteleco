@@ -21,6 +21,9 @@ var jsConnector = {
     actualizarPanelConversacionSeleccionada: function(listaMensajesJsonString, aliasRemitente){
         var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
         pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente);
+    },
+    actualizarPanelesTrasEnvioMensaje: function(aliasRemitente){
+        javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     }
 };
 

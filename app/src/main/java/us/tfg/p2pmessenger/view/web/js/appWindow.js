@@ -5,6 +5,7 @@ var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldA
 var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
+var idFormFieldMensaje = "pagAppWindow_formFieldMensaje";
 var claseBloque_conversacionAbierta = "conversacionBoxAbierta";
 var claseBloque_conversacionBox = "conversacionBox";
 var prefijoSelectorClase = ".";
@@ -131,6 +132,12 @@ function pagAppWindow_onClickSeleccionarConversacion(item){
 function pagAppWindow_onClickEliminarConversacion(item){
     var aliasConversacion = item.parentElement.parentElement.id.substring(prefijoIdBloque_conversacionBox.length);
     javaConnector.eliminarConversacion(aliasConversacion); 
+}
+
+function pagAppWindow_onClickEnviarMensaje(item){
+    var idBloqueFormEnvioMensaje = item.parentElement.parentElement.id;
+    var mensaje = $(prefijoSelectorId.concat(idBloqueFormEnvioMensaje)).find(prefijoSelectorId.concat(idFormFieldMensaje)).val();
+    javaConnector.enviarMensajeAConversacionSeleccionada(mensaje);
 }
 
 
@@ -294,9 +301,9 @@ function onPageReady(){
 }
 
 
-
 /*
+
 $(function(){
-    pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
+    //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
     pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes));
 })*/

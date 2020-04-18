@@ -509,6 +509,11 @@ public class VistaGUI extends Application
             }
         }
 
+        public void enviarMensajeAConversacionSeleccionada(String mensaje){
+            servicio.appEnviarMensaje(mensaje);
+            javascriptConnector.call("actualizarPanelesTrasEnvioMensaje", servicio.getConversacionSeleccionada().getAlias());
+        }
+
 
 
 

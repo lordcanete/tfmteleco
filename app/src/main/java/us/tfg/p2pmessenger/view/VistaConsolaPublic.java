@@ -946,4 +946,14 @@ public class VistaConsolaPublic implements Vista
         this.app.eliminaConversacion(id);    
     }
 
+    public void appEnviarMensaje(String mensaje){
+        int tipoMensaje;
+        if(getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO){
+            tipoMensaje = Mensaje.INDIVIDUAL_NORMAL;
+        }else{
+            tipoMensaje = Mensaje.GRUPO_NORMAL;
+        }
+        app.enviaMensaje(tipoMensaje, mensaje, getConversacionSeleccionada().getId(), getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO);
+    }
+
 }
