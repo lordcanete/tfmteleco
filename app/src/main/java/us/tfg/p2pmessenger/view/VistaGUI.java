@@ -357,11 +357,9 @@ public class VistaGUI extends Application
                     
                 }        
                 listaConversacionesJson = listaConversacionesJsonBuilder.build();
-                if(nuevaConversacion != null){
-                    if(errorAbrirNuevaConversacion){                        
-                        System.out.println("Error al iniciar una nueva conversacion");  
-                        javascriptConnector.call("notificarError", VistaGUI.ERROR_ABRIRNUEVACONVERSACION);
-                    }
+                if(nuevaConversacion != null && errorAbrirNuevaConversacion){
+                    System.out.println("Error al iniciar una nueva conversacion");  
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_ABRIRNUEVACONVERSACION);                    
                 }else{                                    
                     System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
                     javascriptConnector.call("actualizarPanelConversaciones", listaConversacionesJson.toString());
