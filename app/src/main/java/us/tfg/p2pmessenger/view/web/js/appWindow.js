@@ -175,6 +175,8 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
 }
 
 function pagAppWindow_reiniciarPanelConversacionSeleccionada(){
+    var panelConversacionSeleccionadaDefault = $("#panel-derecho-default");
+    var panelConversacionSeleccionada = $("#panel-derecho");
     ocultarBloque(panelConversacionSeleccionada);
     mostrarBloque(panelConversacionSeleccionadaDefault);
 }
