@@ -141,6 +141,7 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
 function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON){
     var panelListaConversacionesAbiertas = $("#pagAppWindow_bloqueIzquierdoConversaciones");
     var hayConversacionSeleccionada = false;
+    ocultarBloque(idCapaAgenda);
     panelListaConversacionesAbiertas.find(prefijoSelectorClase.concat(claseBloque_conversacionBox)).remove();
     if(listaConversacionesJSON.length > 0){
         ocultarBloqueNotificacion(idBloque_listaConversacionesDefault);

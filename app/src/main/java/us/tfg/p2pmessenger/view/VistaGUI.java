@@ -308,7 +308,7 @@ public class VistaGUI extends Application
                     System.out.println(conversacion.toString()); 
                     conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
-                                                .add("ultimoMensaje", conversacion.getMensaje() == null ? " " : conversacion.getMensaje())
+                                                .add("ultimoMensaje", conversacion.getMensaje() == null ? ": " : conversacion.getMensaje())
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente());                                                                    
@@ -340,7 +340,7 @@ public class VistaGUI extends Application
                         } else{
                             conversacionJsonBuilder = Json.createObjectBuilder()
                                                     .add("aliasRemitente", nuevaConversacion.getAlias())                                          
-                                                    .add("ultimoMensaje", " ")
+                                                    .add("ultimoMensaje", ": ")
                                                     .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
                                                     .add("tipo", nuevaConversacion.getTipo())
                                                     .add("pendiente", nuevaConversacion.isPendiente())
@@ -358,10 +358,7 @@ public class VistaGUI extends Application
                 }        
                 listaConversacionesJson = listaConversacionesJsonBuilder.build();
                 if(nuevaConversacion != null){
-                    if(!errorAbrirNuevaConversacion){
-                        System.out.println("Abriendo nueva conversacion. Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
-                        javascriptConnector.call("mostrarNuevaConversacionAbierta", listaConversacionesJson.toString());
-                    }else{
+                    if(errorAbrirNuevaConversacion){                        
                         System.out.println("Error al iniciar una nueva conversacion");  
                         javascriptConnector.call("notificarError", VistaGUI.ERROR_ABRIRNUEVACONVERSACION);
                     }
