@@ -307,6 +307,7 @@ public class VistaGUI extends Application
                 {
                     System.out.println(conversacion.toString()); 
                     conversacionJsonBuilder = Json.createObjectBuilder()
+                                                .add("idConversacion", conversacion.getId().toStringFull())
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
                                                 .add("ultimoMensaje", conversacion.getMensaje() == null ? ": -" : conversacion.getMensaje())
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
@@ -339,6 +340,7 @@ public class VistaGUI extends Application
                             errorAbrirNuevaConversacion = true;
                         } else{
                             conversacionJsonBuilder = Json.createObjectBuilder()
+                                                    .add("idConversacion", nuevaConversacion.getId().toStringFull())
                                                     .add("aliasRemitente", nuevaConversacion.getAlias())                                          
                                                     .add("ultimoMensaje", ":  -")
                                                     .add("fechaUltimoMensaje", nuevaConversacion.getFecha().getTime())
@@ -453,6 +455,11 @@ public class VistaGUI extends Application
             }
             
         }       
+
+        public void eliminarConversacion(String idConversacion){
+            servicio.appEliminarConversacion(idConversacion);
+            obtenerListaConversacionesAbiertas(servicio.getConversacionAbierta().getAlias());          
+        }
 
         public void eliminarContacto(String usuario){
             ArrayList<Contacto> contactos=servicio.appObtenerContactos();

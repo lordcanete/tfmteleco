@@ -941,5 +941,8 @@ public class VistaConsolaPublic implements Vista
         return app.iniciarConversacion(idFull);
     }
 
+    public void appEliminarConversacion(String id){
+        this.app.eliminaConversacion(id);    
+    }
 
 }

@@ -121,10 +121,16 @@ function pagAppWindow_onClickNuevaConversacion(item){
 
 function pagAppWindow_onClickSeleccionarConversacion(item){
     if(!item.classList.contains(claseBloque_conversacionAbierta)){
-        var aliasRemitente = item.id.substring(prefijoIdBloque_conversacionBox.length);
+        var idBoxConversacion = item.id;        
+        var aliasRemitente = $(prefijoSelectorClase.concat(idBoxConversacion)).find(".conversacionBoxRemitente").text();
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);    
     }
     
+}
+
+function pagAppWindow_onClickEliminarConversacion(item){
+    var aliasRemitente = item.id.substring(prefijoIdBloque_conversacionBox.length);
+    javaConnector.eliminarConversacion(aliasRemitente); 
 }
 
 
@@ -206,6 +212,7 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
 }
 
 function pagAppWindow_crearConversacionBox(conversacionJson) {
+    var idConversacion = conversacionJson.idConversacion;
     var aliasRemitente = conversacionJson.aliasRemitente;
     var ultimoMensaje = conversacionJson.ultimoMensaje;
     var fechaUltimoMensaje = conversacionJson.fechaUltimoMensaje;
@@ -216,7 +223,7 @@ function pagAppWindow_crearConversacionBox(conversacionJson) {
     var fechaUltimoMensajeFormateada = pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fechaUltimoMensaje);
 
     var conversacionBox = plantilla.clone(true);
-    conversacionBox.attr("id",prefijoIdBloque_conversacionBox + aliasRemitente);
+    conversacionBox.attr("id",prefijoIdBloque_conversacionBox + idConversacion);
     conversacionBox.removeClass("d-none");    
         
     var aliasRemitenteElement = conversacionBox.find(".conversacionBoxRemitente");

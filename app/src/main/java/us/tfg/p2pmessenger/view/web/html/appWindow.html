@@ -40,7 +40,7 @@
         </div>
         <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column"> 
             <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex align-items-center p-4 border">
-                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span>
+                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span>                
             </div>
             <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1 overflow-auto scrollbarInvisible">
                 
@@ -105,7 +105,10 @@
 
         <div id="conversacionBoxPlantilla" class="conversacionBox border col-12 p-1 bg-white d-none" onclick="pagAppWindow_onClickSeleccionarConversacion(this);">
             <div class="conversacionBoxRemitente font-weight-bold">
-                Usuario
+                Usuario                 
+            </div>
+            <div class="position-absolute iconosOpcionesConversacion">                    
+                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEliminarConversacion(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
             </div>
             <div class="conversacionBoxUltimoMensaje pl-1">
                 <span class="conversacionBoxUltimoMensajeTexto">Mensaje</span><span class="conversacionBoxUltimoMensajeFecha font-italic">Fecha</span>
