@@ -306,11 +306,11 @@ public class VistaGUI extends Application
                 for (Conversacion conversacion : conversaciones)
                 {
                     System.out.println(conversacion.toString()); 
-                    System.out.println("Fecha que devuelve nueva conversacion: " + nuevaConversacion.getFecha().getTime());
+                    System.out.println("Fecha que devuelve nueva conversacion: " + conversacion.getFecha().getTime());
                     System.out.println("Ultimo mensaje que devuelve nueva conversacion: " + conversacion.getMensaje());
                     conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
-                                                .add("ultimoMensaje", "")
+                                                .add("ultimoMensaje", conversacion.getMensaje() == null ? conversacion.getMensaje() : "")
                                                 .add("fechaUltimoMensaje", conversacion.getFecha().getTime())
                                                 .add("tipo", conversacion.getTipo())
                                                 .add("pendiente", conversacion.isPendiente());                                                                    
