@@ -84,6 +84,10 @@ html,body {
     z-index: 999999;
 }
 
+.iconoNuevoMensajeConversacion{
+    color: #891436 !important;
+}
+
 .btn-noFocus:focus{
     outline: none !important;
 }

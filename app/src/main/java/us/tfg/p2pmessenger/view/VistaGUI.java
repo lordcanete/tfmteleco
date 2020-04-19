@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -55,6 +57,9 @@ public class VistaGUI extends Application
     public static final String ERROR_NOHAYCONVERSACIONESABIERTAS = "No hay conversaciones abiertas";
     public static final String ERROR_OBTENERMENSAJESCONVERSACION = "Error al obtener los mensajes de la conversación";
     public static final String ERROR_ABRIRNUEVACONVERSACION = "Error al iniciar una nueva conversacion";
+
+    private final static Logger LOGGER = Logger.getLogger("us.tfg.p2pmessenger.view.VistaGUI");
+    
     
     
     /** for communication to the Javascript engine. */
@@ -179,22 +184,27 @@ public class VistaGUI extends Application
             switch (servicio.appGetModo())
             {
                 case ControladorApp.MODO_APAGADO:
-                    System.out.println("MODO_APAGADO");
+                    LOGGER.log(Level.INFO, "MODO_APAGADO");
+                    //System.out.println("MODO_APAGADO");
                     break;
                 case ControladorApp.MODO_SESION_INICIADA:
-                    System.out.println("MODO_SESION_INICIADA");   
+                    LOGGER.log(Level.INFO, "MODO_SESION_INICIADA");
+                    //System.out.println("MODO_SESION_INICIADA");   
                     cargarPagina("appWindow.html");
                     break;
                 case ControladorApp.MODO_NECESARIA_DIRECION:  
-                    System.out.println("MODO NECESARIA DIRECCION");
+                    LOGGER.log(Level.INFO, "MODO_NECESARIA_DIRECCION");
+                    //System.out.println("MODO NECESARIA DIRECCION");
                     cargarPagina("nuevaDireccion.html");
                     break;
                 case ControladorApp.MODO_INICIO_SESION:
-                    System.out.println("MODO_INICIO_SESION");
+                    LOGGER.log(Level.INFO, "MODO_INICIO_SESION");
+                    //System.out.println("MODO_INICIO_SESION");
                     cargarPagina("inicioSesion.html");
                     break;
                 case ControladorApp.MODO_REGISTRO:
-                    System.out.println("MODO_REGISTRO");
+                    LOGGER.log(Level.INFO, "MODO_REGISTRO");
+                    //System.out.println("MODO_REGISTRO");
                     cargarPagina("registro.html");
                     break;
             }  
@@ -249,12 +259,14 @@ public class VistaGUI extends Application
                     }                    
                     
                 }else{
-                    System.out.println("Nombre de usuario " + inputUsuario + " en uso");
+                    LOGGER.log(Level.INFO, "Nombre de usuario {0} en uso", inputUsuario);
+                    //System.out.println("Nombre de usuario " + inputUsuario + " en uso");
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONODISPONIBLE);
                 }
             } catch (Exception e)
             {
-                System.out.println("Error al crear un usuario nuevo");
+                LOGGER.log(Level.INFO, "Error al crear un usuario nuevo");
+                //System.out.println("Error al crear un usuario nuevo");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_CREACIONUSUARIO);
                 e.printStackTrace();
             }
@@ -281,7 +293,8 @@ public class VistaGUI extends Application
                 }
             } catch (Exception e)
             {
-                System.out.println("Error al iniciar sesion");
+                LOGGER.log(Level.INFO, "Error al iniciar sesion");
+                //System.out.println("Error al iniciar sesion");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_INICIOSESION);            
                 e.printStackTrace();
             }
@@ -307,7 +320,6 @@ public class VistaGUI extends Application
             {
                 for (Conversacion conversacion : conversaciones)
                 {
-                    System.out.println(conversacion.toString()); 
                     conversacionJsonBuilder = Json.createObjectBuilder()
                                                 .add("idConversacion", conversacion.getId().toStringFull())
                                                 .add("aliasRemitente", conversacion.getAlias())                                          
@@ -328,7 +340,8 @@ public class VistaGUI extends Application
                     listaConversacionesJsonBuilder.add(conversacionJson);
                 }   
                 if(aliasConversacionSeleccionada != null && !conversacionSeleccionadaAbierta) {
-                    System.out.println("Creando nueva conversacion");
+                    LOGGER.log(Level.INFO, "Creando nueva conversacion");
+                    //System.out.println("Creando nueva conversacion");
                     ArrayList<Contacto> contactos = servicio.appObtenerContactos();
                     Contacto contactoNuevaConversacion = null;
                     for(Contacto contacto : contactos){
@@ -358,22 +371,26 @@ public class VistaGUI extends Application
                         }
                     }
                     else{
-                        System.out.println("Error al obtener el contacto remitente");
+                        LOGGER.log(Level.INFO, "Error al obtener el contacto remitente");
+                        //System.out.println("Error al obtener el contacto remitente");
                     }
                     
                 }        
                 listaConversacionesJson = listaConversacionesJsonBuilder.build();
                 if(nuevaConversacion != null && errorAbrirNuevaConversacion){
-                    System.out.println("Error al iniciar una nueva conversacion");  
+                    LOGGER.log(Level.INFO, "Error al iniciar una nueva conversacion");
+                    //System.out.println("Error al iniciar una nueva conversacion");  
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_ABRIRNUEVACONVERSACION);                    
                 }else{                                    
-                    System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
+                    LOGGER.log(Level.INFO, "Conversaciones a devolver en json: {0}", listaConversacionesJson.toString());
+                    //System.out.println("Conversaciones a devolver en json: \n"+listaConversacionesJson.toString());
                     javascriptConnector.call("actualizarPanelConversaciones", listaConversacionesJson.toString());
                 }                
             }
             else
             {
-                System.out.println("Error al obtener las conversaciones abiertas");
+                LOGGER.log(Level.INFO, "Error al obtener las conversaciones abiertas");
+                //System.out.println("Error al obtener las conversaciones abiertas");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONVERSACIONESABIERTAS); 
             }
         }
@@ -389,7 +406,6 @@ public class VistaGUI extends Application
             {
                 for (Mensaje mensaje : mensajes)
                 {
-                    System.out.println(mensaje.toString());  
                     mensajeJsonBuilder = Json.createObjectBuilder()
                                                 .add("contenido", mensaje.getContenido()) 
                                                 .add("fecha", mensaje.getFecha().getTime());                      
@@ -401,12 +417,14 @@ public class VistaGUI extends Application
                     mensajeJson = mensajeJsonBuilder.build();
                     listaMensajesJsonBuilder.add(mensajeJson);                   
                 }   
-                listaMensajesJson = listaMensajesJsonBuilder.build();                
-                System.out.println("Mensajes a devolver en json: \n"+listaMensajesJson.toString());
+                listaMensajesJson = listaMensajesJsonBuilder.build();   
+                LOGGER.log(Level.INFO, "Mensajes a devolver en json: \n{0}", listaMensajesJson.toString());             
+                //System.out.println("Mensajes a devolver en json: \n"+listaMensajesJson.toString());
                 javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionSeleccionada.getAlias());
             }else
             {
-                System.out.println("Error al obtener los mensajes de la conversación");
+                LOGGER.log(Level.INFO, "Error al obtener los mensajes de la conversación");
+                //System.out.println("Error al obtener los mensajes de la conversación");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERMENSAJESCONVERSACION); 
             }
 
@@ -423,34 +441,35 @@ public class VistaGUI extends Application
             {
                 for (Contacto contacto : contactos)
                 {
-                    System.out.println("alias: "+contacto.getAlias()+" usuario: "+contacto.getUsuario().getNombre());                    
                     listaContactosJsonBuilder.add(Json.createObjectBuilder()
                                                 .add("alias", contacto.getAlias())
                                                 .add("usuario", contacto.getUsuario().getNombre()).build());
                 }                
-                listaContactosJson = listaContactosJsonBuilder.build();                
-                System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
+                listaContactosJson = listaContactosJsonBuilder.build();    
+                LOGGER.log(Level.INFO, "Contactos a devolver en json: \n{0}",listaContactosJson.toString());            
+                //System.out.println("Contactos a devolver en json: \n"+listaContactosJson.toString());
                 javascriptConnector.call("abrirPanelAgenda", listaContactosJson.toString());
             }
             else
             {
-                System.out.println("Error al obtener los contactos guardados");
+                LOGGER.log(Level.INFO, "Error al obtener los contactos guardados");
+                //System.out.println("Error al obtener los contactos guardados");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
             }
                 
         }
 
         public void crearContacto(String inputUsuario, String inputAlias){
-            System.out.println("Entra a crearContacto");
             try{
-                System.out.println("Entra al try de crearContacto");
                 boolean existeUsuario = !servicio.compruebaNombre(inputUsuario);
                 if(existeUsuario){
-                    System.out.println("El usuario existe.");
+                    LOGGER.log(Level.INFO, "El usuario existe");
+                    //System.out.println("El usuario existe.");
                     servicio.appNuevoContacto(inputUsuario, inputAlias);
                     javascriptConnector.call("actualizarPanelAgenda");
                 }else{
-                    System.out.println("El usuario existe.");
+                    LOGGER.log(Level.INFO, "El usuario no existe");
+                    //System.out.println("El usuario no existe.");
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_USUARIONOEXISTENTE); 
                 }
                 
@@ -468,7 +487,8 @@ public class VistaGUI extends Application
                 for (Conversacion conversacion : conversaciones)
                 {
                     if(conversacion.getId().toStringFull().compareTo(idConversacion) == 0){
-                        System.out.println("Eliminando conversacion: " + idConversacion);                        
+                        LOGGER.log(Level.INFO, "Eliminando conversacion: {0}", idConversacion);
+                        //System.out.println("Eliminando conversacion: " + idConversacion);                        
                         servicio.appEliminarConversacion(idConversacion);
                         if(conversacionSeleccionada == null || conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
                             obtenerListaConversacionesAbiertas(null);   
@@ -488,8 +508,7 @@ public class VistaGUI extends Application
             {
                 for (Contacto contacto : contactos)
                 {
-                    System.out.println("usuario a buscar: " + usuario + "\nusuario comparando: "+contacto.getUsuario().getNombre());
-                   if(usuario.compareTo(contacto.getUsuario().getNombre()) == 0){
+                    if(usuario.compareTo(contacto.getUsuario().getNombre()) == 0){
                         idUsuario = contacto.getId();
                    }
                 }
@@ -498,14 +517,16 @@ public class VistaGUI extends Application
                     javascriptConnector.call("actualizarPanelAgenda");
                 }
                 else{
-                    System.out.println("Error al eliminar contacto");
+                    LOGGER.log(Level.INFO, "Error al eliminar contacto");
+                    //System.out.println("Error al eliminar contacto");
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_ELIMINARCONTACTO); 
                 }                               
                 
             }
             else
             {
-                System.out.println("Error al obtener los contactos guardados");
+                LOGGER.log(Level.INFO, "Error al obtener los contactos guardados");
+                //System.out.println("Error al obtener los contactos guardados");
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
             }
         }

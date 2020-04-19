@@ -957,7 +957,6 @@ public class VistaConsolaPublic implements Vista
     }
 
     public void appEliminarConversacion(String id){
-        System.out.println("Llamando a this.app.eliminaconversacion");
         this.app.eliminaConversacion(id);    
     }
 
