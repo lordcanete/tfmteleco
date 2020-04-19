@@ -295,11 +295,13 @@ function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
 }
 
 function pagAppWindow_comprobarNotificaciones() {
-    javaConnector.comprobarNotificaciones();
+    if(servicioConnector.checkNotificacionesPendientes()){
+        javaConnector.actualizarTrasNotificacion();
+    }
 }
 
 function onPageReady(){
-    //window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
+    window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
     javaConnector.obtenerListaConversacionesAbiertas(null);    
 }
 

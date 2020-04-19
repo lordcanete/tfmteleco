@@ -35,7 +35,7 @@ public class VistaConsolaPublic implements Vista
     private int puerto;
     private String ip;
 
-    private JSObject conectorGUI;
+    private boolean notificacionesPendiente;
     
     //Setters & Getters para acceder desde instancias
     public ControladorApp getApp(){
@@ -86,30 +86,21 @@ public class VistaConsolaPublic implements Vista
         this.conversacionSeleccionada = conversacion;
     }
 
-    public JSObject getConectorGUI(){
-        return this.conectorGUI;
+    public boolean getNotificacionesPendientes(){
+        return this.notificacionesPendiente;
     }
 
-    public void setConectorGUI(JSObject conector){
-        this.conectorGUI = conector;
+    public void setNotificacionesPendientes(boolean pendiente){
+        this.notificacionesPendiente = pendiente;
     }
+
     
     //Constructor
     public VistaConsolaPublic(String ip, int puerto)
     {
         this.puerto=puerto;
         this.ip=ip;
-        app = new ControladorConsolaImpl(ip, puerto,this);
-    }  
-
-    public VistaConsolaPublic(){
-
-    }
-
-    public void inicializaVistaConsolaPublic(String ip, int puerto)
-    {
-        this.puerto=puerto;
-        this.ip=ip;
+        this.notificacionesPendiente = false;
         app = new ControladorConsolaImpl(ip, puerto,this);
     }  
     
@@ -848,7 +839,7 @@ public class VistaConsolaPublic implements Vista
     public void notificacion(String origen)
     {
         System.out.println("Notificacion: Nuevo mensaje de "+origen);
-        conectorGUI.call("actualizarPanelesAppWinidow", conversacionSeleccionada.getAlias());        
+        setNotificacionesPendientes(true);           
     }
 
     @Override
@@ -979,7 +970,14 @@ public class VistaConsolaPublic implements Vista
         }
         app.enviaMensaje(tipoMensaje, mensaje, getConversacionSeleccionada().getId(), getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO);
     }
-
+    
+    public boolean checkNotificacionesPendientes(){
+        boolean hayNotificaciones = getNotificacionesPendientes();
+        if(hayNotificaciones){
+            setNotificacionesPendientes(false);
+        }
+        return hayNotificaciones;
+    }
     
 
 }

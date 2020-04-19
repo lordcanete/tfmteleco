@@ -64,7 +64,7 @@ public class VistaGUI extends Application
     private WebView webView;
     private WebEngine webEngine;
     private Scene scene;
-    private VistaConsolaPublic servicio = new VistaConsolaPublic();
+    private VistaConsolaPublic servicio;
     private int puerto;
     private String ip;
 
@@ -162,7 +162,7 @@ public class VistaGUI extends Application
         }
 
         public void iniciarServicio(){
-            servicio.inicializaVistaConsolaPublic(ip,puerto);
+            servicio = new VistaConsolaPublic(ip,puerto);
             servicio.appOnCreateEntorno();
             servicio.appOnStart();
             if(servicio.appGetError()!=0) {
@@ -170,8 +170,7 @@ public class VistaGUI extends Application
                 servicio.appOnStop();
                 servicio.appOnDestroy();
                 System.exit(0);
-            } else{
-                servicio.setConectorGUI(javascriptConnector);
+            } else{                
                 javascriptConnector.call("comprobarEstadoCallback");
             }
         }
@@ -516,7 +515,7 @@ public class VistaGUI extends Application
             javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
         }
 
-        public void comprobarNotificaciones(){
+        public void actualizarTrasNotificacion(){
             javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
         }
 
