@@ -299,8 +299,8 @@ function pagAppWindow_comprobarNotificaciones() {
 }
 
 function onPageReady(){
-    javaConnector.obtenerListaConversacionesAbiertas(null);
-    window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
+    ´//window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
+    javaConnector.obtenerListaConversacionesAbiertas(null);    
 }
 
 

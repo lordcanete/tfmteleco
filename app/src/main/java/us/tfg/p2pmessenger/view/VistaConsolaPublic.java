@@ -835,7 +835,7 @@ public class VistaConsolaPublic implements Vista
     public void notificacion(String origen)
     {
         System.out.println("Notificacion: Nuevo mensaje de "+origen);
-        
+        this.conectorGUI.comprobarNotificaciones();        
     }
 
     @Override
