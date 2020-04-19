@@ -99,6 +99,17 @@ public class VistaConsolaPublic implements Vista
         this.ip=ip;
         app = new ControladorConsolaImpl(ip, puerto,this);
     }  
+
+    public VistaConsolaPublic(){
+
+    }
+
+    public void inicializaVistaConsolaPublic(String ip, int puerto)
+    {
+        this.puerto=puerto;
+        this.ip=ip;
+        app = new ControladorConsolaImpl(ip, puerto,this);
+    }  
     
     public void listarGrupos()
     {
