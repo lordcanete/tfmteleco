@@ -17,6 +17,8 @@ import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 
+import netscape.javascript.JSObject;
+
 public class VistaConsolaPublic implements Vista
 {
     private ControladorApp app;
@@ -33,7 +35,7 @@ public class VistaConsolaPublic implements Vista
     private int puerto;
     private String ip;
 
-    private VistaGUI.JavaConnector conectorGUI;
+    private JSObject conectorGUI;
     
     //Setters & Getters para acceder desde instancias
     public ControladorApp getApp(){
@@ -84,11 +86,11 @@ public class VistaConsolaPublic implements Vista
         this.conversacionSeleccionada = conversacion;
     }
 
-    public VistaGUI.JavaConnector getConectorGUI(){
+    public JSObject getConectorGUI(){
         return this.conectorGUI;
     }
 
-    public void setConectorGUI(VistaGUI.JavaConnector conector){
+    public void setConectorGUI(JSObject conector){
         this.conectorGUI = conector;
     }
     
@@ -846,7 +848,7 @@ public class VistaConsolaPublic implements Vista
     public void notificacion(String origen)
     {
         System.out.println("Notificacion: Nuevo mensaje de "+origen);
-        this.conectorGUI.comprobarNotificaciones();        
+        conectorGUI.call("actualizarPanelesAppWinidow", conversacionSeleccionada.getAlias());        
     }
 
     @Override

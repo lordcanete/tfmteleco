@@ -132,6 +132,7 @@ public class VistaGUI extends Application
                 // set an interface object named 'javaConnector' in the web engine's page
                 JSObject window = (JSObject) webEngine.executeScript("window");
                 window.setMember("javaConnector", javaConnector);
+                window.setMember("servicioConnector", servicio);
                 // get the Javascript connector object. 
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
                 webEngine.executeScript("onPageReady()");
@@ -170,7 +171,7 @@ public class VistaGUI extends Application
                 servicio.appOnDestroy();
                 System.exit(0);
             } else{
-                servicio.setConectorGUI(this);
+                servicio.setConectorGUI(javascriptConnector);
                 javascriptConnector.call("comprobarEstadoCallback");
             }
         }
