@@ -512,11 +512,11 @@ public class VistaGUI extends Application
 
         public void enviarMensajeAConversacionSeleccionada(String mensaje){
             servicio.appEnviarMensaje(mensaje);
-            javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
+            javascriptConnector.call("actualizarPanelesAppWindowTrasEnvioMensaje", servicio.getConversacionSeleccionada().getAlias());
         }
 
         public void actualizarTrasNotificacion(){
-            javascriptConnector.call("actualizarPanelesAppWinidow", servicio.getConversacionSeleccionada().getAlias());
+            javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", servicio.getConversacionSeleccionada().getAlias());
         }
 
 

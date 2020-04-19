@@ -146,6 +146,10 @@ function pagAppWindow_limpiarFormularioNuevoContacto(){
     limpiarTextoInput(idInput_CrearContactoUsuario);
 }
 
+function pagAppWindow_limpiarFormularioNuevoMensaje(){
+    limpiarTextoInput(prefijoSelectorId.concat(idFormFieldMensaje));
+}
+
 function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     var validacion = false;
     if (!(usuario.trim() == "") && !(alias.trim() == "")) {

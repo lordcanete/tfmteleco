@@ -22,7 +22,11 @@ var jsConnector = {
         var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
         pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente);
     },
-    actualizarPanelesAppWinidow: function(aliasRemitente){
+    actualizarPanelesAppWindowTrasEnvioMensaje: function(aliasRemitente){
+        pagAppWindow_limpiarFormularioNuevoMensaje();
+        javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
+    },
+    actualizarPanelesAppWindowTrasNotificacion: function(aliasRemitente){
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     }
 };
