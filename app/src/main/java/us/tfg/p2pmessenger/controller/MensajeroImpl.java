@@ -278,9 +278,10 @@ public class MensajeroImpl implements Mensajero, ObservadorKey
         controlador.guardaMensaje(myMessage, idDestino);
 
         MensajeCifrado sobre = null;
-
+        System.out.println("traza1");
         if (individual)
         {
+            System.out.println("traza2");
             // busca la clave simetrica de un usuario. para mensajes
             // que se envian, si no la encuentra le pide que genere
             // una nueva al otro extremo
@@ -338,6 +339,7 @@ public class MensajeroImpl implements Mensajero, ObservadorKey
             }
         } else
         {
+            System.out.println("traza3");
             // enviar mensje de grupo
             Key clave = getLlavero().getClaveSimetrica(idDestino.toStringFull());
             if (clave != null)
