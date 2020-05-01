@@ -274,9 +274,9 @@ function pagAppWindow_formateaFechaUltimoMensajeParaMensajeBox(fechaUltimoMensaj
     var fechaUltimoMensajeFormateada = "";
 
     if(fechaUltimoMensaje.getDate() == hoy.getDate() && fechaUltimoMensaje.getMonth() == hoy.getMonth() && fechaUltimoMensaje.getFullYear() == hoy.getFullYear()) {
-        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getHours() + ":" + fechaUltimoMensaje.getMinutes();
+        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getHours() + ":" + minutosFechaConDosDigitos(fechaUltimoMensaje);
     }else{
-        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getDate() + "/" + (fechaUltimoMensaje.getMonth()+1).toString() + "/" + fechaUltimoMensaje.getFullYear() + "-" + fechaUltimoMensaje.getHours() + ":" + fechaUltimoMensaje.getMinutes();
+        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getDate() + "/" + (fechaUltimoMensaje.getMonth()+1).toString() + "/" + fechaUltimoMensaje.getFullYear() + "-" + fechaUltimoMensaje.getHours() + ":" + minutosFechaConDosDigitos(fechaUltimoMensaje);
     }
     return fechaUltimoMensajeFormateada;
 }
@@ -287,11 +287,15 @@ function pagAppWindow_formateaFechaUltimoMensajeParaConversacionBox(fechaUltimoM
     var fechaUltimoMensajeFormateada = "";
 
     if(fechaUltimoMensaje.getDate() == hoy.getDate() && fechaUltimoMensaje.getMonth() == hoy.getMonth() && fechaUltimoMensaje.getFullYear() == hoy.getFullYear()) {
-        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getHours() + ":" + fechaUltimoMensaje.getMinutes();
+        fechaUltimoMensajeFormateada = fechaUltimoMensaje.getHours() + ":" + minutosFechaConDosDigitos(fechaUltimoMensaje);
     }else{
         fechaUltimoMensajeFormateada = fechaUltimoMensaje.getDate() + "/" + (fechaUltimoMensaje.getMonth()+1).toString() + "/" + fechaUltimoMensaje.getFullYear();
     }
     return fechaUltimoMensajeFormateada;
+}
+
+function minutosFechaConDosDigitos(fecha){
+    return (fecha.getMinutes()<10?'0':'') + fecha.getMinutes();
 }
 
 function pagAppWindow_formateaUltimoMensajeParaConversacionBox(mensaje){
