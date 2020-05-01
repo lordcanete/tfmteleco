@@ -1,5 +1,5 @@
 *.iml
-.gradle
+*gradle*
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -9,3 +9,4 @@
 .externalNativeBuild
 *.class
 lib/pastry.jar
+settings.gradle
