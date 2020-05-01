@@ -260,6 +260,7 @@ public class VistaConsola implements Vista
                             String privatekey = "";
                             if (scanner.hasNextLine())
                             {
+                                System.out.println("entra en el hasnextline");
                                 privatekey = scanner.nextLine();
                                 conectaAGrupo(id, privatekey);
                             }
