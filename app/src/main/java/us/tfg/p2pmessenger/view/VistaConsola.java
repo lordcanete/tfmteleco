@@ -258,7 +258,7 @@ public class VistaConsola implements Vista
                             id = scanner.next();
                             System.out.println("y la clave privada:");
                             String privatekey = "";
-                            if (scanner.hasNextLine())
+                            if (scanner.hasNext())
                             {
                                 System.out.println("entra en el hasnextline");
                                 privatekey = scanner.nextLine();
