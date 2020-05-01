@@ -17,6 +17,8 @@ import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 
+import netscape.javascript.JSObject;
+
 public class VistaConsolaPublic implements Vista
 {
     private ControladorApp app;
@@ -28,9 +30,12 @@ public class VistaConsolaPublic implements Vista
     private boolean apagar;
 
     private ArrayList<Conversacion> conversaciones;
+    private Conversacion conversacionSeleccionada;
 
     private int puerto;
     private String ip;
+
+    private boolean notificacionesPendiente;
     
     //Setters & Getters para acceder desde instancias
     public ControladorApp getApp(){
@@ -55,7 +60,7 @@ public class VistaConsolaPublic implements Vista
     public ArrayList<Conversacion> getConversaciones(){
         return this.conversaciones;
     }
-    public void set(ArrayList<Conversacion> paramConversaciones){
+    public void setConversaciones(ArrayList<Conversacion> paramConversaciones){
         this.conversaciones = paramConversaciones;
     }
 
@@ -69,15 +74,33 @@ public class VistaConsolaPublic implements Vista
     public String getIp(){
         return this.ip;
     }
-    public void set(String paramIp){
+    public void setIp(String paramIp){
         this.ip = paramIp;
     }
+
+    public Conversacion getConversacionSeleccionada(){
+        return this.conversacionSeleccionada;
+    }
+
+    public void setConversacionSeleccionada(Conversacion conversacion){
+        this.conversacionSeleccionada = conversacion;        
+    }
+
+    public boolean getNotificacionesPendientes(){
+        return this.notificacionesPendiente;
+    }
+
+    public void setNotificacionesPendientes(boolean pendiente){
+        this.notificacionesPendiente = pendiente;
+    }
+
     
     //Constructor
     public VistaConsolaPublic(String ip, int puerto)
     {
         this.puerto=puerto;
         this.ip=ip;
+        this.notificacionesPendiente = false;
         app = new ControladorConsolaImpl(ip, puerto,this);
     }  
     
@@ -816,6 +839,7 @@ public class VistaConsolaPublic implements Vista
     public void notificacion(String origen)
     {
         System.out.println("Notificacion: Nuevo mensaje de "+origen);
+        setNotificacionesPendientes(true);           
     }
 
     @Override
@@ -917,5 +941,42 @@ public class VistaConsolaPublic implements Vista
     public void appEliminaContacto(String id){
         this.app.eliminaContacto(id);
     }
+
+    public ArrayList<Conversacion> appObtenerConversacionesAbiertas(){
+        setConversaciones(this.app.obtenerConversacionesAbiertas());
+        return getConversaciones();
+    }
+
+    public ArrayList<Mensaje> appObtieneMensajes(String idStringFull, int primerMensaje, int ultimoMensaje, int tipo){
+        return this.app.obtieneMensajes(idStringFull, primerMensaje, ultimoMensaje, tipo);
+        
+    }
+
+    public boolean appIniciarConversacion(String idFull) {
+        return app.iniciarConversacion(idFull);
+    }
+
+    public void appEliminarConversacion(String id){
+        this.app.eliminaConversacion(id);    
+    }
+
+    public void appEnviarMensaje(String mensaje){
+        int tipoMensaje;
+        if(getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO){
+            tipoMensaje = Mensaje.INDIVIDUAL_NORMAL;
+        }else{
+            tipoMensaje = Mensaje.GRUPO_NORMAL;
+        }
+        app.enviaMensaje(tipoMensaje, mensaje, getConversacionSeleccionada().getId(), getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO);
+    }
+    
+    public boolean checkNotificacionesPendientes(){
+        boolean hayNotificaciones = getNotificacionesPendientes();
+        if(hayNotificaciones){
+            setNotificacionesPendientes(false);
+        }
+        return hayNotificaciones;
+    }
+    
 
 }

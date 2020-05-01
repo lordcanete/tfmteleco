@@ -31,3 +31,7 @@ function validarFormularioRegistroUsuario(usuario, passwd, passwdConfirm){
     } 
     return validacion;
 }
+
+function onPageReady(){
+    
+}

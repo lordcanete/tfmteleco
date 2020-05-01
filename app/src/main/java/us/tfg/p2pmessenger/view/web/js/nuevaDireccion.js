@@ -28,3 +28,7 @@ function validarFormularioConectaPastry(ip, puerto){
     return validacion;
 
 }
+
+function onPageReady(){
+    
+}

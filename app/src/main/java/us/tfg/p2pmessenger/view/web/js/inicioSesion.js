@@ -26,3 +26,7 @@ function validarFormularioInicioSesion(usuario, passwd){
     } 
     return validacion;
 }
+
+function onPageReady(){
+    
+}

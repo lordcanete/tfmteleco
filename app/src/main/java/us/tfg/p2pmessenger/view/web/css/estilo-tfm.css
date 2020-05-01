@@ -43,7 +43,7 @@ html,body {
 
 .conversacionBoxAbierta {
     /*background-color: #fef9f0;*/
-    background-color: #efe3e5;
+    background-color: #efe3e5 !important;
 }
 
 .mensajeBoxRecibido {
@@ -72,12 +72,20 @@ html,body {
     right: 5%;
     top: 10%;
 }
+.iconosOpcionesConversacion{
+    right: 0%;
+    top: 10%;
+}
 
 .iconoCerrarVentana{
     right: 1%;
     top: 1%;
     padding: 0;
     z-index: 999999;
+}
+
+.iconoNuevoMensajeConversacion{
+    color: #891436 !important;
 }
 
 .btn-noFocus:focus{
@@ -98,6 +106,6 @@ html,body {
     width: 100% !important;
     height: 100% !important;
     background-color: rgba(128,128,128, 0.2);
-    z-index: 99999999 !important;
+    z-index: 9999999999 !important;
     
 }
