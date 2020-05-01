@@ -83,7 +83,7 @@ public class VistaConsolaPublic implements Vista
     }
 
     public void setConversacionSeleccionada(Conversacion conversacion){
-        this.conversacionSeleccionada = conversacion;
+        this.conversacionSeleccionada = conversacion;        
     }
 
     public boolean getNotificacionesPendientes(){

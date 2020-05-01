@@ -330,7 +330,7 @@ public class VistaGUI extends Application
                     if(aliasConversacionSeleccionada != null){
                         if(conversacion.getAlias().compareTo(aliasConversacionSeleccionada) == 0){
                             conversacionJsonBuilder.add("seleccionada", true);
-                            conversacionSeleccionadaAbierta = true;
+                            conversacionSeleccionadaAbierta = true;                            
                             servicio.setConversacionSeleccionada(conversacion);
                         }                        
                     }else{
@@ -490,7 +490,11 @@ public class VistaGUI extends Application
                         LOGGER.log(Level.INFO, "Eliminando conversacion: {0}", idConversacion);
                         //System.out.println("Eliminando conversacion: " + idConversacion);                        
                         servicio.appEliminarConversacion(idConversacion);
-                        if(conversacionSeleccionada == null || conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
+                        if(conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
+                            servicio.setConversacionSeleccionada(null);
+                            obtenerListaConversacionesAbiertas(null);   
+                        }
+                        else if(conversacionSeleccionada == null){                            
                             obtenerListaConversacionesAbiertas(null);   
                         }else{
                             obtenerListaConversacionesAbiertas(conversacionSeleccionada.getAlias());

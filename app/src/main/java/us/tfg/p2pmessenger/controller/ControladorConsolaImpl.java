@@ -1107,6 +1107,7 @@ public class ControladorConsolaImpl implements ControladorApp
         {
             mensajes = db.getMensajes(llavero.getClaveSimetrica(yo.getNombre()),
                     yo.getNombre(), primerMsj, ultimoMsj, id);
+            
         } catch (Exception e)
         {
             vista.excepcion(e);
