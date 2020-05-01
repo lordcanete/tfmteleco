@@ -182,6 +182,7 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
         }
     }else{
         mostrarBloque(idBloque_listaConversacionesDefault);
+        pagAppWindow_reiniciarPanelConversacionSeleccionada();
     }
     
 }
@@ -316,9 +317,9 @@ function onPageReady(){
 }
 
 
-
+/*
 
 $(function(){
     pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
     //pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes));
-})
+})*/
