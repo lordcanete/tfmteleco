@@ -301,6 +301,7 @@ public class MensajeroImpl implements Mensajero, ObservadorKey
                 {
                     // envia
                     procesa(node.getId(), sobre, false);
+                    System.out.println("tipo mensaje 2: " + myMessage.getClase())
                     appScribe.enviaMensaje(sobre, idDestino, true);
                 }
             } else

@@ -1131,6 +1131,7 @@ public class ControladorConsolaImpl implements ControladorApp
     public void enviaMensaje(int tipo, String contenido, String idString, boolean individual)
     {
         Id idDestino = rice.pastry.Id.build(idString);
+        System.out.println("tipo mensaje: " + tipo);
         enviaMensaje(tipo, contenido, idDestino, individual);
     }
 
@@ -1141,7 +1142,7 @@ public class ControladorConsolaImpl implements ControladorApp
         final Mensaje mensaje = new Mensaje(node.getId(),
                 idDestino, contenido, tipo);
         Contacto contacto = null;
-
+        System.out.println("tipo mensaje 2: " + mensaje.getClase());
         if (mensaje.getClase() == Mensaje.INDIVIDUAL_IMPORTANTE)
         {
             try
