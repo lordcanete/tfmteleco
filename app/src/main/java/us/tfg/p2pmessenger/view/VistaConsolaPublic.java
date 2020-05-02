@@ -981,6 +981,10 @@ public class VistaConsolaPublic implements Vista
     public String appObtenerCodigoInvitacion(String idConversacionGrupo){
         return app.obrenerCodigoInvitacion(idConversacionGrupo);
     }
+
+    public void appCrearGrupo(String nombre){
+        app.crearGrupo(nombre);
+    }
     
 
 }

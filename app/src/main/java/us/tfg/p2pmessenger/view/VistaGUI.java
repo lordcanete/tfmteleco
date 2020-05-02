@@ -479,6 +479,11 @@ public class VistaGUI extends Application
             
         }       
 
+        public void crearGrupo(String nombreGrupo){
+            servicio.appCrearGrupo(nombreGrupo);
+            javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo");
+        }
+
         public void eliminarConversacion(String idConversacion){
             ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
             Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();

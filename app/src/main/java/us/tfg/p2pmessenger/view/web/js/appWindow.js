@@ -22,6 +22,7 @@ var string_PUNTOSSUSPENSIVOS = "...";
 var tiempoRefrescoNotificaciones = 2500;
 
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
+var mensaje_validacionCrearGrupoKO = "Por favor, rellene el campo de Nombre del grupo";
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 var mockup_jsonConversaciones = '[{"idConversacion":"A8070C4F9D211F752643D391F4CC3B679700A0F7","aliasRemitente":"ertiti","ultimoMensaje":": -","fechaUltimoMensaje":1587216642664,"tipo":2,"pendiente":true,"seleccionada":false},{"idConversacion":"A360332152C7EDA5D68A615F3BEC9213D997FEE6","aliasRemitente":"canuto","ultimoMensaje":"canuto: eey ahora si","fechaUltimoMensaje":1586715830279,"tipo":2,"pendiente":false,"seleccionada":false}]'
@@ -108,6 +109,15 @@ function pagAppWindow_onClickGuardarContacto(){
     }
 }
 
+function pagAppWindow_onClickCrearGrupo(){
+    var nombreGrupo = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias");
+    if(pagAppWindow_validarFormularioCrearGrupo(nombreGrupo)){
+        javaConnector.crearGrupo(nombreGrupo);
+    }else{
+        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearGrupoKO);
+    }
+}
+
 function pagAppWindow_onClickEliminarContacto(item){
     var idContactoBoxAgenda = item.parentElement.parentElement.id;
     var idUsuario = idContactoBoxAgenda.substring(18);
@@ -162,6 +172,14 @@ function pagAppWindow_limpiarFormularioNuevoMensaje(){
 function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     var validacion = false;
     if (!(usuario.trim() == "") && !(alias.trim() == "")) {
+        validacion = true;
+    } 
+    return validacion;
+}
+
+function pagAppWindow_validarFormularioCrearGrupo(nombre){
+    var validacion = false;
+    if (!(nombre.trim() == "")) {
         validacion = true;
     } 
     return validacion;

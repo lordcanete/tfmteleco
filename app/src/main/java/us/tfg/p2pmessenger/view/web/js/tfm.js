@@ -31,6 +31,9 @@ var jsConnector = {
     },
     actualizarCodigoInvitacionGrupo: function(codigo){
         pagAppWindow_refrescarCodigoInvitacionGrupo(codigo);
+    },
+    actualizarPanelConversacionesTrasCrearGrupo: function(){
+        javaConnector.obtenerListaConversacionesAbiertas(null);
     }
 };
 
