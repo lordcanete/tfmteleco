@@ -141,11 +141,9 @@ function pagAppWindow_onClickEnviarMensaje(item){
     javaConnector.enviarMensajeAConversacionSeleccionada(mensaje);
 }
 
-function pagAppWindow_onClickGenerarCodigoInvitacion(item){
-    $("#iconoCerrarCodInvitacion").click(function(){
-        pagAppWindow_onClickCerrarTooltipCodInvitacion();
-    })
+function pagAppWindow_onClickGenerarCodigoInvitacion(){    
     javaConnector.generarCodigoInvitacionGrupo();
+    //pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
 }
 
 function pagAppWindow_onClickCerrarTooltipCodInvitacion(){
@@ -170,10 +168,16 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
 }
 
 function pagAppWindow_refrescarCodigoInvitacionGrupo(codigo){    
-    $("#pagAppWindow_codigoInvitacionGrupo").attr("data-title",codigo);
+    pagAppWindow_modificarCodigoInvitacionGrupo(codigo);    
     $("#pagAppWindow_codigoInvitacionGrupo").tooltip('show');
+    $("#iconoCerrarCodInvitacion").click(function(){
+        pagAppWindow_onClickCerrarTooltipCodInvitacion();
+    });
 }
 
+function pagAppWindow_modificarCodigoInvitacionGrupo(codigo){    
+    $("#pagAppWindow_codigoInvitacionGrupo").attr('data-original-title', codigo);    
+}
 
 function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON){
     var panelListaConversacionesAbiertas = $("#pagAppWindow_bloqueIzquierdoConversaciones");
@@ -216,7 +220,7 @@ function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, 
     var panelConversacionSeleccionadaBloqueCodInvitacion = $("#pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
     panelConversacionSeleccionadaListaMensajes.empty();
     panelConversacionSeleccionadaAliasRemitente.text(aliasRemitente);
-    pagAppWindow_refrescarCodigoInvitacionGrupo('');
+    pagAppWindow_modificarCodigoInvitacionGrupo('aergyhdrftyer');
     if(esGrupo){
         mostrarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
     }else{
@@ -344,8 +348,8 @@ function onPageReady(){
 
 
 
-/*
+
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
     pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);    
-})*/
+})
