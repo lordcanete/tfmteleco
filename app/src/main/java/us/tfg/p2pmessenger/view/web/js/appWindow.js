@@ -142,7 +142,14 @@ function pagAppWindow_onClickEnviarMensaje(item){
 }
 
 function pagAppWindow_onClickGenerarCodigoInvitacion(item){
+    $("#iconoCerrarCodInvitacion").click(function(){
+        pagAppWindow_onClickCerrarTooltipCodInvitacion();
+    })
     javaConnector.generarCodigoInvitacionGrupo();
+}
+
+function pagAppWindow_onClickCerrarTooltipCodInvitacion(){
+    $("#pagAppWindow_codigoInvitacionGrupo").tooltip('hide');
 }
 
 function pagAppWindow_limpiarFormularioNuevoContacto(){
@@ -162,8 +169,9 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     return validacion;
 }
 
-function pagAppWindow_refrescarCodigoInvitacionGrupo(codigo){
-    $("#pagAppWindow_bloqueConversacionContactoCodigoInvitacionGrupo").text(codigo);
+function pagAppWindow_refrescarCodigoInvitacionGrupo(codigo){    
+    $("#pagAppWindow_codigoInvitacionGrupo").attr("data-title",codigo);
+    $("#pagAppWindow_codigoInvitacionGrupo").tooltip('show');
 }
 
 
@@ -208,7 +216,7 @@ function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, 
     var panelConversacionSeleccionadaBloqueCodInvitacion = $("#pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
     panelConversacionSeleccionadaListaMensajes.empty();
     panelConversacionSeleccionadaAliasRemitente.text(aliasRemitente);
-    pagAppWindow_refrescarCodigoInvitacionGrupo("");
+    pagAppWindow_refrescarCodigoInvitacionGrupo('');
     if(esGrupo){
         mostrarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
     }else{
@@ -339,5 +347,5 @@ function onPageReady(){
 /*
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
+    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);    
 })*/

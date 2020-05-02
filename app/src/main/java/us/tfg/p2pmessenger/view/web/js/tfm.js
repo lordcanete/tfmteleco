@@ -62,3 +62,7 @@ function ocultarBloque(idBloque){
 function limpiarTextoInput(id){
     $(id).val("");
 }
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
