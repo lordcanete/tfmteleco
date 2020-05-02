@@ -545,6 +545,7 @@ public class VistaGUI extends Application
         }
 
         public void generarCodigoInvitacionGrupo(){
+            System.out.println("Llamado metodo de generarCodigoInvitacionGrupo");
             Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
             if(conversacionSeleccionada != null){
                 String codigoInvitacion = servicio.appObtenerCodigoInvitacion(conversacionSeleccionada.getId().toStringFull());
