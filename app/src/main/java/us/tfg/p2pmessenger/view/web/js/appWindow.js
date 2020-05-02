@@ -110,7 +110,7 @@ function pagAppWindow_onClickGuardarContacto(){
 }
 
 function pagAppWindow_onClickCrearGrupo(){
-    var nombreGrupo = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias");
+    var nombreGrupo = $("#pagAppWindow_PanelAgendaCrearGrupoFieldNombre");
     if(pagAppWindow_validarFormularioCrearGrupo(nombreGrupo)){
         javaConnector.crearGrupo(nombreGrupo);
     }else{
