@@ -141,6 +141,9 @@ function pagAppWindow_onClickEnviarMensaje(item){
     javaConnector.enviarMensajeAConversacionSeleccionada(mensaje);
 }
 
+function pagAppWindow_onClickGenerarCodigoInvitacion(item){
+    javaConnector.generarCodigoInvitacionGrupo();
+}
 
 function pagAppWindow_limpiarFormularioNuevoContacto(){
     limpiarTextoInput(idInput_CrearContactoAlias);
@@ -159,6 +162,9 @@ function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     return validacion;
 }
 
+function pagAppWindow_refrescarCodigoInvitacionGrupo(codigo){
+    $("#pagAppWindow_bloqueConversacionContactoCodigoInvitacionGrupo").text(codigo);
+}
 
 
 function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON){
@@ -194,13 +200,21 @@ function pagAppWindow_reiniciarPanelConversacionSeleccionada(){
     mostrarBloque(panelConversacionSeleccionadaDefault);
 }
 
-function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente){
+function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente, esGrupo){
     var panelConversacionSeleccionadaDefault = $("#panel-derecho-default");
     var panelConversacionSeleccionada = $("#panel-derecho");
     var panelConversacionSeleccionadaListaMensajes = $("#pagAppWindow_bloqueConversacionListaMensajes");
     var panelConversacionSeleccionadaAliasRemitente = $("#pagAppWindow_bloqueConversacionContactoIdUsuario");
+    var panelConversacionSeleccionadaBloqueCodInvitacion = $("pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
     panelConversacionSeleccionadaListaMensajes.empty();
     panelConversacionSeleccionadaAliasRemitente.text(aliasRemitente);
+    pagAppWindow_refrescarCodigoInvitacionGrupo("");
+    if(esGrupo){
+        mostrarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
+    }else{
+        ocultarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
+    }
+
     ocultarBloque(panelConversacionSeleccionadaDefault);
     mostrarBloque(panelConversacionSeleccionada);
     listaMensajesJSON.forEach(function(mensajeJson) { 

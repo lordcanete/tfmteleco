@@ -18,9 +18,9 @@ var jsConnector = {
         var listaConversacionesJSON = JSON.parse(listaConversacionesJsonString);
         pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON);
     },
-    actualizarPanelConversacionSeleccionada: function(listaMensajesJsonString, aliasRemitente){
+    actualizarPanelConversacionSeleccionada: function(listaMensajesJsonString, aliasRemitente, esGrupo){
         var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
-        pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente);
+        pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente, esGrupo);
     },
     actualizarPanelesAppWindowTrasEnvioMensaje: function(aliasRemitente){
         pagAppWindow_limpiarFormularioNuevoMensaje();
@@ -28,6 +28,9 @@ var jsConnector = {
     },
     actualizarPanelesAppWindowTrasNotificacion: function(aliasRemitente){
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
+    },
+    actualizarCodigoInvitacionGrupo: function(codigo){
+        pagAppWindow_refrescarCodigoInvitacionGrupo(codigo);
     }
 };
 

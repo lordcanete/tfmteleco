@@ -977,6 +977,10 @@ public class VistaConsolaPublic implements Vista
         }
         return hayNotificaciones;
     }
+
+    public String appObtenerCodigoInvitacion(String idConversacionGrupo){
+        return app.obrenerCodigoInvitacion(idConversacionGrupo);
+    }
     
 
 }

@@ -420,7 +420,7 @@ public class VistaGUI extends Application
                 listaMensajesJson = listaMensajesJsonBuilder.build();   
                 LOGGER.log(Level.INFO, "Mensajes a devolver en json: \n{0}", listaMensajesJson.toString());             
                 //System.out.println("Mensajes a devolver en json: \n"+listaMensajesJson.toString());
-                javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionSeleccionada.getAlias());
+                javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionSeleccionada.getAlias(), conversacionSeleccionada.getTipo() == Conversacion.TIPO_GRUPO);
             }else
             {
                 LOGGER.log(Level.INFO, "Error al obtener los mensajes de la conversación");
@@ -542,6 +542,15 @@ public class VistaGUI extends Application
 
         public void actualizarTrasNotificacion(){
             javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", servicio.getConversacionSeleccionada().getAlias());
+        }
+
+        public void generarCodigoInvitacionGrupo(){
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
+            if(conversacionSeleccionada != null){
+                String codigoInvitacion = servicio.appObtenerCodigoInvitacion(conversacionSeleccionada.getId().toStringFull());
+                javascriptConnector.call("actualizarCodigoInvitacionGrupo", codigoInvitacion);
+            }          
+
         }
 
 

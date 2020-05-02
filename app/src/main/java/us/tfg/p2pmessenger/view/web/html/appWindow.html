@@ -39,9 +39,13 @@
             
         </div>
         <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column"> 
-            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex align-items-center p-4 border">
-                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span>    
-                <button type="button" class="btn btn-success mx-1 small" onclick="pagAppWindow_onClickGenerarCodigoInvitacion(this);">Código invitación</button>    
+            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-column align-items-start p-4 border">
+                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span> 
+                <div id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="d-flex">
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickGenerarCodigoInvitacion(this);"><i class="fa fa-refresh fa text-muted m-0" aria-hidden="true"></i></button>  
+                    Cód. invitación: <span id="pagAppWindow_bloqueConversacionContactoCodigoInvitacionGrupo" class="mx-1"></span> 
+                </div>   
+                
             </div>
             <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1 overflow-auto scrollbarInvisible">
                 
