@@ -34,6 +34,9 @@ var jsConnector = {
     },
     actualizarPanelConversacionesTrasCrearGrupo: function(){
         javaConnector.obtenerListaConversacionesAbiertas(null);
+    },
+    actualizarPanelConversacionesTrasUnirseAGrupo: function(){
+        javaConnector.obtenerListaConversacionesAbiertas(null);
     }
 };
 

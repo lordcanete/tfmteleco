@@ -559,6 +559,11 @@ public class VistaGUI extends Application
 
         }
 
+        public void unirseAGrupo(String idUsuario, String codigoInvitacion){
+            appEnviarPeticionUnirAGrupo(idUsuario, codigoInvitacion);
+            javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo");
+        }
+
 
 
 

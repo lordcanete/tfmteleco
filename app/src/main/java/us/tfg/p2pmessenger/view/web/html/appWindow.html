@@ -70,8 +70,22 @@
         </div>
 
         
-        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 align-items-center justify-content-center position-absolute d-none">
+        <div id="pagAppWindow_capaAgenda" class="h-100 w-100 align-items-center justify-content-center position-absolute d-flex">
             <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 w-75 position-relative">
+                <div id="pagAppWindow_PanelAgendaUnirseAGrupo" class="capaNotificaciones d-none align-items-center position-absolute">        
+                    <div class="shadow-sm p-3 text-left bg-white m-auto col-11 col-lg-8">
+                        <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_onClickCerrarPanelUnirseGrupo();"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
+                        <form class="row m-0 p-0">  
+                            <span id="pagAppWindow_PanelAgendaUnirseAGrupoIdContactoInvitacion" class="d-none"></span>    
+                            <div class="col-12 px-1">Introduce el código recibido de <span id="pagAppWindow_PanelAgendaUnirseAGrupoAliasContactoInvitacion"></span></div>                                    
+                            <div class="col-9 px-1">
+                                <label for="pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo" class="sr-only">Código</label>
+                                <input type="text" class="form-control" id="pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo" placeholder="Código de invitación">
+                            </div>
+                            <button type="button" class="btn btn-success col-2 px-1" onclick="pagAppWindow_onClickUnirseAGrupo(this);">Unirse</button>
+                        </form>
+                    </div>
+                </div>
                 <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_onClickCerrarAgenda();"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
                 <h2 class="m-2 mb-4">Agenda</h2>
                 <ul class="nav nav-tabs mx-1" id="pagAppWindow_pestaniasCreacion" role="tablist">
@@ -129,7 +143,7 @@
                 <span class="small">ID - Usuario</span>
             </div>     
             <div class="position-absolute iconosOpcionesContacto">
-                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickUnirseGrupo(this);"><i class="fa fa-users fa text-muted m-1" aria-hidden="true"></i></button>
+                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickIntroducirCodigoGrupo(this);"><i class="fa fa-users fa text-muted m-1" aria-hidden="true"></i></button>
                 <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickNuevaConversacion(this);"><i class="fa fa-comment-o fa text-muted m-1" aria-hidden="true"></i></button>
                 <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEliminarContacto(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
             </div>                                  

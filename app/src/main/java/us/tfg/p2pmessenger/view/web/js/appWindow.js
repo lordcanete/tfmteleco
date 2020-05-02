@@ -11,6 +11,7 @@ var claseBloque_conversacionBox = "conversacionBox";
 var prefijoSelectorClase = ".";
 var prefijoSelectorId = "#";
 var idBloque_listaConversacionesDefault = "#pagAppWindow_bloqueIzquierdoConversacionesDefault";
+var idBloque_panelUnirseAGrupo = "#pagAppWindow_PanelAgendaUnirseAGrupo";
 var prefijoIdBloque_contactoBoxAgenda = "contactoBoxAgenda-";
 var prefijoIdBloque_conversacionBox = "conversacionBox-";
 var prefijoIdBloque_conversacionBox_notificacion = "notificacion-"
@@ -23,6 +24,7 @@ var tiempoRefrescoNotificaciones = 2500;
 
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 var mensaje_validacionCrearGrupoKO = "Por favor, rellene el campo de Nombre del grupo";
+var mensaje_validacionUnirseAGrupoKO = "Por favor, rellene el campo de código de invitación";
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 var mockup_jsonConversaciones = '[{"idConversacion":"A8070C4F9D211F752643D391F4CC3B679700A0F7","aliasRemitente":"ertiti","ultimoMensaje":": -","fechaUltimoMensaje":1587216642664,"tipo":2,"pendiente":true,"seleccionada":false},{"idConversacion":"A360332152C7EDA5D68A615F3BEC9213D997FEE6","aliasRemitente":"canuto","ultimoMensaje":"canuto: eey ahora si","fechaUltimoMensaje":1586715830279,"tipo":2,"pendiente":false,"seleccionada":false}]'
@@ -118,6 +120,8 @@ function pagAppWindow_onClickCrearGrupo(){
     }
 }
 
+
+
 function pagAppWindow_onClickEliminarContacto(item){
     var idContactoBoxAgenda = item.parentElement.parentElement.id;
     var idUsuario = idContactoBoxAgenda.substring(18);
@@ -129,6 +133,33 @@ function pagAppWindow_onClickNuevaConversacion(item){
     var idContactoBoxAgenda = item.parentElement.parentElement.id;
     var aliasUsuario = $(prefijoSelectorId.concat(idContactoBoxAgenda)).find(".contactoBoxAlias").text();
     javaConnector.obtenerListaConversacionesAbiertas(aliasUsuario);
+}
+
+function pagAppWindow_onClickIntroducirCodigoGrupo(item){
+    var idContactoBoxAgenda = item.parentElement.parentElement.id;
+    var aliasUsuario = $(prefijoSelectorId.concat(idContactoBoxAgenda)).find(".contactoBoxAlias").text();
+    var idUsuario = idContactoBoxAgenda.substring(18);
+    pagAppWindow_mostrarPanelUnirseAGrupo(aliasUsuario, idUsuario);
+}
+
+function pagAppWindow_onClickUnirseAGrupo(){
+    var codigo = $("#pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo").val();
+    var idUsuario = $("#pagAppWindow_PanelAgendaUnirseAGrupoIdContactoInvitacion").text();    
+    if(pagAppWindow_validarFormularioUnirseAGrupo(codigo)){
+        javaConnector.unirseAGrupo(idUsuario, codigo);
+    }else{
+        mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionUnirseAGrupoKO);
+    }
+}
+
+function pagAppWindow_mostrarPanelUnirseAGrupo(aliasUsuario, idUsuario){
+    $("#pagAppWindow_PanelAgendaUnirseAGrupoAliasContactoInvitacion").text(aliasUsuario);
+    $("#pagAppWindow_PanelAgendaUnirseAGrupoIdContactoInvitacion").text(idUsuario);
+    mostrarBloque(idBloque_panelUnirseAGrupo);
+}
+
+function pagAppWindow_onClickCerrarPanelUnirseGrupo(){
+    ocultarBloque(idBloque_panelUnirseAGrupo);
 }
 
 function pagAppWindow_onClickSeleccionarConversacion(item){
@@ -170,18 +201,24 @@ function pagAppWindow_limpiarFormularioNuevoMensaje(){
 }
 
 function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
-    var validacion = false;
-    if (!(usuario.trim() == "") && !(alias.trim() == "")) {
-        validacion = true;
-    } 
-    return validacion;
+    return (pagAppWindow_validarCampoVacio(usuario) && pagAppWindow_validarCampoVacio(alias));    
 }
 
 function pagAppWindow_validarFormularioCrearGrupo(nombre){
+    return pagAppWindow_validarCampoVacio(nombre);
+}
+
+function pagAppWindow_validarFormularioUnirseAGrupo(codigo){
+    return pagAppWindow_validarCampoVacio(codigo);
+}
+
+
+
+function pagAppWindow_validarCampoVacio(contenido){
     var validacion = false;
-    if (!(nombre.trim() == "")) {
-        validacion = true;
-    } 
+        if (!(contenido.trim() == "")) {
+            validacion = true;
+        } 
     return validacion;
 }
 
@@ -369,5 +406,6 @@ function onPageReady(){
 /*
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);    
+    //pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);    
+    pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
 })*/

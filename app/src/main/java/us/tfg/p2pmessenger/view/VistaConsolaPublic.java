@@ -985,6 +985,10 @@ public class VistaConsolaPublic implements Vista
     public void appCrearGrupo(String nombre){
         app.crearGrupo(nombre);
     }
+
+    public void appEnviarPeticionUnirAGrupo(String idUsuario, String codigoInvitacion){
+        app.enviarPeticionUnirAGrupo(idUsuario, codigoInvitacion);
+    }
     
 
 }
