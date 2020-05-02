@@ -419,7 +419,7 @@ public class VistaGUI extends Application
                 }   
                 listaMensajesJson = listaMensajesJsonBuilder.build();   
                 LOGGER.log(Level.INFO, "Mensajes a devolver en json: \n{0}", listaMensajesJson.toString());             
-                System.out.println("conversacionSeleccionada.getTipo() == Conversacion.TIPO_GRUPO: " + (conversacionSeleccionada.getTipo() == Conversacion.TIPO_GRUPO));
+                //System.out.println("Mensajes a devolver en json: \n"+listaMensajesJson.toString());
                 javascriptConnector.call("actualizarPanelConversacionSeleccionada", listaMensajesJson.toString(), conversacionSeleccionada.getAlias(), conversacionSeleccionada.getTipo() == Conversacion.TIPO_GRUPO);
             }else
             {

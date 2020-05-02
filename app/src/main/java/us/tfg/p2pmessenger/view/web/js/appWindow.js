@@ -205,7 +205,7 @@ function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, 
     var panelConversacionSeleccionada = $("#panel-derecho");
     var panelConversacionSeleccionadaListaMensajes = $("#pagAppWindow_bloqueConversacionListaMensajes");
     var panelConversacionSeleccionadaAliasRemitente = $("#pagAppWindow_bloqueConversacionContactoIdUsuario");
-    var panelConversacionSeleccionadaBloqueCodInvitacion = $("pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
+    var panelConversacionSeleccionadaBloqueCodInvitacion = $("#pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
     panelConversacionSeleccionadaListaMensajes.empty();
     panelConversacionSeleccionadaAliasRemitente.text(aliasRemitente);
     pagAppWindow_refrescarCodigoInvitacionGrupo("");
@@ -335,9 +335,9 @@ function onPageReady(){
 }
 
 
-/*
+
 
 $(function(){
-    pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-    //pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes));
-})*/
+    //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
+    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
+})
