@@ -57,6 +57,7 @@ public class VistaGUI extends Application
     public static final String ERROR_NOHAYCONVERSACIONESABIERTAS = "No hay conversaciones abiertas";
     public static final String ERROR_OBTENERMENSAJESCONVERSACION = "Error al obtener los mensajes de la conversación";
     public static final String ERROR_ABRIRNUEVACONVERSACION = "Error al iniciar una nueva conversacion";
+    public static final String ERROR_UNIRSEAGRUPO = "Error al encontrar contacto para unirse a grupo";
 
     private final static Logger LOGGER = Logger.getLogger("us.tfg.p2pmessenger.view.VistaGUI");
     
@@ -559,10 +560,35 @@ public class VistaGUI extends Application
 
         }
 
-        public void unirseAGrupo(String idUsuario, String codigoInvitacion){
-            System.out.println("idUsuario: " + idUsuario + " codigo: " + codigoInvitacion);
-            servicio.appEnviarPeticionUnirAGrupo(idUsuario, codigoInvitacion);
-            javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo");
+        public void unirseAGrupo(String usuario, String codigoInvitacion){
+            ArrayList<Contacto> contactos=servicio.appObtenerContactos();
+            Id idUsuario  = null;
+            if(contactos!=null)
+            {
+                for (Contacto contacto : contactos)
+                {
+                    if(usuario.compareTo(contacto.getUsuario().getNombre()) == 0){
+                        idUsuario = contacto.getId();
+                   }
+                }
+                if (idUsuario != null){
+                    servicio.appEnviarPeticionUnirAGrupo(idUsuario, codigoInvitacion);
+                    javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo");
+                }
+                else{
+                    LOGGER.log(Level.INFO, "Error al encontrar contacto para unirse a grupo");
+                    //System.out.println("Error al encontrar contacto para unirse a grupo");
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_UNIRSEAGRUPO); 
+                }                               
+                
+            }
+            else
+            {
+                LOGGER.log(Level.INFO, "Error al obtener los contactos guardados");
+                //System.out.println("Error al obtener los contactos guardados");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
+            }           
+            
         }
 
 
