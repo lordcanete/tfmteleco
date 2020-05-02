@@ -336,8 +336,8 @@ function onPageReady(){
 
 
 
-
+/*
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
     pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
-})
+})*/
