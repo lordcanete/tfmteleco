@@ -572,7 +572,7 @@ public class VistaGUI extends Application
                    }
                 }
                 if (idUsuario != null){
-                    servicio.appEnviarPeticionUnirAGrupo(idUsuario, codigoInvitacion);
+                    servicio.appEnviarPeticionUnirAGrupo(idUsuario.toStringFull(), codigoInvitacion);
                     javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo");
                 }
                 else{
