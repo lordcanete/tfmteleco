@@ -22,6 +22,7 @@ import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
+import us.tfg.p2pmessenger.model.Usuario;
 import us.tfg.p2pmessenger.view.VistaConsolaPublic;
 
 
