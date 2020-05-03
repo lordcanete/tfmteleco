@@ -27,16 +27,16 @@ var jsConnector = {
         pagAppWindow_limpiarFormularioNuevoMensaje();
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     },
-    actualizarPanelesAppWindowTrasNotificacion: function(aliasRemitente){
+    actualizarPanelesAppWindowTrasNotificacion: function(aliasRemitente=null){
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     },
     actualizarCodigoInvitacionGrupo: function(codigo){
         pagAppWindow_refrescarCodigoInvitacionGrupo(codigo);
     },
-    actualizarPanelConversacionesTrasCrearGrupo: function(aliasRemitente){
+    actualizarPanelConversacionesTrasCrearGrupo: function(aliasRemitente=null){        
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     },
-    actualizarPanelConversacionesTrasUnirseAGrupo: function(aliasRemitente){
+    actualizarPanelConversacionesTrasUnirseAGrupo: function(aliasRemitente=null){
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     }
 };

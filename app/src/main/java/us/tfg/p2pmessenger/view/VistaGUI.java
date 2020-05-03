@@ -313,9 +313,12 @@ public class VistaGUI extends Application
         }
 
         public void refrescarConversaciones(){
+            System.out.println("Entra refrescarConversaciones");
             if(servicio.getConversacionSeleccionada() != null){
+                System.out.println("Entra refrescarConversaciones no null");
                 obtenerListaConversacionesAbiertas(servicio.getConversacionSeleccionada().getAlias());
             }else{
+                System.out.println("Entra refrescarConversaciones null");
                 obtenerListaConversacionesAbiertas(null);
             }
         }
@@ -521,7 +524,7 @@ public class VistaGUI extends Application
             if(servicio.getConversacionSeleccionada() != null){
                 javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", servicio.getConversacionSeleccionada().getAlias());
             }else{
-                javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", (Class<?>) null);
+                javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo");
             }
             
         }
@@ -591,7 +594,7 @@ public class VistaGUI extends Application
             if(servicio.getConversacionSeleccionada() != null){
                 javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", servicio.getConversacionSeleccionada().getAlias());
             }else{
-                javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", (Class<?>) null);
+                javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion");
             }
             
             
@@ -623,7 +626,7 @@ public class VistaGUI extends Application
                     if(servicio.getConversacionSeleccionada() != null){
                         javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo", servicio.getConversacionSeleccionada().getAlias());
                     }else{
-                        javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo", (Class<?>) null);
+                        javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo");
                     }
                     
                 }
