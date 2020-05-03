@@ -95,7 +95,7 @@ function pagAppWindow_onClickAbrirAgenda(){
     pagAppWindow_mostrarAgendaActualizada();        
 }
 function pagAppWindow_onClickCerrarAgenda(){
-    javaConnector.obtenerListaConversacionesAbiertas(null);
+    javaConnector.cerrarAgenda();
 }
 
 function pagAppWindow_onClickCerrarNotificacionError(){

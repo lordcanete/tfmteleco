@@ -7,7 +7,8 @@ var jsConnector = {
     },
     abrirPanelAgenda: function(listaContactosJsonString){
         var listaContactosJson = JSON.parse(listaContactosJsonString);
-        pagAppWindow_limpiarFormularioNuevoContacto();
+        pagAppWindow_limpiarFormularioNuevoContacto();        
+        pagAppWindow_limpiarFormularioNuevoGrupo();
         pagAppWindow_mostrarCapaAgenda(listaContactosJson);
     },
     actualizarPanelAgenda: function(){
@@ -32,12 +33,11 @@ var jsConnector = {
     actualizarCodigoInvitacionGrupo: function(codigo){
         pagAppWindow_refrescarCodigoInvitacionGrupo(codigo);
     },
-    actualizarPanelConversacionesTrasCrearGrupo: function(){
-        pagAppWindow_limpiarFormularioNuevoGrupo();
-        javaConnector.obtenerListaConversacionesAbiertas(null);
+    actualizarPanelConversacionesTrasCrearGrupo: function(aliasRemitente){
+        javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     },
-    actualizarPanelConversacionesTrasUnirseAGrupo: function(){
-        javaConnector.obtenerListaConversacionesAbiertas(null);
+    actualizarPanelConversacionesTrasUnirseAGrupo: function(aliasRemitente){
+        javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     }
 };
 

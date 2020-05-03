@@ -308,6 +308,10 @@ public class VistaGUI extends Application
             javascriptConnector.call("comprobarEstadoCallback");
         }
 
+        public void cerrarAgenda(){
+            obtenerListaConversacionesAbiertas(servicio.getConversacionSeleccionada().getAlias());
+        }
+
         public void obtenerListaConversacionesAbiertas(String aliasConversacionSeleccionada){
             ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
             JsonArrayBuilder listaConversacionesJsonBuilder = Json.createArrayBuilder();
@@ -506,7 +510,7 @@ public class VistaGUI extends Application
 
         public void crearGrupo(String nombreGrupo){
             servicio.appCrearGrupo(nombreGrupo);
-            javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo");
+            javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", servicio.getConversacionSeleccionada().getAlias());
         }
 
         public void eliminarConversacion(String idConversacion){
@@ -597,7 +601,7 @@ public class VistaGUI extends Application
                 }
                 if (idUsuario != null){
                     servicio.appEnviarPeticionUnirAGrupo(idUsuario.toStringFull(), codigoInvitacion);
-                    javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo");
+                    javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo", servicio.getConversacionSeleccionada().getAlias());
                 }
                 else{
                     LOGGER.log(Level.INFO, "Error al encontrar contacto para unirse a grupo");
