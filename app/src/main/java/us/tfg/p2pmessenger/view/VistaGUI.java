@@ -407,16 +407,19 @@ public class VistaGUI extends Application
             {
                 for (Mensaje mensaje : mensajes)
                 {
-                    mensajeJsonBuilder = Json.createObjectBuilder()
+                    if(!comprobarSiEsMensajeDeControl(mensaje)){
+                        mensajeJsonBuilder = Json.createObjectBuilder()
                                                 .add("contenido", mensaje.getContenido()) 
                                                 .add("fecha", mensaje.getFecha().getTime());                      
-                    if(mensaje.getOrigen().equals(conversacionSeleccionada.getId())){
-                        mensajeJsonBuilder.add("sentidoRecepcion", true);
-                    }else{
-                        mensajeJsonBuilder.add("sentidoRecepcion", false);
+                        if(mensaje.getOrigen().equals(conversacionSeleccionada.getId())){
+                            mensajeJsonBuilder.add("sentidoRecepcion", true);
+                        }else{
+                            mensajeJsonBuilder.add("sentidoRecepcion", false);
+                        }
+                        mensajeJson = mensajeJsonBuilder.build();
+                        listaMensajesJsonBuilder.add(mensajeJson); 
                     }
-                    mensajeJson = mensajeJsonBuilder.build();
-                    listaMensajesJsonBuilder.add(mensajeJson);                   
+                                      
                 }   
                 listaMensajesJson = listaMensajesJsonBuilder.build();   
                 LOGGER.log(Level.INFO, "Mensajes a devolver en json: \n{0}", listaMensajesJson.toString());             
@@ -591,6 +594,21 @@ public class VistaGUI extends Application
             
         }
 
+        public boolean comprobarSiEsMensajeDeControl(Mensaje mensaje){
+            boolean validacion = false;
+            validacion = comprobarSiEsMensajeUnionGrupo(mensaje);
+            return validacion;
+        }
+        public boolean comprobarSiEsMensajeUnionGrupo(Mensaje mensaje){
+            boolean validacion = false;
+            String contenido = mensaje.getContenido();
+            int longContenido = contenido.length();
+            boolean tieneFormatoJSON = (contenido.substring(0,1).compareTo("{") == 0) && (contenido.substring(longContenido-1).compareTo("}") == 0);
+            boolean contieneClavesValoresUnionGrupo = contenido.contains("\"id_grupo\":") && contenido.contains("\"clave_privada\":");
+            System.out.println("tieneFormatoJSON: " + tieneFormatoJSON + " contieneClavesValoresUnionGrupo: " + contieneClavesValoresUnionGrupo);
+            validacion = tieneFormatoJSON && contieneClavesValoresUnionGrupo;
+            return validacion;
+        }
 
 
 
