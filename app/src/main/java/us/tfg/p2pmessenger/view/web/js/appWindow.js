@@ -96,7 +96,7 @@ function pagAppWindow_onClickAbrirAgenda(){
 }
 
 function pagAppWindow_onClickRefrescarConversaciones(){
-    javaconector.refrescarConversaciones();
+    javaConnector.refrescarConversaciones();
 }
 
 function pagAppWindow_onClickCerrarAgenda(){
