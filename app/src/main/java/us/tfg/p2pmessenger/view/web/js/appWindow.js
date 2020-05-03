@@ -183,8 +183,8 @@ function pagAppWindow_onClickEnviarMensaje(item){
 }
 
 function pagAppWindow_onClickGenerarCodigoInvitacion(){    
-    javaConnector.generarCodigoInvitacionGrupo();
-    //pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
+    //javaConnector.generarCodigoInvitacionGrupo();    
+    pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
 }
 
 function pagAppWindow_onClickCerrarTooltipCodInvitacion(){
@@ -225,8 +225,10 @@ function pagAppWindow_validarCampoVacio(contenido){
 function pagAppWindow_refrescarCodigoInvitacionGrupo(codigo){    
     pagAppWindow_modificarCodigoInvitacionGrupo(codigo);    
     $("#pagAppWindow_codigoInvitacionGrupo").tooltip('show');
-    $("#iconoCerrarCodInvitacion").click(function(){
+    //Se cerrará el tooltip al pulsar en cualquier sitio. Después, se elimina este handler    
+    $(document).on('click', function (e) {        
         pagAppWindow_onClickCerrarTooltipCodInvitacion();
+        $(document).off('click', pagAppWindow_onClickCerrarTooltipCodInvitacion());
     });
 }
 
@@ -397,6 +399,9 @@ function pagAppWindow_comprobarNotificaciones() {
 }
 
 function onPageReady(){
+    $('#pagAppWindow_codigoInvitacionGrupo').on('click', function(e) {
+        e.stopPropagation();
+    });
     window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
     javaConnector.obtenerListaConversacionesAbiertas(null);    
 }
@@ -406,6 +411,7 @@ function onPageReady(){
 /*
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-    //pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);    
-    pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
+    //pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
+    
+    //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
 })*/
