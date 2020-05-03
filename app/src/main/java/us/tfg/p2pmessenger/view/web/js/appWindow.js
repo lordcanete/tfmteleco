@@ -94,6 +94,11 @@ function pagAppWindow_onClickAbrirAgenda(){
     //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
     pagAppWindow_mostrarAgendaActualizada();        
 }
+
+function pagAppWindow_onClickRefrescarConversaciones(){
+    javaconector.refrescarConversaciones();
+}
+
 function pagAppWindow_onClickCerrarAgenda(){
     javaConnector.cerrarAgenda();
 }

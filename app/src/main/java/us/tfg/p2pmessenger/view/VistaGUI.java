@@ -309,12 +309,15 @@ public class VistaGUI extends Application
         }
 
         public void cerrarAgenda(){
+            refrescarConversaciones();          
+        }
+
+        public void refrescarConversaciones(){
             if(servicio.getConversacionSeleccionada() != null){
                 obtenerListaConversacionesAbiertas(servicio.getConversacionSeleccionada().getAlias());
             }else{
                 obtenerListaConversacionesAbiertas(null);
             }
-            
         }
 
         public void obtenerListaConversacionesAbiertas(String aliasConversacionSeleccionada){
@@ -515,7 +518,12 @@ public class VistaGUI extends Application
 
         public void crearGrupo(String nombreGrupo){
             servicio.appCrearGrupo(nombreGrupo);
-            javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", servicio.getConversacionSeleccionada().getAlias());
+            if(servicio.getConversacionSeleccionada() != null){
+                javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", servicio.getConversacionSeleccionada().getAlias());
+            }else{
+                javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", (Class<?>) null);
+            }
+            
         }
 
         public void eliminarConversacion(String idConversacion){
@@ -580,7 +588,13 @@ public class VistaGUI extends Application
         }
 
         public void actualizarTrasNotificacion(){
-            javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", servicio.getConversacionSeleccionada().getAlias());
+            if(servicio.getConversacionSeleccionada() != null){
+                javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", servicio.getConversacionSeleccionada().getAlias());
+            }else{
+                javascriptConnector.call("actualizarPanelesAppWindowTrasNotificacion", (Class<?>) null);
+            }
+            
+            
         }
 
         public void generarCodigoInvitacionGrupo(){
@@ -606,7 +620,12 @@ public class VistaGUI extends Application
                 }
                 if (idUsuario != null){
                     servicio.appEnviarPeticionUnirAGrupo(idUsuario.toStringFull(), codigoInvitacion);
-                    javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo", servicio.getConversacionSeleccionada().getAlias());
+                    if(servicio.getConversacionSeleccionada() != null){
+                        javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo", servicio.getConversacionSeleccionada().getAlias());
+                    }else{
+                        javascriptConnector.call("actualizarPanelConversacionesTrasUnirseAGrupo", (Class<?>) null);
+                    }
+                    
                 }
                 else{
                     LOGGER.log(Level.INFO, "Error al encontrar contacto para unirse a grupo");
