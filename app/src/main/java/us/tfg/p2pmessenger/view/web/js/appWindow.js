@@ -1,8 +1,9 @@
-var idCapaAgenda ="#pagAppWindow_capaAgenda"
-var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones"
-var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes"
-var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias"
-var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario"
+var idCapaAgenda ="#pagAppWindow_capaAgenda";
+var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones";
+var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes";
+var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias";
+var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario";
+var idInput_CrearGrupoNombre = "pagAppWindow_PanelAgendaCrearGrupoFieldNombre";
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var idFormFieldMensaje = "pagAppWindow_formFieldMensaje";
@@ -145,7 +146,7 @@ function pagAppWindow_onClickIntroducirCodigoGrupo(item){
 function pagAppWindow_onClickUnirseAGrupo(){
     var codigo = $("#pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo").val();
     var idUsuario = $("#pagAppWindow_PanelAgendaUnirseAGrupoIdContactoInvitacion").text();    
-    if(pagAppWindow_validarFormularioUnirseAGrupo(codigo)){
+    if(pagAppWindow_validarFormularioUnirseAGrupo(codigo)){        
         javaConnector.unirseAGrupo(idUsuario, codigo);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionUnirseAGrupoKO);
@@ -200,6 +201,10 @@ function pagAppWindow_limpiarFormularioNuevoMensaje(){
     limpiarTextoInput(prefijoSelectorId.concat(idFormFieldMensaje));
 }
 
+function pagAppWindow_limpiarFormularioNuevoGrupo(){
+    limpiarTextoInput(prefijoSelectorId.concat(idInput_CrearGrupoNombre));
+}
+
 function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     return (pagAppWindow_validarCampoVacio(usuario) && pagAppWindow_validarCampoVacio(alias));    
 }
@@ -243,7 +248,8 @@ function pagAppWindow_modificarCodigoInvitacionGrupo(codigo){
 function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON){
     var panelListaConversacionesAbiertas = $("#pagAppWindow_bloqueIzquierdoConversaciones");
     var hayConversacionSeleccionada = false;
-    ocultarBloque(idCapaAgenda);
+    ocultarBloque(idBloque_panelUnirseAGrupo);
+    ocultarBloque(idCapaAgenda);    
     panelListaConversacionesAbiertas.find(prefijoSelectorClase.concat(claseBloque_conversacionBox)).remove();
     if(listaConversacionesJSON.length > 0){
         ocultarBloqueNotificacion(idBloque_listaConversacionesDefault);
@@ -316,6 +322,11 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
     contenidoElement.text(contenido);  
     var fechaElement = mensajeBox.find(".mensajeBoxFecha");
     fechaElement.text(fechaFormateada); 
+    if(mensajeJson.hasOwnProperty('remitente')){
+        var remitente = mensajeJson.remitente;
+        var remitenteElement = mensajeBox.find(".mensajeBoxRemitente");
+        remitenteElement.text(remitente);
+    }
     
     return mensajeBox;
 }

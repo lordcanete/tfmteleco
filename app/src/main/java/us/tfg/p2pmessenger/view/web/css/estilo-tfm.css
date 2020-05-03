@@ -117,3 +117,7 @@ html,body {
     background-color: #000;
     border-radius: .25rem;
 }
+
+.mensajeBoxRemitente{
+    color: #ef95a3;
+}

@@ -398,11 +398,15 @@ public class VistaGUI extends Application
 
         public void obtenerMensajesConversacionSeleccionada(int primerMensaje, int ultimoMensaje){
             Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
+            ArrayList<Contacto> contactos = servicio.appObtenerContactos();
+            Usuario usuarioLogado = servicio.appGetUsuario();
             ArrayList<Mensaje> mensajes = obtenerMensajesConversacion(conversacionSeleccionada, primerMensaje, ultimoMensaje);
             JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
             JsonObjectBuilder mensajeJsonBuilder = Json.createObjectBuilder();
             JsonArray listaMensajesJson = null;
             JsonObject mensajeJson = null;
+            boolean contactoGuardado = false;
+            String aliasContactoGuardado = "";
             if(mensajes!=null)
             {
                 for (Mensaje mensaje : mensajes)
@@ -411,10 +415,26 @@ public class VistaGUI extends Application
                         mensajeJsonBuilder = Json.createObjectBuilder()
                                                 .add("contenido", mensaje.getContenido()) 
                                                 .add("fecha", mensaje.getFecha().getTime());                      
-                        if(mensaje.getOrigen().equals(conversacionSeleccionada.getId())){
-                            mensajeJsonBuilder.add("sentidoRecepcion", true);
-                        }else{
+                        if(mensaje.getOrigen().equals(usuarioLogado.getId())){
                             mensajeJsonBuilder.add("sentidoRecepcion", false);
+                        }else{
+                            mensajeJsonBuilder.add("sentidoRecepcion", true);
+                            if(conversacionSeleccionada.getTipo() == Conversacion.TIPO_GRUPO){
+                                contactoGuardado = false;
+                                for(Contacto contacto : contactos){
+                                    if (mensaje.getOrigen().equals(contacto.getUsuario().getId())){
+                                        contactoGuardado = true;
+                                        aliasContactoGuardado = contacto.getAlias();
+                                        break;
+                                    }
+                                }
+                                if(contactoGuardado){
+                                    mensajeJsonBuilder.add("remitente", aliasContactoGuardado);
+                                }else{
+                                    mensajeJsonBuilder.add("remitente", mensaje.getOrigen().toStringFull());
+                                }
+
+                            }
                         }
                         mensajeJson = mensajeJsonBuilder.build();
                         listaMensajesJsonBuilder.add(mensajeJson); 

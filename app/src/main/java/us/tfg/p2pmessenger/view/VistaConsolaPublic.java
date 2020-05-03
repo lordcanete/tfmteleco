@@ -990,5 +990,8 @@ public class VistaConsolaPublic implements Vista
         app.enviarPeticionUnirAGrupo(idUsuario, codigoInvitacion);
     }
     
+    public Usuario appGetUsuario(){
+        return app.getUsuario();
+    }
 
 }
