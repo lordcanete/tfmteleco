@@ -309,7 +309,12 @@ public class VistaGUI extends Application
         }
 
         public void cerrarAgenda(){
-            obtenerListaConversacionesAbiertas(servicio.getConversacionSeleccionada().getAlias());
+            if(servicio.getConversacionSeleccionada() != null){
+                obtenerListaConversacionesAbiertas(servicio.getConversacionSeleccionada().getAlias());
+            }else{
+                obtenerListaConversacionesAbiertas(null);
+            }
+            
         }
 
         public void obtenerListaConversacionesAbiertas(String aliasConversacionSeleccionada){

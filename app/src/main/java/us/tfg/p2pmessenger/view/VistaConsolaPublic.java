@@ -102,6 +102,7 @@ public class VistaConsolaPublic implements Vista
         this.puerto=puerto;
         this.ip=ip;
         this.notificacionesPendiente = false;
+        this.conversacionSeleccionada = null;
         app = new ControladorConsolaImpl(ip, puerto,this);
     }  
     
