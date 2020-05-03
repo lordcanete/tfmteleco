@@ -183,8 +183,8 @@ function pagAppWindow_onClickEnviarMensaje(item){
 }
 
 function pagAppWindow_onClickGenerarCodigoInvitacion(){    
-    //javaConnector.generarCodigoInvitacionGrupo();    
-    pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
+    javaConnector.generarCodigoInvitacionGrupo();    
+    //pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
 }
 
 function pagAppWindow_onClickCerrarTooltipCodInvitacion(){
