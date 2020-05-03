@@ -183,8 +183,8 @@ function pagAppWindow_onClickEnviarMensaje(item){
 }
 
 function pagAppWindow_onClickGenerarCodigoInvitacion(){    
-    javaConnector.generarCodigoInvitacionGrupo();    
-    //pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
+    //javaConnector.generarCodigoInvitacionGrupo();    
+    pagAppWindow_refrescarCodigoInvitacionGrupo("mockup");
 }
 
 function pagAppWindow_onClickCerrarTooltipCodInvitacion(){
@@ -225,6 +225,10 @@ function pagAppWindow_validarCampoVacio(contenido){
 function pagAppWindow_refrescarCodigoInvitacionGrupo(codigo){    
     pagAppWindow_modificarCodigoInvitacionGrupo(codigo);    
     $("#pagAppWindow_codigoInvitacionGrupo").tooltip('show');
+    //Evitará que se cierre la tooltip al pulsar sobre ella
+    $('.tooltip').on('click', function(e) {
+        e.stopPropagation();
+    });
     //Se cerrará el tooltip al pulsar en cualquier sitio. Después, se elimina este handler    
     $(document).on('click', function (e) {        
         pagAppWindow_onClickCerrarTooltipCodInvitacion();
@@ -411,7 +415,9 @@ function onPageReady(){
 /*
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-    //pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
-    
+    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
+    $('#pagAppWindow_codigoInvitacionGrupo').on('click', function(e) {
+        e.stopPropagation();
+    });    
     //pagAppWindow_mostrarCapaAgenda(JSON.parse(mockup_jsonContactos));
 })*/
