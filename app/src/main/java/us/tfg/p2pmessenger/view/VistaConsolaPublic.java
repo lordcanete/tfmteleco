@@ -1050,5 +1050,10 @@ public class VistaConsolaPublic implements Vista
     public Usuario appGetUsuario(){
         return app.getUsuario();
     }
+    
+    public ArrayList<String> appObtenerConversacionesPendiente(){
+        return app.obtenerConversacionesPendiente();
+
+    }
 
 }
