@@ -59,7 +59,6 @@ import us.tfg.p2pmessenger.model.Usuario;
 import us.tfg.p2pmessenger.util.Base64;
 import us.tfg.p2pmessenger.view.Vista;
 import us.tfg.p2pmessenger.view.VistaConsolaPublic;
-
 /**
  * Clase que realiza el papel de controlador en el patron
  * "modelo - vista - controlador". Esta clase toma como
@@ -71,7 +70,7 @@ import us.tfg.p2pmessenger.view.VistaConsolaPublic;
  * es {@link Mensajero} y la vista es esta clase, donde
  * se representa la informacion generada por ese controlador.
  */
-public class ControladorConsolaImpl implements ControladorApp
+public class ControladorGUIImpl implements ControladorApp
 {
 
 
@@ -110,7 +109,7 @@ public class ControladorConsolaImpl implements ControladorApp
     private boolean varBuscaUsuario;
 
     private Conversacion conversacionAbierta;
-    private Vista vista;
+    private VistaConsolaPublic vista;
     private InetAddress miDireccion;
     private int puertoEscucha;
     private String ipEscucha;
@@ -127,7 +126,7 @@ public class ControladorConsolaImpl implements ControladorApp
     private int error;
 
 
-    public ControladorConsolaImpl(String ipEscucha, int puertoEscucha, Vista vista)
+    public ControladorGUIImpl(String ipEscucha, int puertoEscucha, VistaConsolaPublic vista)
     {
         // hack for JCE Unlimited Strength
         Field field = null;
@@ -231,7 +230,7 @@ public class ControladorConsolaImpl implements ControladorApp
         if (mode == MODO_INICIO_SESION)
         {            
             GestorFicherosConsola gfich = new GestorFicherosConsola();
-            if (gfich.existeFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO))
+            if (gfich.existeFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO))
             {
                 String usuario = "";
                 String contr = "";
@@ -239,7 +238,7 @@ public class ControladorConsolaImpl implements ControladorApp
                 {
                     GestorFicherosConsola gestorFicheros = new GestorFicherosConsola();
 
-                    byte[] buffer = gestorFicheros.leeDeFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO);
+                    byte[] buffer = gestorFicheros.leeDeFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO);
                     JsonReader jsonReader = Json
                             .createReader(new ByteArrayInputStream(buffer));
                     JsonObject objeto = jsonReader.readObject();
@@ -262,7 +261,7 @@ public class ControladorConsolaImpl implements ControladorApp
                         error = Vista.ERROR_INICIAR_LLAVERO;
                         vista.excepcion(e);
                         if (logger.level <= Logger.CONFIG) logger.logException("Error al iniciar el llavero", e);
-                        gfich.eliminaFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO);
+                        gfich.eliminaFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO);
                     }
                 }
 
@@ -753,11 +752,6 @@ public class ControladorConsolaImpl implements ControladorApp
     }
 
     @Override
-    public boolean boolEliminaConversacion(String id){
-        return true;
-    }
-
-    @Override
     public void eliminaConversacion(String id)
     {
         Grupo g = null;
@@ -777,6 +771,33 @@ public class ControladorConsolaImpl implements ControladorApp
         } catch (Exception e)
         {
             vista.excepcion(e);
+        }
+
+    }
+
+    @Override
+    public boolean boolEliminaConversacion(String id){
+        boolean resultado = false;
+        Grupo g = null;
+        try
+        {
+            g = db.obtenerGrupo(id, llavero.getClaveSimetrica(yo.getNombre()), yo.getNombre());
+            if (g != null)
+            {
+                abandonaGrupo(g.getId().toStringFull());
+            } else
+            {
+                db.borrarConversacionAbierta(id, yo.getNombre());
+                llavero.setClaveSimetrica(id + Llavero.EXTENSION_CLAVE_ENTRANTE, null);
+                llavero.setClaveSimetrica(id + Llavero.EXTENSION_CLAVE_SALIENTE, null);                
+            }
+            resultado = true;
+
+        } catch (Exception e)
+        {
+            vista.excepcion(e);
+        }finally{
+            return resultado;
         }
 
     }
@@ -804,14 +825,14 @@ public class ControladorConsolaImpl implements ControladorApp
                                            .build();
 
             GestorFicherosConsola gfich = new GestorFicherosConsola();
-            gfich.escribirAFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO, contenidoJson.toString().getBytes(StandardCharsets.UTF_8),
+            gfich.escribirAFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO, contenidoJson.toString().getBytes(StandardCharsets.UTF_8),
                     false);
 
             Llavero llavero = new ControladorLlaveroConsola(null, contr);
 
             Usuario nuevo = this.gestorUsuariosGrupos.creaUsuario(
-                    nombre, ControladorConsolaImpl.TAM_CLAVE_ASIMETRICA, Controlador.ALGORITMO_CLAVE_ASIMETRICA,
-                    ControladorConsolaImpl.ALGORITMO_FIRMA, ControladorConsolaImpl.ALGORITMO_CLAVE_SIMETRICA);
+                    nombre, ControladorGUIImpl.TAM_CLAVE_ASIMETRICA, Controlador.ALGORITMO_CLAVE_ASIMETRICA,
+                    ControladorGUIImpl.ALGORITMO_FIRMA, ControladorGUIImpl.ALGORITMO_CLAVE_SIMETRICA);
 
             BloqueMensajes bloqueMensajes = new BloqueMensajes(nuevo.getBloqueMensajesImportantes()
                     , nuevo.getId(), false, null);
@@ -844,8 +865,131 @@ public class ControladorConsolaImpl implements ControladorApp
          */
     }
 
+
     @Override
-    public void crearGrupo(String nombreGrupo, VistaConsolaPublic caller){}
+    public void crearGrupo(final String nombreGrupo, VistaConsolaPublic caller)
+    {
+        buscaIdDisponible(new Continuation<Id, Exception>()
+        {
+            @Override
+            public void receiveResult(Id result)
+            {
+                try
+                {
+                    final Grupo nuevoGrupo = gestorUsuariosGrupos.creaGrupo(result, nombreGrupo, yo,
+                            Controlador.ALGORITMO_CLAVE_ASIMETRICA, ControladorGUIImpl.TAM_CLAVE_ASIMETRICA,
+                            ControladorGUIImpl.ALGORITMO_CLAVE_SIMETRICA, ControladorGUIImpl.ALGORITMO_FIRMA);
+
+
+                    buscaIdDisponible(new Continuation<Id, Exception>()
+                    {
+                        @Override
+                        public void receiveResult(Id result)
+                        {
+                            BloqueMensajes bloqueMensajes = new BloqueMensajes(result, nuevoGrupo.getId(), true, null);
+                            nuevoGrupo.setBloqueMensajesImportantes(bloqueMensajes.getId());
+
+                            final String idGrupo = nuevoGrupo.getId().toStringFull();
+                            GrupoCifrado gc = null;
+                            try
+                            {
+                                db.insertarGrupo(nuevoGrupo, llavero.getClaveSimetrica(yo.getNombre()), yo.getNombre());
+                            } catch (Exception e)
+                            {
+                                vista.excepcion(e);
+                                error = Vista.ERROR_INSERCION_NUEVO_GRUPO_EN_BBDD;
+                            }
+
+                            try
+                            {
+                                db.insertarConversacionAbierta(nuevoGrupo.getId().toStringFull(),
+                                        nuevoGrupo.getNombre(),
+                                        yo.getNombre(),
+                                        Conversacion.TIPO_GRUPO);
+                            } catch (Exception e)
+                            {
+                                vista.excepcion(e);
+                                error = Vista.ERROR_INSERCION_CONVERSACION_EN_BBDD;
+                            }
+
+
+                            try
+                            {
+                                gc = new GrupoCifrado(nuevoGrupo,
+                                        (SecretKey) llavero.getClaveSimetrica(nuevoGrupo.getId().toStringFull()),
+                                        llavero.getClavePrivada(nuevoGrupo.getId().toStringFull()));
+                            } catch (Exception e)
+                            {
+                                vista.excepcion(e);
+                                error = Vista.ERROR_CREACION_GRUPO_CIFRADO;
+                            }
+
+
+                            Continuation<Boolean[], Exception> cont = new Continuation<Boolean[], Exception>()
+                            {
+                                @Override
+                                public void receiveResult(Boolean[] result)
+                                {
+                                    int inserciones = 0;
+                                    for (boolean b : result)
+                                    {
+                                        if (b)
+                                            inserciones++;
+                                    }
+                                    if (inserciones > 0)
+                                    {
+                                        if (logger.level <= Logger.INFO)
+                                            logger.log("Insertado correctamente en " + inserciones + " ubicaciones");
+                                    } else
+                                    {
+                                        if (logger.level <= Logger.INFO)
+                                            logger.log("No se ha insertado el grupo " + idGrupo);
+                                    }
+                                }
+
+                                @Override
+                                public void receiveException(Exception exception)
+                                {
+                                    vista.excepcion(exception);
+                                    error = Vista.ERROR_INSERCION_NUEVO_GRUPO_EN_PASTRY;
+                                }
+                            };
+
+                            almacenamiento.insert(gc, cont);
+
+                            if (logger.level <= Logger.INFO)
+                                logger.log("grupo " + nuevoGrupo.getId().toStringFull() + " creado. Clave privada = " +
+                                        Base64.getEncoder().encodeToString(
+                                                llavero.getClavePrivada(nuevoGrupo.getId().toStringFull())
+                                                       .getEncoded()));
+
+                            almacenamiento.insert(bloqueMensajes, cont);
+                            System.out.println("Caller notificargrupocreado");
+                            caller.NotificarGrupoCreado();
+
+                        }
+
+                        @Override
+                        public void receiveException(Exception exception)
+                        {
+
+                        }
+                    });
+
+                } catch (Exception e)
+                {
+                    vista.excepcion(e);
+                    error = Vista.ERROR_CREACION_NUEVO_GRUPO;
+                }
+            }
+
+            @Override
+            public void receiveException(Exception exception)
+            {
+
+            }
+        });
+    }
 
     @Override
     public void crearGrupo(final String nombreGrupo)
@@ -858,8 +1002,8 @@ public class ControladorConsolaImpl implements ControladorApp
                 try
                 {
                     final Grupo nuevoGrupo = gestorUsuariosGrupos.creaGrupo(result, nombreGrupo, yo,
-                            Controlador.ALGORITMO_CLAVE_ASIMETRICA, ControladorConsolaImpl.TAM_CLAVE_ASIMETRICA,
-                            ControladorConsolaImpl.ALGORITMO_CLAVE_SIMETRICA, ControladorConsolaImpl.ALGORITMO_FIRMA);
+                            Controlador.ALGORITMO_CLAVE_ASIMETRICA, ControladorGUIImpl.TAM_CLAVE_ASIMETRICA,
+                            ControladorGUIImpl.ALGORITMO_CLAVE_SIMETRICA, ControladorGUIImpl.ALGORITMO_FIRMA);
 
 
                     buscaIdDisponible(new Continuation<Id, Exception>()
@@ -982,7 +1126,7 @@ public class ControladorConsolaImpl implements ControladorApp
             mensajero.abandonaGrupo(tmp);
             db.borrarConversacionAbierta(idGrupo, yo.getNombre());
             db.borrarGrupo(idGrupo, yo.getNombre());
-            db.setValor(idGrupo + ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE, null);
+            db.setValor(idGrupo + ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE, null);
             db.borraMensajesDeConversacion(yo.getNombre(), idGrupo);
             llavero.setClaveSimetrica(idGrupo, null);
             llavero.setEntradaPrivada(idGrupo, null);
@@ -1035,7 +1179,7 @@ public class ControladorConsolaImpl implements ControladorApp
         onStop();
         this.modo = MODO_INICIO_SESION;
         GestorFicherosConsola gfich = new GestorFicherosConsola();
-        gfich.eliminaFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO);
+        gfich.eliminaFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO);
     }
 
     @Override
@@ -1104,8 +1248,11 @@ public class ControladorConsolaImpl implements ControladorApp
         {
             //muestra notificacion con que hay un nuevo mensaje
             vista.notificacion(destinatario.getAlias());
+            vista.notificacionDestinatario(destinatario.getAlias());
+
         } else //muestra notificacion con que hay un nuevo mensaje
             vista.notificacion(idConversacion.toStringFull());
+            vista.notificacionConversacion(idConversacion.toStringFull());
     }
 
     @Override
@@ -1211,7 +1358,7 @@ public class ControladorConsolaImpl implements ControladorApp
                 Grupo grupo = db.obtenerGrupo(idDestino, llavero.getClaveSimetrica(miNombre), yo.getNombre());
                 Id idBloque;
                 String ultimoIdConocido = db
-                        .getValor(grupo.getId().toStringFull() + ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE);
+                        .getValor(grupo.getId().toStringFull() + ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE);
 
                 if (ultimoIdConocido.length() > 0)
                     idBloque = rice.pastry.Id.build(ultimoIdConocido);
@@ -1297,7 +1444,7 @@ public class ControladorConsolaImpl implements ControladorApp
 
         Continuation<PastContent, Exception> contBuscar = new Continuation<PastContent, Exception>()
         {
-            private ControladorConsolaImpl aplicacion;
+            private ControladorGUIImpl aplicacion;
 
             @Override
             public void receiveResult(PastContent result)
@@ -1358,7 +1505,7 @@ public class ControladorConsolaImpl implements ControladorApp
             }
 
             Continuation<PastContent, Exception> inicializa(
-                    ControladorConsolaImpl aplicacion)
+                    ControladorGUIImpl aplicacion)
             {
                 this.aplicacion = aplicacion;
                 return this;
@@ -1439,7 +1586,7 @@ public class ControladorConsolaImpl implements ControladorApp
 
         Continuation<PastContent, Exception> contBuscar = new Continuation<PastContent, Exception>()
         {
-            private ControladorConsolaImpl aplicacion;
+            private ControladorGUIImpl aplicacion;
 
             @Override
             public void receiveResult(PastContent result)
@@ -1465,7 +1612,7 @@ public class ControladorConsolaImpl implements ControladorApp
                             try
                             {
                                 clave = ManejadorClaves
-                                        .generaClaveSimetrica(ControladorConsolaImpl.ALGORITMO_CLAVE_SIMETRICA);
+                                        .generaClaveSimetrica(ControladorGUIImpl.ALGORITMO_CLAVE_SIMETRICA);
                                 llavero.setClaveSimetrica(
                                         bloque.getDestinatario().toStringFull() + Llavero.EXTENSION_CLAVE_ENTRANTE,
                                         clave);
@@ -1545,7 +1692,7 @@ public class ControladorConsolaImpl implements ControladorApp
                                         try
                                         {
                                             db.setValor(bloque.getDestinatario()
-                                                              .toStringFull() + ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE,
+                                                              .toStringFull() + ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE,
                                                     result.toStringFull());
                                         } catch (Exception e)
                                         {
@@ -1553,7 +1700,7 @@ public class ControladorConsolaImpl implements ControladorApp
                                                 logger.logException(
                                                         "Error al insertar un valor en la bbdd: " + bloque
                                                                 .getDestinatario()
-                                                                .toStringFull() + ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE + " : " + result
+                                                                .toStringFull() + ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE + " : " + result
                                                                 .toStringFull(),
                                                         e);
                                         }
@@ -1574,7 +1721,7 @@ public class ControladorConsolaImpl implements ControladorApp
                             try
                             {
                                 db.setValor(bloque.getDestinatario().toStringFull() +
-                                        ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE, bloque.getId().toStringFull());
+                                        ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE, bloque.getId().toStringFull());
                             } catch (Exception e)
                             {
                                 if (logger.level <= Logger.WARNING)
@@ -1595,7 +1742,7 @@ public class ControladorConsolaImpl implements ControladorApp
                         "App.conectaAGupo.ContinuacionBuscar.Exception", exception);
             }
 
-            Continuation<PastContent, Exception> inicializa(ControladorConsolaImpl aplicacion)
+            Continuation<PastContent, Exception> inicializa(ControladorGUIImpl aplicacion)
             {
                 this.aplicacion = aplicacion;
                 return this;
@@ -1628,13 +1775,13 @@ public class ControladorConsolaImpl implements ControladorApp
                         {
                             ultimoIdConocido = db
                                     .getValor(mensaje.getDestino()
-                                                     .toStringFull() + ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE);
+                                                     .toStringFull() + ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE);
                         } catch (Exception e)
                         {
                             if (logger.level <= Logger.WARNING) logger.logException(
                                     "Error al obtener el valor de " +
                                             mensaje.getDestino()
-                                                   .toStringFull() + ControladorConsolaImpl.EXTENSION_ULTIMO_BLOQUE, e);
+                                                   .toStringFull() + ControladorGUIImpl.EXTENSION_ULTIMO_BLOQUE, e);
                         }
                         if (ultimoIdConocido.length() > 0)
                         {

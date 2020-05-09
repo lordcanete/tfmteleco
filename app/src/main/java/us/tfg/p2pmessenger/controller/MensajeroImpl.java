@@ -278,7 +278,7 @@ public class MensajeroImpl implements Mensajero, ObservadorKey
         controlador.guardaMensaje(myMessage, idDestino);
 
         MensajeCifrado sobre = null;
-
+        
         if (individual)
         {
             // busca la clave simetrica de un usuario. para mensajes

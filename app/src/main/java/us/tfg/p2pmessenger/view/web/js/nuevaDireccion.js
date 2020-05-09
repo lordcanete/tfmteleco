@@ -2,10 +2,13 @@ var idBloque_notifError = "#pagConectaPastry_bloqueNotificacionError";
 var idBloque_textoError = "#pagConectaPastry_mensajeNotificacionError";
 var mensaje_validacionKO = "Por favor, proporcione una IP y puerto en formato válido"
 
-function pagConectaPastry_onClickConectar () {
+
+async function pagConectaPastry_onClickConectar () {
     var ip = $("#pagConectaPastry_formFieldIP").val();
     var puerto = $("#pagConectaPastry_formFieldPort").val();
-    if(validarFormularioConectaPastry(ip, puerto)){
+    if(validarFormularioConectaPastry(ip, puerto)){        
+        mostrarBloque(idCapaCargando);
+        await sleep(100);
         javaConnector.conectarPastry(ip, puerto);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionKO);
@@ -29,6 +32,5 @@ function validarFormularioConectaPastry(ip, puerto){
 
 }
 
-function onPageReady(){
-    
-}
+
+  

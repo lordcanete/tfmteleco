@@ -2,17 +2,21 @@ var idBloque_notifError = "#pagInicioSesion_bloqueNotificacionError";
 var idBloque_textoError = "#pagInicioSesion_mensajeNotificacionError";
 var mensaje_validacionKO = "Por favor, proporcione un usuario y una contraseña"
 
-function pagInicioSesion_onClickAutenticar () {
+async function pagInicioSesion_onClickAutenticar () {
     var usuario = $("#pagInicioSesion_formFieldUser").val();
     var passwd = $("#pagInicioSesion_formFieldPass").val();        
     if(validarFormularioInicioSesion(usuario, passwd)){
+        mostrarBloque(idCapaCargando);
+        await sleep(100);
         javaConnector.iniciarSesion(usuario, passwd);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionKO);
     }
 };
 
-function pagInicioSesion_onClickRegistrar () {
+async function pagInicioSesion_onClickRegistrar () {
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
     javaConnector.accederRegistroUsuario();
 };
 function pagInicioSesion_onClickCerrarNotificacionError(){
@@ -25,8 +29,4 @@ function validarFormularioInicioSesion(usuario, passwd){
         validacion = true;
     } 
     return validacion;
-}
-
-function onPageReady(){
-    
 }

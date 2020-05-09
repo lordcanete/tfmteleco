@@ -20,6 +20,7 @@
             <div id="pagAppWindow_bloqueIzquierdoNavbar" class="border d-flex align-items-center p-1">
                 <img class="h-100" src="../img/Logo_US.png"/>
                 <div class="ml-auto">
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickRefrescarConversaciones();"><i class="fa fa-refresh fa-2x text-muted m-1" aria-hidden="true"></i></button>
                     <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickAbrirAgenda();"><i class="fa fa-address-book-o fa-2x text-muted m-1" aria-hidden="true"></i></button>
                     <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickCerrarSesion();"><i class="fa fa-sign-out fa-2x text-muted m-1" aria-hidden="true"></i></button>
                 </div>               
@@ -39,8 +40,15 @@
             
         </div>
         <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column"> 
-            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex align-items-center p-4 border">
-                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span>                
+            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-row align-items-center p-4 border">
+                <div id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</div>   
+                <div id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="mx-2">
+                    <button id="pagAppWindow_codigoInvitacionGrupo" type="button" class="btn border btn-light btn-sm px-1 py-0" data-trigger="manual" data-toggle="tooltip" 
+                    data-html="true" data-placement="bottom" title="" onclick="pagAppWindow_onClickGenerarCodigoInvitacion();">
+                        <i class="fa fa-refresh fa text-muted mx-1 my-0" aria-hidden="true"></i>Cód. invitación
+                    </button>       
+                </div>  
+                
             </div>
             <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1 overflow-auto scrollbarInvisible">
                 
@@ -58,22 +66,54 @@
 
         
         <div id="pagAppWindow_capaAgenda" class="h-100 w-100 align-items-center justify-content-center position-absolute d-none">
-            <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 position-relative">
+            <div id="pagAppWindow_PanelAgenda" class="card d-flex flex-column p-1 shadow-sm h-75 w-75 position-relative">
+                <div id="pagAppWindow_PanelAgendaUnirseAGrupo" class="capaNotificaciones d-none align-items-center position-absolute">        
+                    <div class="shadow-sm p-3 text-left bg-white m-auto col-11 col-lg-8">
+                        <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_onClickCerrarPanelUnirseGrupo();"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
+                        <form class="row m-0 p-0">  
+                            <span id="pagAppWindow_PanelAgendaUnirseAGrupoIdContactoInvitacion" class="d-none"></span>    
+                            <div class="col-12 px-1">Introduce el código recibido de <span id="pagAppWindow_PanelAgendaUnirseAGrupoAliasContactoInvitacion"></span></div>                                    
+                            <div class="col-9 px-1">
+                                <label for="pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo" class="sr-only">Código</label>
+                                <input type="text" class="form-control" id="pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo" placeholder="Código de invitación">
+                            </div>
+                            <button type="button" class="btn btn-success col-2 px-1" onclick="pagAppWindow_onClickUnirseAGrupo(this);">Unirse</button>
+                        </form>
+                    </div>
+                </div>
                 <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_onClickCerrarAgenda();"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
-                <h2 class="m-2 mb-4">Contactos</h2>
-                <div id="pagAppWindow_PanelAgendaAgregarContacto">
-                    <h6 class="ml-2 mb-1">Nuevo contacto</h6>
-                    <form class="form-inline">                                            
-                        <div class="form-group m-1">
-                          <label for="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" class="sr-only">Alias</label>
-                          <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" placeholder="Alias">
-                        </div>
-                        <div class="form-group m-1">
-                            <label for="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" class="sr-only">ID Usuario</label>
-                            <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" placeholder="ID Usuario">
-                          </div>
-                        <button type="button" class="btn btn-success m-1" onclick="pagAppWindow_onClickGuardarContacto();">Guardar</button>
-                      </form>
+                <h2 class="m-2 mb-4">Agenda</h2>
+                <ul class="nav nav-tabs mx-1" id="pagAppWindow_pestaniasCreacion" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="addContacto-tab" data-toggle="tab" href="#pagAppWindow_PanelAgendaAgregarContacto" role="tab" aria-controls="addContacto" aria-selected="true">Nuevo contacto</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="addGrupo-tab" data-toggle="tab" href="#pagAppWindow_PanelAgendaCrearGrupo" role="tab" aria-controls="profile" aria-selected="false">Nuevo grupo</a>
+                    </li>
+                </ul>
+                <div class="tab-content mx-1" id="pagAppWindow_formsCreacion">
+                    <div id="pagAppWindow_PanelAgendaAgregarContacto" class="tab-pane fade show active py-2 px-0 border border-top-0" role="tabpanel" aria-labelledby="addContacto-tab">
+                        <form class="row m-0 p-0">                                            
+                            <div class="col-4 px-1">
+                                <label for="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" class="sr-only">Alias</label>
+                                <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldAlias" placeholder="Alias">
+                            </div>
+                            <div class="col-4 px-1">
+                                <label for="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" class="sr-only">ID Usuario</label>
+                                <input type="text" class="form-control" id="pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario" placeholder="ID Usuario">
+                            </div>
+                            <button type="button" class="btn btn-success col-2 px-1" onclick="pagAppWindow_onClickGuardarContacto();">Guardar</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade py-2 px-0 border border-top-0" id="pagAppWindow_PanelAgendaCrearGrupo" role="tabpanel" aria-labelledby="addGrupo-tab">
+                        <form class="row m-0 p-0">                                            
+                            <div class="col-9 px-1">
+                                <label for="pagAppWindow_PanelAgendaCrearGrupoFieldNombre" class="sr-only">Nombre</label>
+                                <input type="text" class="form-control" id="pagAppWindow_PanelAgendaCrearGrupoFieldNombre" placeholder="Nombre del nuevo grupo">
+                            </div>
+                            <button type="button" class="btn btn-success col-2 px-1" onclick="pagAppWindow_onClickCrearGrupo();">Crear</button>
+                        </form>
+                    </div>
                 </div>
                 <div id="pagAppWindow_PanelAgendaListaContactos" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
                      
@@ -98,6 +138,7 @@
                 <span class="small">ID - Usuario</span>
             </div>     
             <div class="position-absolute iconosOpcionesContacto">
+                <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickIntroducirCodigoGrupo(this);"><i class="fa fa-users fa text-muted m-1" aria-hidden="true"></i></button>
                 <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickNuevaConversacion(this);"><i class="fa fa-comment-o fa text-muted m-1" aria-hidden="true"></i></button>
                 <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEliminarContacto(this);"><i class="fa fa-trash-o fa text-muted m-1" aria-hidden="true"></i></button>
             </div>                                  
@@ -118,6 +159,7 @@
 
         <div id="mensajeDivRecibidoPlantilla" class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1 d-none">
             <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+                <div class="mensajeBoxRemitente text-wrap font-weight-bold text-left"></div>
                 <div class="mensajeBoxContenido text-wrap text-left"></div>
                 <div class="mensajeBoxFecha text-right small font-italic text-muted"></div>
             </div>
@@ -129,6 +171,13 @@
                 <div class="mensajeBoxFecha text-right small font-italic text-muted"></div>
             </div>
         </div>
+        <div id="capaCargando" class="capaNotificaciones d-none align-items-center">        
+            <div class="shadow-sm px-3 py-1 text-center bg-white m-auto rounded">            
+                <div><i class="fa fa-clock-o fa-3x iconoCargando" aria-hidden="true"></i>            </div>
+                <div class="color-us">Espere</div>
+            </div>
+        </div>
+    
 
 
 
@@ -137,6 +186,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/appWindow.js"></script>
     <script src="../js/tfm.js"></script>    
