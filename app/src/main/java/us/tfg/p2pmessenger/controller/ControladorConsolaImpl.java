@@ -839,6 +839,9 @@ public class ControladorConsolaImpl implements ControladorApp
     }
 
     @Override
+    public void crearGrupo(String nombreGrupo, VistaConsolaPublic caller){}
+
+    @Override
     public void crearGrupo(final String nombreGrupo)
     {
         buscaIdDisponible(new Continuation<Id, Exception>()
