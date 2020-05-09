@@ -753,6 +753,11 @@ public class ControladorConsolaImpl implements ControladorApp
     }
 
     @Override
+    public boolean boolEliminaConversacion(String id){
+        return true;
+    }
+
+    @Override
     public void eliminaConversacion(String id)
     {
         Grupo g = null;
