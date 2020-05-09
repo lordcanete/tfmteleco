@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 
 import rice.p2p.commonapi.Id;
 import us.tfg.p2pmessenger.controller.ControladorApp;
-import us.tfg.p2pmessenger.controller.ControladorConsolaImpl;
+import us.tfg.p2pmessenger.controller.ControladorGUIImpl;
 import us.tfg.p2pmessenger.controller.GestorFicherosConsola;
 import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
@@ -19,6 +20,8 @@ import us.tfg.p2pmessenger.model.Mensaje;
 import us.tfg.p2pmessenger.model.Usuario;
 
 import netscape.javascript.JSObject;
+
+
 
 public class VistaConsolaPublic implements Vista
 {
@@ -37,6 +40,7 @@ public class VistaConsolaPublic implements Vista
     private String ip;
 
     private boolean notificacionesPendiente;
+    private boolean finCrearGrupo;
     
     //Setters & Getters para acceder desde instancias
     public ControladorApp getApp(){
@@ -95,6 +99,14 @@ public class VistaConsolaPublic implements Vista
         this.notificacionesPendiente = pendiente;
     }
 
+    public boolean getFinCrearGrupo(){
+        return this.finCrearGrupo;
+    }
+
+    public void setFinCrearGrupo(boolean finalizado){
+        this.finCrearGrupo = finalizado;
+    }
+
     
     //Constructor
     public VistaConsolaPublic(String ip, int puerto)
@@ -103,7 +115,7 @@ public class VistaConsolaPublic implements Vista
         this.ip=ip;
         this.notificacionesPendiente = false;
         this.conversacionSeleccionada = null;
-        app = new ControladorConsolaImpl(ip, puerto,this);
+        app = new ControladorGUIImpl(ip, puerto,this);
     }  
     
     public void listarGrupos()
@@ -172,6 +184,21 @@ public class VistaConsolaPublic implements Vista
         {
             System.out.println("Error al abandonar el grupo: "+e);
             e.printStackTrace();
+        }
+    }
+
+    public boolean appAbandonaGrupo(Id nombre){
+        boolean resultado = false;
+        try
+        {
+            this.app.abandonaGrupo(nombre.toStringFull());
+            resultado = true;
+        }catch (Exception e)
+        {
+            System.out.println("Error al abandonar el grupo: "+e);
+            e.printStackTrace();
+        }finally{
+            return resultado;
         }
     }
 
@@ -483,7 +510,7 @@ public class VistaConsolaPublic implements Vista
                                                                    .build();
 
                                     GestorFicherosConsola gfich = new GestorFicherosConsola();
-                                    gfich.escribirAFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO,
+                                    gfich.escribirAFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO,
                                             contenidoJson.toString().getBytes(), false);
 
                                     app.onStart();
@@ -844,6 +871,26 @@ public class VistaConsolaPublic implements Vista
         setNotificacionesPendientes(true);           
     }
 
+    public void notificacionDestinatario(String alias){
+        for (Conversacion conversacion : conversaciones)
+        {                
+            if(conversacion.getAlias().compareTo(alias) == 0){
+                System.out.println("Entrando a notificacionDestinatario");
+                conversacion.setPendiente(true);
+            }
+        }
+    }
+
+    public void notificacionConversacion(String id){
+        for (Conversacion conversacion : conversaciones)
+            {                
+                if(conversacion.getId().toStringFull().compareTo(id) == 0){
+                    System.out.println("Entrando a notificacionConversacion");
+                    conversacion.setPendiente(true);
+                }
+            }
+    }
+
     @Override
     public void excepcion(Exception e)
     {
@@ -958,8 +1005,8 @@ public class VistaConsolaPublic implements Vista
         return app.iniciarConversacion(idFull);
     }
 
-    public void appEliminarConversacion(String id){
-        this.app.eliminaConversacion(id);    
+    public boolean appEliminarConversacion(String id){
+        return this.app.boolEliminaConversacion(id);    
     }
 
     public void appEnviarMensaje(String mensaje){
@@ -985,7 +1032,15 @@ public class VistaConsolaPublic implements Vista
     }
 
     public void appCrearGrupo(String nombre){
-        app.crearGrupo(nombre);
+        System.out.println("appCrearGrupo");
+        app.crearGrupo(nombre, this);
+    }
+    
+    public void NotificarGrupoCreado(){
+        System.out.println("NotificarGRupoCreado");
+        System.out.println("finCreargrupo: " + this.finCrearGrupo);
+        this.finCrearGrupo = true;
+        System.out.println("finCreargrupo: " + this.finCrearGrupo);
     }
 
     public void appEnviarPeticionUnirAGrupo(String idUsuario, String codigoInvitacion){

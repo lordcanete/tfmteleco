@@ -40,14 +40,14 @@
             
         </div>
         <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column"> 
-            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-row align-items-start p-4 border">
-                <span id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</span>   
-                <span id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="mx-2">
+            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-row align-items-center p-4 border">
+                <div id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</div>   
+                <div id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="mx-2">
                     <button id="pagAppWindow_codigoInvitacionGrupo" type="button" class="btn border btn-light btn-sm px-1 py-0" data-trigger="manual" data-toggle="tooltip" 
                     data-html="true" data-placement="bottom" title="" onclick="pagAppWindow_onClickGenerarCodigoInvitacion();">
                         <i class="fa fa-refresh fa text-muted mx-1 my-0" aria-hidden="true"></i>Cód. invitación
                     </button>       
-                </span>  
+                </div>  
                 
             </div>
             <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1 overflow-auto scrollbarInvisible">
@@ -171,6 +171,13 @@
                 <div class="mensajeBoxFecha text-right small font-italic text-muted"></div>
             </div>
         </div>
+        <div id="capaCargando" class="capaNotificaciones d-none align-items-center">        
+            <div class="shadow-sm px-3 py-1 text-center bg-white m-auto rounded">            
+                <div><i class="fa fa-clock-o fa-3x iconoCargando" aria-hidden="true"></i>            </div>
+                <div class="color-us">Espere</div>
+            </div>
+        </div>
+    
 
 
 

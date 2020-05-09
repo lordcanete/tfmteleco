@@ -4,6 +4,7 @@ var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes
 var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias";
 var idInput_CrearContactoUsuario = "#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario";
 var idInput_CrearGrupoNombre = "pagAppWindow_PanelAgendaCrearGrupoFieldNombre";
+var idInput_UnirseGrupoCodigo = "pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo"
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var idFormFieldMensaje = "pagAppWindow_formFieldMensaje";
@@ -22,6 +23,7 @@ var const_PRIMERMENSAJEDEFAULT = 0;
 var const_ULTIMOMENSAJEDEFAULT = 20;
 var string_PUNTOSSUSPENSIVOS = "...";
 var tiempoRefrescoNotificaciones = 2500;
+var longitudCodigoInvitacionGrupo = 50;
 
 var mensaje_validacionCrearContactoKO = "Por favor, rellene los campos de Usuario y Alias";
 var mensaje_validacionCrearGrupoKO = "Por favor, rellene el campo de Nombre del grupo";
@@ -29,12 +31,13 @@ var mensaje_validacionUnirseAGrupoKO = "Por favor, rellene el campo de código d
 
 var mockup_jsonContactos = '[{"alias":"canete2","usuario":"canete2"},{"alias":"canuto","usuario":"canuto"},{"alias":"tarrilla","usuario":"tarrilla"}]';
 var mockup_jsonConversaciones = '[{"idConversacion":"A8070C4F9D211F752643D391F4CC3B679700A0F7","aliasRemitente":"ertiti","ultimoMensaje":": -","fechaUltimoMensaje":1587216642664,"tipo":2,"pendiente":true,"seleccionada":false},{"idConversacion":"A360332152C7EDA5D68A615F3BEC9213D997FEE6","aliasRemitente":"canuto","ultimoMensaje":"canuto: eey ahora si","fechaUltimoMensaje":1586715830279,"tipo":2,"pendiente":false,"seleccionada":false}]'
-var mockup_jsonMensajes = '[{"contenido":"joe que mal esto sa rayao","fecha":1586698748921,"sentidoRecepcion":false},{"contenido":"bueno vamos a ver si esto se va mostrando","fecha":1586715516660,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colega","fecha":1586715606287,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colega","fecha":1586715646005,"sentidoRecepcion":false},{"contenido":"nada esto sigue sin ir","fecha":1586715791948,"sentidoRecepcion":false},{"contenido":"eey ahora si","fecha":1586715826344,"sentidoRecepcion":false}]';
+var mockup_jsonMensajes = '[{"contenido":"joe que mal esto sa rayao","fecha":1586698748921,"sentidoRecepcion":false},{"contenido":"bueno vamos a ver si esto se va mostrando","fecha":1586715516660,"sentidoRecepcion":false}]';
+var mockup_jsonMensajes2 = '[{"contenido":"joe que mal esto sa rayao","fecha":1586698748921,"sentidoRecepcion":false},{"contenido":"bueno vamos a ver si esto se va mostrando","fecha":1586715516660,"sentidoRecepcion":false},{"contenido":"si tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a vva colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegava colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegaer si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colegasi tio a ver si ahora va colega","fecha":1586715606287,"sentidoRecepcion":false},{"contenido":"joe que mal esto sa rayao","fecha":1586698748921,"sentidoRecepcion":false}]';
 
 function mostrarCapa(idCapa){
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
-    $(idListaConversaciones).removeClass("overflow-auto");
-    $(idListaMensajesConversacion).removeClass("overflow-auto");
+    /*$(idListaConversaciones).removeClass("overflow-auto");
+    $(idListaMensajesConversacion).removeClass("overflow-auto");*/
     $(idCapa).addClass("d-flex");
     $(idCapa).removeClass("d-none");
 }
@@ -43,8 +46,8 @@ function ocultarCapa(idCapa){
     $(idCapa).addClass("d-none");
     $(idCapa).removeClass("d-flex");
     /*Parche para evitar que salga el scrollbar en JavaFX browser*/
-    $(idListaConversaciones).addClass("overflow-auto");
-    $(idListaMensajesConversacion).addClass("overflow-auto");
+    /*$(idListaConversaciones).addClass("overflow-auto");
+    $(idListaMensajesConversacion).addClass("overflow-auto");*/
 }
 
 function pagAppWindow_ocultarCapaAgenda(){
@@ -86,7 +89,9 @@ function pagAppWindow_mostrarAgendaActualizada(){
     javaConnector.obtenerListaContactos();
 }
 
-function pagAppWindow_onClickCerrarSesion () {
+async function pagAppWindow_onClickCerrarSesion () {
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
     javaConnector.cerrarSesion();
 };
 
@@ -95,7 +100,9 @@ function pagAppWindow_onClickAbrirAgenda(){
     pagAppWindow_mostrarAgendaActualizada();        
 }
 
-function pagAppWindow_onClickRefrescarConversaciones(){
+async function pagAppWindow_onClickRefrescarConversaciones(){    
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
     javaConnector.refrescarConversaciones();
 }
 
@@ -111,19 +118,31 @@ function pagAppWindow_onClickGuardarContacto(){
     var usuario = $("#pagAppWindow_PanelAgendaAgregarContactoFieldIDUsuario").val();
     var alias = $("#pagAppWindow_PanelAgendaAgregarContactoFieldAlias").val();    
     if(pagAppWindow_validarFormularioCrearContacto(usuario, alias)){
-        javaConnector.crearContacto(usuario, alias);
+        guardarContacto(usuario, alias);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearContactoKO);
     }
 }
 
+async function guardarContacto(usuario, alias){
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
+    javaConnector.crearContacto(usuario, alias);
+}
+
 function pagAppWindow_onClickCrearGrupo(){
     var nombreGrupo = $("#pagAppWindow_PanelAgendaCrearGrupoFieldNombre").val();
     if(pagAppWindow_validarFormularioCrearGrupo(nombreGrupo)){
-        javaConnector.crearGrupo(nombreGrupo);
+        crearGrupo(nombreGrupo);
     }else{
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensaje_validacionCrearGrupoKO);
     }
+}
+
+async function crearGrupo(nombre){
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
+    javaConnector.crearGrupo(nombre);
 }
 
 
@@ -131,8 +150,13 @@ function pagAppWindow_onClickCrearGrupo(){
 function pagAppWindow_onClickEliminarContacto(item){
     var idContactoBoxAgenda = item.parentElement.parentElement.id;
     var idUsuario = idContactoBoxAgenda.substring(18);
-    javaConnector.eliminarContacto(idUsuario);
+    eliminarContacto(idUsuario);
+}
 
+async function eliminarContacto(idUsuario){
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
+    javaConnector.eliminarContacto(idUsuario);
 }
 
 function pagAppWindow_onClickNuevaConversacion(item){
@@ -185,7 +209,9 @@ function pagAppWindow_onClickEliminarConversacion(item){
 function pagAppWindow_onClickEnviarMensaje(item){
     var idBloqueFormEnvioMensaje = item.parentElement.parentElement.id;
     var mensaje = $(prefijoSelectorId.concat(idBloqueFormEnvioMensaje)).find(prefijoSelectorId.concat(idFormFieldMensaje)).val();
-    javaConnector.enviarMensajeAConversacionSeleccionada(mensaje);
+    if(pagAppWindow_validarFormularioEnviarMensaje(mensaje)){
+        javaConnector.enviarMensajeAConversacionSeleccionada(mensaje);
+    }    
 }
 
 function pagAppWindow_onClickGenerarCodigoInvitacion(){    
@@ -210,6 +236,10 @@ function pagAppWindow_limpiarFormularioNuevoGrupo(){
     limpiarTextoInput(prefijoSelectorId.concat(idInput_CrearGrupoNombre));
 }
 
+function pagAppWindow_limpiarFormularioUnirseAGrupo(){
+    limpiarTextoInput(prefijoSelectorId.concat(idInput_UnirseGrupoCodigo));
+}
+
 function pagAppWindow_validarFormularioCrearContacto(usuario, alias){
     return (pagAppWindow_validarCampoVacio(usuario) && pagAppWindow_validarCampoVacio(alias));    
 }
@@ -218,12 +248,21 @@ function pagAppWindow_validarFormularioCrearGrupo(nombre){
     return pagAppWindow_validarCampoVacio(nombre);
 }
 
-function pagAppWindow_validarFormularioUnirseAGrupo(codigo){
+function pagAppWindow_validarFormularioUnirseAGrupo(codigo){    
+    var validacion = pagAppWindow_validarCampoVacio(codigo) && pagAppWindow_validarLongitudString(codigo, longitudCodigoInvitacionGrupo);
+    return validacion;
+}
+function pagAppWindow_validarFormularioEnviarMensaje(codigo){
     return pagAppWindow_validarCampoVacio(codigo);
 }
 
-
-
+function pagAppWindow_validarLongitudString(string, longitud){
+    var validacion = false;
+    if(string.length == longitud){
+        validacion = true;
+    }
+    return validacion;
+}
 function pagAppWindow_validarCampoVacio(contenido){
     var validacion = false;
         if (!(contenido.trim() == "")) {
@@ -277,6 +316,8 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
     
 }
 
+
+
 function pagAppWindow_reiniciarPanelConversacionSeleccionada(){
     var panelConversacionSeleccionadaDefault = $("#panel-derecho-default");
     var panelConversacionSeleccionada = $("#panel-derecho");
@@ -292,19 +333,22 @@ function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, 
     var panelConversacionSeleccionadaBloqueCodInvitacion = $("#pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
     panelConversacionSeleccionadaListaMensajes.empty();
     panelConversacionSeleccionadaAliasRemitente.text(aliasRemitente);
-    pagAppWindow_modificarCodigoInvitacionGrupo('aergyhdrftyer');
+    
+    
+    pagAppWindow_modificarCodigoInvitacionGrupo('');
     if(esGrupo){
         mostrarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
     }else{
         ocultarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
     }
-
     ocultarBloque(panelConversacionSeleccionadaDefault);
     mostrarBloque(panelConversacionSeleccionada);
     listaMensajesJSON.forEach(function(mensajeJson) { 
         var mensajeBox = pagAppWindow_crearMensajeBox(mensajeJson);
-        panelConversacionSeleccionadaListaMensajes.append(mensajeBox);              
-    }); 
+        panelConversacionSeleccionadaListaMensajes.append(mensajeBox);    
+              
+    });     
+    panelConversacionSeleccionadaListaMensajes.scrollTop(panelConversacionSeleccionadaListaMensajes[0].scrollHeight);
 
 }
 
@@ -418,20 +462,20 @@ function pagAppWindow_comprobarNotificaciones() {
     }
 }
 
-function onPageReady(){
+$(function(){
     $('#pagAppWindow_codigoInvitacionGrupo').on('click', function(e) {
         e.stopPropagation();
     });
     window.setInterval(pagAppWindow_comprobarNotificaciones, tiempoRefrescoNotificaciones);
     javaConnector.obtenerListaConversacionesAbiertas(null);    
-}
+})
 
 
 
 /*
 $(function(){
     //pagAppWindow_refrescarListaConversacionesAbiertas(JSON.parse(mockup_jsonConversaciones));
-    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes), "Alias", true);
+    pagAppWindow_refrescarPanelConversacionSeleccionada(JSON.parse(mockup_jsonMensajes2), "Alias", true);
     $('#pagAppWindow_codigoInvitacionGrupo').on('click', function(e) {
         e.stopPropagation();
     });    

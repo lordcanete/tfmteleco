@@ -1,5 +1,7 @@
+var idCapaCargando ="#capaCargando";
 var jsConnector = {
     notificarError: function(mensajeError){
+        ocultarBloque(idCapaCargando);
         mostrarBloqueNotificacion(idBloque_notifError, idBloque_textoError, mensajeError);
     },
     comprobarEstadoCallback: function () {
@@ -12,15 +14,18 @@ var jsConnector = {
         pagAppWindow_mostrarCapaAgenda(listaContactosJson);
     },
     actualizarPanelAgenda: function(){
+        ocultarBloque(idCapaCargando);
         pagAppWindow_limpiarFormularioNuevoContacto();
         pagAppWindow_mostrarAgendaActualizada();
     },
     actualizarPanelConversaciones: function(listaConversacionesJsonString){
         var listaConversacionesJSON = JSON.parse(listaConversacionesJsonString);
+        ocultarBloque(idCapaCargando);
         pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJSON);
     },
     actualizarPanelConversacionSeleccionada: function(listaMensajesJsonString, aliasRemitente, esGrupo){
         var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
+        ocultarBloque(idCapaCargando);
         pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente, esGrupo);
     },
     actualizarPanelesAppWindowTrasEnvioMensaje: function(aliasRemitente){
@@ -33,10 +38,13 @@ var jsConnector = {
     actualizarCodigoInvitacionGrupo: function(codigo){
         pagAppWindow_refrescarCodigoInvitacionGrupo(codigo);
     },
-    actualizarPanelConversacionesTrasCrearGrupo: function(aliasRemitente=null){        
+    actualizarPanelConversacionesTrasCrearGrupo: function(aliasRemitente=null){    
+        ocultarBloque(idCapaCargando);
+        pagAppWindow_limpiarFormularioNuevoGrupo();
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     },
     actualizarPanelConversacionesTrasUnirseAGrupo: function(aliasRemitente=null){
+        pagAppWindow_limpiarFormularioUnirseAGrupo();
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
     }
 };
@@ -69,6 +77,10 @@ function ocultarBloque(idBloque){
 function limpiarTextoInput(id){
     $(id).val("");
 }
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();

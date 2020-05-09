@@ -17,6 +17,7 @@ import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 import us.tfg.p2pmessenger.model.MensajeCifrado;
 import us.tfg.p2pmessenger.model.Usuario;
+import us.tfg.p2pmessenger.view.VistaConsolaPublic;
 
 /**
  * Interfaz del controlador de la aplicacion completa. Es utilizado
@@ -85,11 +86,14 @@ public interface ControladorApp extends Controlador, ObservadorPing
 
     void eliminaConversacion(String id);
 
+    boolean boolEliminaConversacion(String id);
+
     void vaciaConversacion(String id);
 
     void registrarUsuario(String nombre, String contr) throws Exception;
 
     void crearGrupo(String nombreGrupo);
+    void crearGrupo(String nombreGrupo, VistaConsolaPublic caller);
 
     void abandonaGrupo(String idGrupo);
 

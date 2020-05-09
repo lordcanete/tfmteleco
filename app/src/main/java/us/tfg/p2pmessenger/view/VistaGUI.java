@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.concurrent.CompletableFuture;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -16,7 +17,7 @@ import javax.json.JsonArray;
 
 import rice.p2p.commonapi.Id;
 import us.tfg.p2pmessenger.controller.ControladorApp;
-import us.tfg.p2pmessenger.controller.ControladorConsolaImpl;
+import us.tfg.p2pmessenger.controller.ControladorGUIImpl;
 import us.tfg.p2pmessenger.controller.GestorFicherosConsola;
 import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
@@ -59,6 +60,7 @@ public class VistaGUI extends Application
     public static final String ERROR_OBTENERMENSAJESCONVERSACION = "Error al obtener los mensajes de la conversación";
     public static final String ERROR_ABRIRNUEVACONVERSACION = "Error al iniciar una nueva conversacion";
     public static final String ERROR_UNIRSEAGRUPO = "Error al encontrar contacto para unirse a grupo";
+    public static final String ERROR_ELIMINARCONVERSACION = "Error al eliminar la conversación";
 
     private final static Logger LOGGER = Logger.getLogger("us.tfg.p2pmessenger.view.VistaGUI");
     
@@ -142,7 +144,7 @@ public class VistaGUI extends Application
                 window.setMember("servicioConnector", servicio);
                 // get the Javascript connector object. 
                 javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
-                webEngine.executeScript("onPageReady()");
+                //webEngine.executeScript("onPageReady()");
             }
         });
 
@@ -168,7 +170,7 @@ public class VistaGUI extends Application
             }
         }
 
-        public void iniciarServicio(){
+        public void iniciarServicio(){              
             servicio = new VistaConsolaPublic(ip,puerto);
             servicio.appOnCreateEntorno();
             servicio.appOnStart();
@@ -177,12 +179,12 @@ public class VistaGUI extends Application
                 servicio.appOnStop();
                 servicio.appOnDestroy();
                 System.exit(0);
-            } else{                
-                javascriptConnector.call("comprobarEstadoCallback");
-            }
+            } else{                                
+                javascriptConnector.call("comprobarEstadoCallback");           
+            }   
         }
 
-        public void comprobarEstado(){            
+        public void comprobarEstado(){      
             switch (servicio.appGetModo())
             {
                 case ControladorApp.MODO_APAGADO:
@@ -283,7 +285,7 @@ public class VistaGUI extends Application
                                                 .build();
 
                 GestorFicherosConsola gfich = new GestorFicherosConsola();
-                gfich.escribirAFichero(ControladorConsolaImpl.NOMBRE_FICHERO_USUARIO,
+                gfich.escribirAFichero(ControladorGUIImpl.NOMBRE_FICHERO_USUARIO,
                         contenidoJson.toString().getBytes(), false);
 
                 servicio.appOnStart();
@@ -519,8 +521,17 @@ public class VistaGUI extends Application
             
         }       
 
-        public void crearGrupo(String nombreGrupo){
+        public void crearGrupo(String nombreGrupo){         
+            servicio.setFinCrearGrupo(false);
             servicio.appCrearGrupo(nombreGrupo);
+            while(!servicio.getFinCrearGrupo()){
+                try{
+                    Thread.sleep(100);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                
+            }
             if(servicio.getConversacionSeleccionada() != null){
                 javascriptConnector.call("actualizarPanelConversacionesTrasCrearGrupo", servicio.getConversacionSeleccionada().getAlias());
             }else{
@@ -532,23 +543,29 @@ public class VistaGUI extends Application
         public void eliminarConversacion(String idConversacion){
             ArrayList<Conversacion> conversaciones = servicio.appObtenerConversacionesAbiertas();
             Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
+            boolean resultado = false;
             if(conversaciones!=null)
             {
                 for (Conversacion conversacion : conversaciones)
                 {
                     if(conversacion.getId().toStringFull().compareTo(idConversacion) == 0){
                         LOGGER.log(Level.INFO, "Eliminando conversacion: {0}", idConversacion);
-                        //System.out.println("Eliminando conversacion: " + idConversacion);                        
-                        servicio.appEliminarConversacion(idConversacion);
-                        if(conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
+                        //System.out.println("Eliminando conversacion: " + idConversacion);                             
+                        resultado = servicio.appEliminarConversacion(idConversacion);             
+                        if (resultado == true)     {
+                            if(conversacionSeleccionada.getAlias().compareTo(conversacion.getAlias()) == 0){
                             servicio.setConversacionSeleccionada(null);
                             obtenerListaConversacionesAbiertas(null);   
+                            }
+                            else if(conversacionSeleccionada == null){                            
+                                obtenerListaConversacionesAbiertas(null);   
+                            }else{
+                                obtenerListaConversacionesAbiertas(conversacionSeleccionada.getAlias());
+                            }  
+                        }else {
+                            javascriptConnector.call("notificarError", VistaGUI.ERROR_ELIMINARCONVERSACION);
                         }
-                        else if(conversacionSeleccionada == null){                            
-                            obtenerListaConversacionesAbiertas(null);   
-                        }else{
-                            obtenerListaConversacionesAbiertas(conversacionSeleccionada.getAlias());
-                        }                        
+                                              
                     }
                 }
             }
@@ -657,9 +674,22 @@ public class VistaGUI extends Application
             int longContenido = contenido.length();
             boolean tieneFormatoJSON = (contenido.substring(0,1).compareTo("{") == 0) && (contenido.substring(longContenido-1).compareTo("}") == 0);
             boolean contieneClavesValoresUnionGrupo = contenido.contains("\"id_grupo\":") && contenido.contains("\"clave_privada\":");
-            System.out.println("tieneFormatoJSON: " + tieneFormatoJSON + " contieneClavesValoresUnionGrupo: " + contieneClavesValoresUnionGrupo);
             validacion = tieneFormatoJSON && contieneClavesValoresUnionGrupo;
             return validacion;
+        }
+
+        public void generaLog(String logMensaje){
+            LOGGER.log(Level.INFO, logMensaje);    
+        }
+
+        public boolean breakpoint(){
+            try{
+                System.in.read();
+            }catch(Exception e){
+                LOGGER.log(Level.SEVERE, e.toString());
+            }
+            
+            return true;
         }
 
 

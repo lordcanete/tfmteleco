@@ -102,6 +102,7 @@
    <include name="us/tfg/p2pmessenger/controller/Controlador.java"/>
    <include name="us/tfg/p2pmessenger/controller/ControladorApp.java"/>
    <include name="us/tfg/p2pmessenger/controller/ControladorConsolaImpl.java"/>
+   <include name="us/tfg/p2pmessenger/controller/ControladorGUIImpl.java"/>
    <include name="us/tfg/p2pmessenger/controller/ControladorLlaveroConsola.java"/>
    <include name="us/tfg/p2pmessenger/controller/GestorFicherosConsola.java"/>
    <include name="us/tfg/p2pmessenger/controller/GestorUsuariosGrupos.java"/>
