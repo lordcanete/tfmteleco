@@ -58,6 +58,7 @@ import us.tfg.p2pmessenger.model.MensajeCifrado;
 import us.tfg.p2pmessenger.model.Usuario;
 import us.tfg.p2pmessenger.util.Base64;
 import us.tfg.p2pmessenger.view.Vista;
+import us.tfg.p2pmessenger.view.VistaConsolaPublic;
 
 /**
  * Clase que realiza el papel de controlador en el patron
