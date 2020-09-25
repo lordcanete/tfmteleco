@@ -34,7 +34,7 @@ public class GoogleDriveTest {
         System.out.println("----------------------------------\n"+
                             "-----   TEST testListarArchivos---\n"+
                             "----------------------------------");
-        List<File> files = this.gDriveController.listarArchivos(this.gDriveController.getService());
+        List<File> files = this.gDriveController.listarArchivos();
         if (files == null || files.isEmpty()) {
             System.out.println("No files found.");
         } else {
@@ -49,7 +49,7 @@ public class GoogleDriveTest {
         System.out.println("----------------------------------\n"+
                             "-----   TEST testCrearDirectorio---\n"+
                             "----------------------------------");
-        File directorio = this.gDriveController.crearDirectorio(nombreDirectorioTest, this.formatoDirectorio, this.gDriveController.getService());
+        File directorio = this.gDriveController.crearDirectorio(nombreDirectorioTest, this.formatoDirectorio);
         System.out.println("Created folder with id= "+ directorio.getId());
         System.out.println("                    name= "+ directorio.getName());
     }
@@ -60,7 +60,7 @@ public class GoogleDriveTest {
                             "----------------------------------");
         String filtro = "name='"+this.nombreDirectorioTest+"' and mimeType = '"+this.formatoDirectorio+"'";
         System.out.println(filtro);
-        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro, this.gDriveController.getService());
+        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro);
         for (File file : files) {
             System.out.printf("Contenido encontrado: %s (%s)\n",
                 file.getName(), file.getId());
@@ -73,7 +73,7 @@ public class GoogleDriveTest {
                             "----------------------------------");
         String filtro = "name='"+this.nombreArchivoTest+"'";
         System.out.println(filtro);
-        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro, this.gDriveController.getService());
+        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro);
         for (File file : files) {
             System.out.printf("Contenido encontrado: %s (%s)\n",
                 file.getName(), file.getId());
@@ -85,9 +85,9 @@ public class GoogleDriveTest {
                             "-----   TEST testCrearArchivo---\n"+
                             "----------------------------------");
         String filtro = "name='"+this.nombreDirectorioTest+"' and mimeType = '"+this.formatoDirectorio+"'";        
-        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro, this.gDriveController.getService());
+        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro);
         String folderId = files.get(0).getId();        
-        File archivoCreado = this.gDriveController.crearArchivo(folderId, this.nombreArchivoTest, this.rutaArchivoTest, Files.probeContentType(Paths.get(this.rutaArchivoTest)), this.gDriveController.getService());       
+        File archivoCreado = this.gDriveController.crearArchivoDesdeRuta(folderId, this.nombreArchivoTest, this.rutaArchivoTest, Files.probeContentType(Paths.get(this.rutaArchivoTest)));       
         System.out.println("Archivo creado con    id= "+ archivoCreado.getId());
         System.out.println("                    name= "+ archivoCreado.getName());
         
@@ -99,23 +99,23 @@ public class GoogleDriveTest {
                             "----------------------------------");
         String filtro = "name='"+this.nombreArchivoTest+"'";
         System.out.println(filtro);
-        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro, this.gDriveController.getService());
+        List<File> files = this.gDriveController.buscarArchivosDirectorios(filtro);
         String idFile = files.get(0).getId();
-        String enlaceCompartirArchivo = this.gDriveController.obtenerEnlaceCompartirArchivo(idFile, this.gDriveController.getService());
+        String enlaceCompartirArchivo = this.gDriveController.obtenerEnlaceCompartirArchivo(idFile);
         System.out.printf("Enlace para compartir archivo: %s\n", enlaceCompartirArchivo);        
     }
-
+/*
     @Test
     public void testSuite(){
         try {
             /*testListarArchivos();
             testBuscarDirectorio();
-            testCrearArchivo();*/
+            testCrearArchivo();
             testCrearArchivo();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-    }
+    }*/
 }
 

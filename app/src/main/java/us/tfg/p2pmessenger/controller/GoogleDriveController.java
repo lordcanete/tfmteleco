@@ -30,21 +30,19 @@ public class GoogleDriveController {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
-    /**
-     * Global instance of the scopes required by this quickstart.
-     * If modifying these scopes, delete your previously saved tokens/ folder.
-     */
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_FILE);
-    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-    private final NetHttpTransport HTTP_TRANSPORT;
+    private static final String CREDENTIALS_FILE_PATH = "/client_p2pmessenger.json";
+    
     private Drive service;
 
     public GoogleDriveController() throws IOException, GeneralSecurityException{
         // Build a new authorized API client service.
-        this.HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        this.service = new Drive.Builder(this.HTTP_TRANSPORT, this.JSON_FACTORY, getCredentials(this.HTTP_TRANSPORT))
-            .setApplicationName(this.APPLICATION_NAME)
+        System.out.println("Constructor DRive Controller");
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        this.service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
             .build();
+        System.out.println("FIN Constructor DRive Controller");
     }
 
     public Drive getService(){
@@ -77,10 +75,14 @@ public class GoogleDriveController {
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        
     }
 
-    public List<File> listarArchivos(Drive driveService) throws IOException {       
-
+    public static List<File> listarArchivos() throws IOException, GeneralSecurityException {       
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
         FileList result = driveService.files().list()
                 .setPageSize(10)
                 .setFields("nextPageToken, files(id, name)")
@@ -89,30 +91,56 @@ public class GoogleDriveController {
         return files;        
     }
 
-    public File crearArchivo(String folderId, String fileName, String fileLocalPath, String fileFormat, Drive driveService) throws IOException{        
+    public static File crearArchivoDesdeRuta(String folderId, String fileName, String fileLocalPath, String fileFormat) throws IOException, GeneralSecurityException{        
         File fileMetadata = new File();
         fileMetadata.setName(fileName);
         fileMetadata.setParents(Collections.singletonList(folderId));
         java.io.File filePath = new java.io.File(fileLocalPath);
         FileContent mediaContent = new FileContent(fileFormat, filePath);
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
         File file = driveService.files().create(fileMetadata, mediaContent)
             .setFields("id, parents, name, webViewLink")
             .execute();        
         return file;
     }
 
-    public File crearDirectorio(String folderName, String folderMimeType, Drive driveService) throws IOException{
+    public static File crearArchivoDesdeObjetoFile(String folderId, String fileName, Object fileUpload, String fileFormat) throws IOException, GeneralSecurityException{        
+        File fileMetadata = new File();
+        fileMetadata.setName(fileName);
+        fileMetadata.setParents(Collections.singletonList(folderId));        
+        FileContent mediaContent = new FileContent(fileFormat, (java.io.File) fileUpload);
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
+        File file = driveService.files().create(fileMetadata, mediaContent)
+            .setFields("id, parents, name, webViewLink")
+            .execute();        
+        return file;
+    }
+
+    public static File crearDirectorio(String folderName, String folderMimeType) throws IOException, GeneralSecurityException{
         File fileMetadata = new File();
         fileMetadata.setName(folderName);
         fileMetadata.setMimeType(folderMimeType);
-
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
         File file = driveService.files().create(fileMetadata)
             .setFields("id, name")
             .execute();
         return file;
     }
     
-    public List<File> buscarArchivosDirectorios(String filtro, Drive driveService) throws IOException{
+    public static List<File> buscarArchivosDirectorios(String filtro) throws IOException, GeneralSecurityException{
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
         FileList result = driveService.files().list()
             .setQ(filtro)
             .setFields("files(id, name)")
@@ -121,7 +149,11 @@ public class GoogleDriveController {
         return files;
     }
 
-    public String obtenerEnlaceCompartirArchivo(String idFile, Drive driveService) throws IOException{
+    public static String obtenerEnlaceCompartirArchivo(String idFile) throws IOException, GeneralSecurityException{
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
         File archivo = driveService.files().get(idFile).setFields("id,name,webViewLink").execute();
         String enlace = archivo.getWebViewLink();
         return enlace;

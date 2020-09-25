@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.concurrent.CompletableFuture;
+import java.util.Collection;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,6 +26,7 @@ import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 import us.tfg.p2pmessenger.model.Usuario;
 import us.tfg.p2pmessenger.view.VistaConsolaPublic;
+import us.tfg.p2pmessenger.controller.GoogleDriveController;
 
 
 import javafx.application.Application;
@@ -37,9 +39,17 @@ import netscape.javascript.JSObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.w3c.dom.Document;
+import com.google.api.services.drive.model.File;
 
-import java.io.File;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.net.URL;
+import java.lang.Object;
+
+
 /**
  * Created by PCANO on 30/01/20.
  */
@@ -67,6 +77,7 @@ public class VistaGUI extends Application
     
     
     /** for communication to the Javascript engine. */
+    private GoogleDriveController gDriveController;
     private JSObject javascriptConnector;
     /** for communication from the Javascript engine. */
     private JavaConnector javaConnector = new JavaConnector();
@@ -76,7 +87,7 @@ public class VistaGUI extends Application
     private VistaConsolaPublic servicio;
     private int puerto;
     private String ip;
-
+    
 
     //Setters & Getters
     public WebView getWebView(){
@@ -121,20 +132,28 @@ public class VistaGUI extends Application
     public void setPuerto(int paramPuerto){
         this.puerto = paramPuerto;
     }
+    public GoogleDriveController getGDriveController(){
+        return this.gDriveController;
+    }
+    public void setGDriveController(GoogleDriveController gdc){
+        this.gDriveController = gdc;
+    }
+      
     
     @Override
     public void start(Stage primaryStage) throws Exception {       
+        
+            
         Parameters params = getParameters();
         List<String> listParams = params.getRaw();
         puerto = Integer.parseInt(listParams.get(0));
         ip = null;    
         if (listParams.size()>1){
             ip = listParams.get(1);
-        }    
-
+        }  
         webView = new WebView();
         webEngine = webView.getEngine();
-
+         
         // set up the listener
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (Worker.State.SUCCEEDED == newValue) {
@@ -152,7 +171,7 @@ public class VistaGUI extends Application
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        URL url = new File(RUTA_HTML + "index.html").toURI().toURL();       
+        URL url = new java.io.File(RUTA_HTML + "index.html").toURI().toURL();       
         // now load the page
         webEngine.load(url.toString());
 
@@ -160,17 +179,119 @@ public class VistaGUI extends Application
 
     /*Clase para conectar el FrontEnd Web con el BackEnd Java*/
     public class JavaConnector {
+        
+        private String rutaArchivoEncontrado;
+        private boolean archivoEncontrado;
+        private final String nombreDirectorioDriveAplicacion = "P2PMessenger";
+        private final String formatoDirectorioDrive = "application/vnd.google-apps.folder";
+
+        
+
+
+        public void RecursiveSearch(java.io.File[] arr,int index, String nombreArchivo, long lastModifiedArchivo)  
+        { 
+            String lastModifiedFound;
+            String lastModifiedToSearch = Long.toString(lastModifiedArchivo).substring(0,Long.toString(lastModifiedArchivo).length()-3);
+            // Llega al ultimo fichero del directorio actual
+            if(index == arr.length){
+                System.out.println("Fin de directorio actual");
+                return; 
+            } 
+                
+            // Comprueba los archivos 
+            if(arr[index].isFile()){
+                System.out.println("Comprobando fichero");
+                lastModifiedFound = Long.toString(arr[index].lastModified()).substring(0,Long.toString(arr[index].lastModified()).length()-3);
+                if(arr[index].getName().equals(nombreArchivo) && lastModifiedFound.equals(lastModifiedToSearch)){
+                    System.out.println("Encontrado!!! " + arr[index].getAbsolutePath() + " - " + arr[index].lastModified());
+                    rutaArchivoEncontrado = arr[index].getAbsolutePath();
+                    System.out.println("rutaArchivoEncontrado = " + rutaArchivoEncontrado);
+                    archivoEncontrado = true;
+                    return;
+                }
+            }                 
+            // Indagando sobre directorios
+            else if(arr[index].isDirectory()) 
+            {  
+                System.out.println("Entrando a directorio");
+                // Llamada recursiva 
+                RecursiveSearch(arr[index].listFiles(), 0, nombreArchivo, lastModifiedArchivo); 
+                if(archivoEncontrado)
+                    return;
+            }                 
+            // recursion for main directory 
+            System.out.println("Recursivo para el directorio principal");
+            RecursiveSearch(arr,++index, nombreArchivo, lastModifiedArchivo); 
+        } 
+
+        public String buscarArchivo(String nombreArchivo, long lastModified){
+            //Directorio sobre el que se realizara la busqueda recursiva
+            java.io.File root = new java.io.File("/home/");
+            rutaArchivoEncontrado = null;       
+            archivoEncontrado = false;              
+            System.out.println("Buscando archivo: " + nombreArchivo + " - " + lastModified);
+            if(root.exists() && root.isDirectory()) 
+            { 
+                java.io.File arr[] = root.listFiles();  
+                RecursiveSearch(arr,0, nombreArchivo, lastModified);  
+                System.out.println("Fin de busqueda de archivo");
+            }    
+            System.out.println("rutaArchivoEncontrado = " + rutaArchivoEncontrado);
+            return rutaArchivoEncontrado;
+        }
+
+        public String buscarDirectorioDrive(String nombreDirectorio, String formatoDirectorio) throws Exception{
+            String idDir = null;
+            
+            String filtro = "name='"+nombreDirectorio+"' and mimeType = '"+formatoDirectorio+"'";
+            try {
+                List<com.google.api.services.drive.model.File> files = GoogleDriveController.buscarArchivosDirectorios(filtro);    
+                if(!files.isEmpty()){
+                    idDir = files.get(0).getId();
+                }
+                
+            } catch (IOException e) {                
+                idDir = null;
+            }
+            return idDir;
+            
+        }
+        public void enviarArchivoDrive(String nombre, String tipo, long lastModified) throws Exception{      
+            System.out.println(nombre + " - " + tipo + " - " + lastModified);
+            String ruta = buscarArchivo(nombre, lastModified); 
+            System.out.println("Despues de buscarArchivo");           
+            if(ruta == null){
+                //TODO
+                System.out.println("RUTA NULA!");
+                javascriptConnector.call("errorEnvioArchivoDrive");
+            }else{
+                System.out.println("Buscando directorio en Drive");
+                String idDirectorioDrive = buscarDirectorioDrive(this.nombreDirectorioDriveAplicacion, this.formatoDirectorioDrive);
+                System.out.println(idDirectorioDrive);
+                if(idDirectorioDrive == null){
+                    com.google.api.services.drive.model.File nuevoDirectorio = GoogleDriveController.crearDirectorio(this.nombreDirectorioDriveAplicacion, this.formatoDirectorioDrive);
+                    idDirectorioDrive = nuevoDirectorio.getId();
+                }
+                com.google.api.services.drive.model.File archivoCreado = GoogleDriveController.crearArchivoDesdeRuta(idDirectorioDrive, nombre, ruta, Files.probeContentType(Paths.get(ruta)));
+                String urlArchivo = GoogleDriveController.obtenerEnlaceCompartirArchivo(archivoCreado.getId());
+                System.out.println("Compartiendo URL a archivo en Drive: " + urlArchivo);
+                String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + "| Accede a él mediante esta URL: "+urlArchivo;
+                enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive);
+                
+            }            
+
+        }        
 
         public void cargarPagina(String pagina){         
             try {
-                URL url = new File(RUTA_HTML + pagina).toURI().toURL();
+                URL url = new java.io.File(RUTA_HTML + pagina).toURI().toURL();
                 webEngine.load(url.toString());
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
 
-        public void iniciarServicio(){              
+        public void iniciarServicio(){        
             servicio = new VistaConsolaPublic(ip,puerto);
             servicio.appOnCreateEntorno();
             servicio.appOnStart();
@@ -698,12 +819,21 @@ public class VistaGUI extends Application
 
     public static void main(String args[])
     {
+        GoogleDriveController gdcontroller;
+        
         if (args.length < 1){
             System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]"+
             "\nWindows -> java -cp \"../../lib/*\" --module-path \"C:\\directorioJavaFX\\lib\" --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]\n");
             System.exit(0);
         } else
         {
+            try {
+                System.out.println("Creando GoogleDriveController");        
+                gdcontroller = new GoogleDriveController();
+                System.out.println("Creado GoogleDriveController");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }               
             Application.launch(VistaGUI.class, args);       
         }
        
