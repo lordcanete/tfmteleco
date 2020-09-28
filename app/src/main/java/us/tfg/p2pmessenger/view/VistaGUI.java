@@ -71,6 +71,7 @@ public class VistaGUI extends Application
     public static final String ERROR_ABRIRNUEVACONVERSACION = "Error al iniciar una nueva conversacion";
     public static final String ERROR_UNIRSEAGRUPO = "Error al encontrar contacto para unirse a grupo";
     public static final String ERROR_ELIMINARCONVERSACION = "Error al eliminar la conversación";
+    public static final String ERROR_ENVIOARCHIVODRIVE = "Error al compartir el archivo";
 
     private final static Logger LOGGER = Logger.getLogger("us.tfg.p2pmessenger.view.VistaGUI");
     
@@ -194,18 +195,14 @@ public class VistaGUI extends Application
             String lastModifiedToSearch = Long.toString(lastModifiedArchivo).substring(0,Long.toString(lastModifiedArchivo).length()-3);
             // Llega al ultimo fichero del directorio actual
             if(index == arr.length){
-                System.out.println("Fin de directorio actual");
                 return; 
             } 
                 
             // Comprueba los archivos 
             if(arr[index].isFile()){
-                System.out.println("Comprobando fichero");
                 lastModifiedFound = Long.toString(arr[index].lastModified()).substring(0,Long.toString(arr[index].lastModified()).length()-3);
                 if(arr[index].getName().equals(nombreArchivo) && lastModifiedFound.equals(lastModifiedToSearch)){
-                    System.out.println("Encontrado!!! " + arr[index].getAbsolutePath() + " - " + arr[index].lastModified());
                     rutaArchivoEncontrado = arr[index].getAbsolutePath();
-                    System.out.println("rutaArchivoEncontrado = " + rutaArchivoEncontrado);
                     archivoEncontrado = true;
                     return;
                 }
@@ -213,14 +210,12 @@ public class VistaGUI extends Application
             // Indagando sobre directorios
             else if(arr[index].isDirectory()) 
             {  
-                System.out.println("Entrando a directorio");
                 // Llamada recursiva 
                 RecursiveSearch(arr[index].listFiles(), 0, nombreArchivo, lastModifiedArchivo); 
                 if(archivoEncontrado)
                     return;
             }                 
             // recursion for main directory 
-            System.out.println("Recursivo para el directorio principal");
             RecursiveSearch(arr,++index, nombreArchivo, lastModifiedArchivo); 
         } 
 
@@ -228,15 +223,14 @@ public class VistaGUI extends Application
             //Directorio sobre el que se realizara la busqueda recursiva
             java.io.File root = new java.io.File("/home/");
             rutaArchivoEncontrado = null;       
-            archivoEncontrado = false;              
-            System.out.println("Buscando archivo: " + nombreArchivo + " - " + lastModified);
+            archivoEncontrado = false;                          
+            LOGGER.log(Level.INFO, "Buscando archivo: " + nombreArchivo);
             if(root.exists() && root.isDirectory()) 
             { 
                 java.io.File arr[] = root.listFiles();  
                 RecursiveSearch(arr,0, nombreArchivo, lastModified);  
-                System.out.println("Fin de busqueda de archivo");
             }    
-            System.out.println("rutaArchivoEncontrado = " + rutaArchivoEncontrado);
+            LOGGER.log(Level.INFO, "Encontrado archivo: " + rutaArchivoEncontrado);
             return rutaArchivoEncontrado;
         }
 
@@ -256,30 +250,32 @@ public class VistaGUI extends Application
             return idDir;
             
         }
-        public void enviarArchivoDrive(String nombre, String tipo, long lastModified) throws Exception{      
-            System.out.println(nombre + " - " + tipo + " - " + lastModified);
-            String ruta = buscarArchivo(nombre, lastModified); 
-            System.out.println("Despues de buscarArchivo");           
+        public void enviarArchivoDrive(String nombre, String tipo, long lastModified){      
+            LOGGER.log(Level.INFO, "Compartiendo archivo: " + nombre);
+            String ruta = buscarArchivo(nombre, lastModified);             
             if(ruta == null){
-                //TODO
-                System.out.println("RUTA NULA!");
-                javascriptConnector.call("errorEnvioArchivoDrive");
-            }else{
-                System.out.println("Buscando directorio en Drive");
-                String idDirectorioDrive = buscarDirectorioDrive(this.nombreDirectorioDriveAplicacion, this.formatoDirectorioDrive);
-                System.out.println(idDirectorioDrive);
-                if(idDirectorioDrive == null){
-                    com.google.api.services.drive.model.File nuevoDirectorio = GoogleDriveController.crearDirectorio(this.nombreDirectorioDriveAplicacion, this.formatoDirectorioDrive);
-                    idDirectorioDrive = nuevoDirectorio.getId();
-                }
-                com.google.api.services.drive.model.File archivoCreado = GoogleDriveController.crearArchivoDesdeRuta(idDirectorioDrive, nombre, ruta, Files.probeContentType(Paths.get(ruta)));
-                String urlArchivo = GoogleDriveController.obtenerEnlaceCompartirArchivo(archivoCreado.getId());
-                System.out.println("Compartiendo URL a archivo en Drive: " + urlArchivo);
-                String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + "| Accede a él mediante esta URL: "+urlArchivo;
-                enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive);
-                
-            }            
-
+                //TODO      
+                LOGGER.log(Level.INFO, "Imposible encontrar el fichero en el sistema");
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_ENVIOARCHIVODRIVE);
+            }else{   
+                try {
+                    LOGGER.log(Level.INFO, "Buscando directorio de aplicación en Google Drive");
+                    String idDirectorioDrive = buscarDirectorioDrive(this.nombreDirectorioDriveAplicacion, this.formatoDirectorioDrive);                
+                    if(idDirectorioDrive == null){
+                        LOGGER.log(Level.INFO, "No existe el directorio en Google Drive. Creando directorio para la aplicación.");
+                        com.google.api.services.drive.model.File nuevoDirectorio = GoogleDriveController.crearDirectorio(this.nombreDirectorioDriveAplicacion, this.formatoDirectorioDrive);
+                        idDirectorioDrive = nuevoDirectorio.getId();
+                    }
+                    LOGGER.log(Level.INFO, "Subiendo archivo a Google Drive");
+                    com.google.api.services.drive.model.File archivoCreado = GoogleDriveController.crearArchivoDesdeRuta(idDirectorioDrive, nombre, ruta, Files.probeContentType(Paths.get(ruta)));
+                    String urlArchivo = GoogleDriveController.obtenerEnlaceCompartirArchivo(archivoCreado.getId());
+                    LOGGER.log(Level.INFO, "Obtenida URL para compartición de archivo a través de Google Drive: " + urlArchivo);                
+                    String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | URL: "+urlArchivo;
+                    enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive);  
+                } catch (Exception e) {
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_ENVIOARCHIVODRIVE);
+                }                                  
+            }        
         }        
 
         public void cargarPagina(String pagina){         

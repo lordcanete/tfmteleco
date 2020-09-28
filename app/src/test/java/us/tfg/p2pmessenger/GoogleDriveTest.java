@@ -104,18 +104,19 @@ public class GoogleDriveTest {
         String enlaceCompartirArchivo = this.gDriveController.obtenerEnlaceCompartirArchivo(idFile);
         System.out.printf("Enlace para compartir archivo: %s\n", enlaceCompartirArchivo);        
     }
-/*
+
     @Test
     public void testSuite(){
         try {
-            /*testListarArchivos();
+            testListarArchivos();
             testBuscarDirectorio();
             testCrearArchivo();
-            testCrearArchivo();
+            testBuscarArchivo();
+            testCompartirArchivo();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-    }*/
+    }
 }
 
