@@ -39,7 +39,7 @@
             </div>
             
         </div>
-        <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column"> 
+        <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column">             
             <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-row align-items-center p-4 border">
                 <div id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</div>   
                 <div id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="mx-2">
@@ -54,14 +54,19 @@
                 
             </div>
             <div id="pagAppWindow_bloqueConversacionEnviarMensaje" class="border">
-                <form class="form-inline">                    
+                <div class="form-inline">                    
                     <div class="form-group m-1 flex-grow-1">
                       <label for="pagAppWindow_formFieldMensaje" class="sr-only">Mensaje</label>
                       <input type="text" class="form-control flex-grow-1" id="pagAppWindow_formFieldMensaje" placeholder="Escribe tu mensaje...">
-                    </div>
+                    </div>    
+                    <input id="pagAppWindow_fieldEnviarArchivo" type="file" name="name" class="d-none"/>
+                    <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEnviarArchivo();">                        
+                        <i class="fa fa-paperclip fa-2x text-muted m-1" aria-hidden="true"></i>
+                    </button>                                    
                     <button type="button" class="btn btn-success m-1" onclick="pagAppWindow_onClickEnviarMensaje(this);">Enviar</button>
-                  </form>
+                </div>
             </div>
+            
         </div>
 
         
@@ -129,6 +134,8 @@
                 </div>
         </div>
 
+        
+
         <!-- Plantillas para cajas agregables a los contenedores -->
         <div id="contactoBoxAgendaPlantilla" class="contactoBox border p-1 position-relative d-none">
             <div class="contactoBoxAlias font-weight-bold">
@@ -182,6 +189,7 @@
 
 
     </div>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
