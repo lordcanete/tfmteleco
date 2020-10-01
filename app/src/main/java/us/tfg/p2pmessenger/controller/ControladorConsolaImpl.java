@@ -237,6 +237,7 @@ public class ControladorConsolaImpl implements ControladorApp
                         } else {
                           // reject
                           System.out.println("Rejecting id:"+u+" which does not match the certificate entry:"+idName);
+                          System.out.println("Rejecting id:"+u.getId().toStringFull()+" which does not match the certificate entry:"+idName);
                           return false;
                         }
                       }
