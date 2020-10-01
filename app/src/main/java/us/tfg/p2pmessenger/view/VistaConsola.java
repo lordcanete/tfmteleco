@@ -1,5 +1,7 @@
 package us.tfg.p2pmessenger.view;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -37,13 +39,13 @@ public class VistaConsola implements Vista
     private String ip;
 
     // 4euros dni original y copia y fam numerosa jueves 7/09 -> 8:45
-    public VistaConsola(String ip, int puerto)
+    public VistaConsola(String ip, int puerto, File keystore) throws Exception
     {
         this.puerto=puerto;
         this.ip=ip;
-        app = new ControladorConsolaImpl(ip, puerto,this);
+        app = new ControladorConsolaImpl(ip, puerto,this, keystore);
     }   
-    public static void main(String args[])
+    public static void main(String args[]) throws Exception
     {
         //        TreeSet<String> algorithms = new TreeSet<>();
         //        for (Provider provider : Security.getProviders())
@@ -69,16 +71,22 @@ public class VistaConsola implements Vista
         if(argumentos.indexOf("--puerto")!=-1)
             puerto=argumentos.get(argumentos.indexOf("--puerto")+1);
         */
-        if (args.length < 1)
-            System.out.println("usage -> java -cp ... us.tfg.p2pmessenger.view.VistaConsola puertoEscucha [ip]");
+        if (args.length < 2)
+            System.out.println("usage -> java -cp ... us.tfg.p2pmessenger.view.VistaConsola puertoEscucha keystore [ip]");
         else
         {
             int puerto = Integer.parseInt(args[0]);
+
+             // get the keystore file
+            String keystoreFileName = args[1];
+            File keystoreFile = new File(keystoreFileName);
+            if (!keystoreFile.exists()) throw new IllegalArgumentException("No se encontró el fichero de almacenamiento de claves/certificados: "+keystoreFileName);
+
             String ip = null;
-            if (args.length > 1) {
-                ip = args[1];
+            if (args.length > 2) {
+                ip = args[2];
             }
-            VistaConsola servicio = new VistaConsola(ip, puerto);
+            VistaConsola servicio = new VistaConsola(ip, puerto, keystoreFile);
 
             servicio.app.onCreateEntorno();
             servicio.app.onStart();

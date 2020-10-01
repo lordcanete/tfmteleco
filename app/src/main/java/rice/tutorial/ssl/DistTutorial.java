@@ -91,7 +91,7 @@ public class DistTutorial {
     Security.addProvider(new BouncyCastleProvider());
     
     // create the keystore    
-    final KeyStore store = KeyStore.getInstance("UBER", "BC");
+    final KeyStore store = KeyStore.getInstance("PKCS12");
     store.load(new FileInputStream(keyStoreFile), "".toCharArray());
     
     // create the id from the file name
