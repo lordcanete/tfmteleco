@@ -430,8 +430,13 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
     // now try reading off the socket
     if (dsts.hasRemaining()) {
       if (read()) {
-        unwrap();
-        dsts.put(readMe.getFirst());
+        unwrap();        
+        ByteBuffer foo = readMe.getFirst();
+        int len = Math.min(dsts.remaining(), foo.remaining());
+        int pos = foo.position();
+        System.out.println(foo.array().length > len);
+        //dsts.put(foo.array());
+        dsts.put(foo.array(),pos,len);
         if (readMe.getFirst().hasRemaining()) {
           return dsts.position()-start;
         } else {
