@@ -218,7 +218,7 @@ public class ControladorConsolaImpl implements ControladorApp
                     throw new RuntimeException(ioe);
                   }
                 }
-          
+          /*
                 @Override
                 protected BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>> getBindStrategy() {
                   return new BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>>() {        
@@ -244,7 +244,7 @@ public class ControladorConsolaImpl implements ControladorApp
                       return true;
                     }        
                   };
-                }
+                }*/
               };
 
 
