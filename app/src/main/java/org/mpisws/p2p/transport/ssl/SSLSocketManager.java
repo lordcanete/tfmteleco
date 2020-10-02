@@ -417,6 +417,7 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
       ByteBuffer foo = readMe.getFirst();
       int len = Math.min(dsts.remaining(), foo.remaining());
       int pos = foo.position();
+      System.out.println(foo.array().length > len);
       dsts.put(foo.array(),pos,len);
       foo.position(pos+len);
       if (foo.hasRemaining()) {
