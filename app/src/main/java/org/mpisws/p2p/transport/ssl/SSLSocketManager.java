@@ -445,12 +445,15 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
         //System.out.println(foo.array().length > len);
         dsts.put(foo.array(),pos,len);
         if (readMe.getFirst().hasRemaining()) {
+          logger.log("readMe.getFirst has remaining. Returning dsts.position - start");
           return dsts.position()-start;
         } else {
+          logger.log("readMe.removingFirst");
           readMe.removeFirst();
         }
       }    
     }
+    logger.log("Returning dsts.position - start");
     return dsts.position()-start;
   }
 
