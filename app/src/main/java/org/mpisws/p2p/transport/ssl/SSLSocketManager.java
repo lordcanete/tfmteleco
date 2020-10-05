@@ -419,7 +419,7 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
       int len = Math.min(dsts.remaining(), foo.remaining());
       int pos = foo.position();
       //System.out.println("Pos: " + pos + "Len: " + len);      
-      System.out.println("En while\ndsts: " + dsts + "\ndsts array:" + Arrays.toString(dsts.array()) + "\nfoo: "+foo);      
+      //System.out.println("En while\ndsts: " + dsts + "\ndsts array:" + Arrays.toString(dsts.array()) + "\nfoo: "+foo);      
       //System.out.println("En while\ndsts: " + dsts + "\nfoo: "+foo);
       dsts.put(foo.array(),pos,len);
       foo.position(pos+len);
@@ -464,7 +464,7 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
         }
       }    
     }
-    logger.log("Returning dsts.position - start");
+    //logger.log("Returning dsts.position - start");
     return dsts.position()-start;
   }
 
