@@ -581,7 +581,8 @@ public class IdentityImpl<UpperIdentifier, MiddleIdentifier, UpperMsgType, Lower
                   socket.register(true, false, this);
                   return;
                 }
-                
+                logger.log("Buf: " + Arrays.toString(buf.array())+" me:"+
+                        Arrays.toString(localIdentifier));
                 if (!Arrays.equals(buf.array(), localIdentifier)) {
                   if (logger.level <= Logger.INFO) 
                     logger.log("incomingSocket() FAILURE expected "+

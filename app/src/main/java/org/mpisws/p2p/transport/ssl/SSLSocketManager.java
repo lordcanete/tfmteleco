@@ -418,9 +418,9 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
       ByteBuffer foo = readMe.getFirst();
       int len = Math.min(dsts.remaining(), foo.remaining());
       int pos = foo.position();
-      System.out.println("Pos: " + pos + "Len: " + len);      
+      //System.out.println("Pos: " + pos + "Len: " + len);      
       //System.out.println("En while\ndsts: " + dsts + "\ndsts array:" + Arrays.toString(dsts.array()) + "\nfoo: "+foo+"\nfoo array:" + Arrays.toString(foo.array()));      
-      System.out.println("En while\ndsts: " + dsts + "\nfoo: "+foo);
+      //System.out.println("En while\ndsts: " + dsts + "\nfoo: "+foo);
       dsts.put(foo.array(),pos,len);
       foo.position(pos+len);
 
@@ -439,7 +439,7 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
         int len = Math.min(dsts.remaining(), foo.remaining());
         int pos = foo.position();
         //System.out.println("Tras while\ndsts: " + dsts + "\ndsts array:" + Arrays.toString(dsts.array()) + "\nfoo: "+foo+"\nfoo array:" + Arrays.toString(foo.array()));
-        System.out.println("Tras while\ndsts: " + dsts + "\nfoo: "+foo);
+        //System.out.println("Tras while\ndsts: " + dsts + "\nfoo: "+foo);
         //dsts.put(foo.array());
 
         //System.out.println(foo.array().length > len);
