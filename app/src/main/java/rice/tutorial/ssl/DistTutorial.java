@@ -118,7 +118,7 @@ public class DistTutorial {
           throw new RuntimeException(ioe);
         }
       }
-
+/*
       @Override
       protected BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>> getBindStrategy() {
         return new BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>>() {        
@@ -143,11 +143,12 @@ public class DistTutorial {
             return true;
           }        
         };
-      }
+      }*/
     };
 
     // construct a node with the id this time
-    PastryNode node = factory.newNode(id);
+    //PastryNode node = factory.newNode(id);
+    PastryNode node = factory.newNode(); //Utilizando un id aleatorio
       
     // construct a new MyApp
     MyApp app = new MyApp(node);    

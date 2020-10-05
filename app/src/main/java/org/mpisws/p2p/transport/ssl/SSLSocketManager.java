@@ -418,8 +418,10 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
       int len = Math.min(dsts.remaining(), foo.remaining());
       int pos = foo.position();
       System.out.println(foo.array().length > len);
+      System.out.println("En while\ndsts: " + dsts + "\nfoo: "+foo);
       dsts.put(foo.array(),pos,len);
       foo.position(pos+len);
+
       if (foo.hasRemaining()) {
         return dsts.position()-start;
       } else {
@@ -432,11 +434,13 @@ public class SSLSocketManager<Identifier> implements P2PSocket<Identifier>,
       if (read()) {
         unwrap();        
         ByteBuffer foo = readMe.getFirst();
-        int len = Math.min(dsts.remaining(), foo.remaining());
-        int pos = foo.position();
-        System.out.println(foo.array().length > len);
-        //dsts.put(foo.array());
-        dsts.put(foo.array(),pos,len);
+        /*int len = Math.min(dsts.remaining(), foo.remaining());
+        int pos = foo.position();*/
+        System.out.println("Tras while\ndsts: " + dsts + "\nfoo: "+foo);
+        dsts.put(foo.array());
+
+        //System.out.println(foo.array().length > len);
+        //dsts.put(foo.array(),pos,len);
         if (readMe.getFirst().hasRemaining()) {
           return dsts.position()-start;
         } else {
