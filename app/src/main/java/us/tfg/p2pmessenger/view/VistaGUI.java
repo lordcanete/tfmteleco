@@ -88,6 +88,7 @@ public class VistaGUI extends Application
     private VistaConsolaPublic servicio;
     private int puerto;
     private String ip;
+    private java.io.File keystoreFile;
     
 
     //Setters & Getters
@@ -139,7 +140,14 @@ public class VistaGUI extends Application
     public void setGDriveController(GoogleDriveController gdc){
         this.gDriveController = gdc;
     }
-      
+
+    public java.io.File getKeystoreFile(){
+        return this.keystoreFile;
+    }
+     
+    public void setKeystoreFile(java.io.File ksfile){
+        this.keystoreFile = ksfile;
+    }
     
     @Override
     public void start(Stage primaryStage) throws Exception {       
@@ -148,9 +156,13 @@ public class VistaGUI extends Application
         Parameters params = getParameters();
         List<String> listParams = params.getRaw();
         puerto = Integer.parseInt(listParams.get(0));
+        // get the keystore file
+        String keystoreFileName = listParams.get(1);
+        keystoreFile = new java.io.File(keystoreFileName);
+        if (!keystoreFile.exists()) throw new IllegalArgumentException("No se encontró el fichero de almacenamiento de claves/certificados: "+keystoreFileName);
         ip = null;    
-        if (listParams.size()>1){
-            ip = listParams.get(1);
+        if (listParams.size()>2){
+            ip = listParams.get(2);
         }  
         webView = new WebView();
         webEngine = webView.getEngine();
@@ -287,8 +299,8 @@ public class VistaGUI extends Application
             }
         }
 
-        public void iniciarServicio(){        
-            servicio = new VistaConsolaPublic(ip,puerto);
+        public void iniciarServicio() throws Exception{        
+            servicio = new VistaConsolaPublic(ip,puerto,keystoreFile);
             servicio.appOnCreateEntorno();
             servicio.appOnStart();
             if(servicio.appGetError()!=0) {
@@ -817,9 +829,8 @@ public class VistaGUI extends Application
     {
         GoogleDriveController gdcontroller;
         
-        if (args.length < 1){
-            System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]"+
-            "\nWindows -> java -cp \"../../lib/*\" --module-path \"C:\\directorioJavaFX\\lib\" --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha [ip]\n");
+        if (args.length < 2){
+            System.out.println("Uso:\nLinux -> java -cp \"../../lib/*\" --module-path /directorioJavaFX/lib --add-modules=javafx.controls,javafx.web us.tfg.p2pmessenger.view.VistaGUI puertoEscucha keystore [ip]");
             System.exit(0);
         } else
         {

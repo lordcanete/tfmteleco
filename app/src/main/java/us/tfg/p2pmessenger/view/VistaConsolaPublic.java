@@ -18,6 +18,7 @@ import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 import us.tfg.p2pmessenger.model.Usuario;
+import java.io.File;
 
 import netscape.javascript.JSObject;
 
@@ -109,13 +110,13 @@ public class VistaConsolaPublic implements Vista
 
     
     //Constructor
-    public VistaConsolaPublic(String ip, int puerto)
+    public VistaConsolaPublic(String ip, int puerto, File keystore) throws Exception
     {
         this.puerto=puerto;
         this.ip=ip;
         this.notificacionesPendiente = false;
         this.conversacionSeleccionada = null;
-        app = new ControladorGUIImpl(ip, puerto,this);
+        app = new ControladorGUIImpl(ip, puerto,this, keystore);
     }  
     
     public void listarGrupos()

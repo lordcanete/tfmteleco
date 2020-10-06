@@ -1,12 +1,25 @@
 package us.tfg.p2pmessenger.controller;
 
+import org.mpisws.p2p.transport.multiaddress.MultiInetSocketAddress;
+import org.mpisws.p2p.transport.TransportLayer;
+import org.mpisws.p2p.transport.identity.BindStrategy;
+import org.mpisws.p2p.transport.multiaddress.MultiInetSocketAddress;
+import org.mpisws.p2p.transport.sourceroute.SourceRoute;
+import org.mpisws.p2p.transport.sourceroute.factory.MultiAddressSourceRouteFactory;
+import org.mpisws.p2p.transport.ssl.SSLTransportLayer;
+import org.mpisws.p2p.transport.ssl.SSLTransportLayerImpl;
+
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
 import java.security.Key;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -46,6 +59,9 @@ import rice.persistence.MemoryStorage;
 import rice.persistence.PersistentStorageConsole;
 import rice.persistence.Storage;
 import rice.persistence.StorageManagerImpl;
+import rice.pastry.NodeHandle;
+import rice.pastry.leafset.LeafSet;
+import rice.pastry.socket.TransportLayerNodeHandle;
 import us.tfg.p2pmessenger.model.BloqueMensajes;
 import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
@@ -124,9 +140,9 @@ public class ControladorGUIImpl implements ControladorApp
     private Map<Id, Map<String, PingWithTimeout>> observadoresPing;
 
     private int error;
+    private KeyStore sslKeyStore;    
 
-
-    public ControladorGUIImpl(String ipEscucha, int puertoEscucha, VistaConsolaPublic vista)
+    public ControladorGUIImpl(String ipEscucha, int puertoEscucha, VistaConsolaPublic vista, File keystore) throws Exception
     {
         // hack for JCE Unlimited Strength
         Field field = null;
@@ -154,6 +170,9 @@ public class ControladorGUIImpl implements ControladorApp
         this.ipEscucha = ipEscucha;
         this.observadoresPing = new HashMap<>();
         this.vista = vista;
+        // create the keystore    
+        this.sslKeyStore = KeyStore.getInstance("PKCS12");
+        this.sslKeyStore.load(new FileInputStream(keystore), "".toCharArray());        
     }
 
     @Override
@@ -170,14 +189,34 @@ public class ControladorGUIImpl implements ControladorApp
             // genera los ids de nodo de forma aleatoria
             nodeIdFactory = new RandomNodeIdFactory(env);
 
-            // crea la fabrica de nodos
+            InetAddress ia_ipEscucha;
+            // crea la fabrica de nodos            
             if (this.ipEscucha == null) {
-                factory = new SocketPastryNodeFactory(nodeIdFactory,
-                        InetAddress.getLocalHost(), puertoEscucha, env);
+                ia_ipEscucha = InetAddress.getLocalHost();                
             } else {
-                factory = new SocketPastryNodeFactory(nodeIdFactory,
-                        InetAddress.getByName(ipEscucha), puertoEscucha, env);
+                ia_ipEscucha = InetAddress.getByName(ipEscucha);                
             }
+            factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env){
+                @Override
+                protected TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> getSourceRouteTransportLayer(
+                    TransportLayer<MultiInetSocketAddress, ByteBuffer> etl, 
+                    PastryNode pn, 
+                    MultiAddressSourceRouteFactory esrFactory) {
+          
+                  // get the default layer by calling super
+                  TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> sourceRoutingTransportLayer =
+                          super.getSourceRouteTransportLayer(etl, pn, esrFactory);
+                  
+                  try {
+                    // return our layer
+                    return new SSLTransportLayerImpl<SourceRoute<MultiInetSocketAddress>, ByteBuffer>
+                            (sourceRoutingTransportLayer,sslKeyStore,sslKeyStore,pn.getEnvironment());
+                  } catch (IOException ioe) {
+                    throw new RuntimeException(ioe);
+                  }
+                }
+          
+              };
             // inicializacion de la fabrica de ids para los objetos almacenados
             pastryIdFactory = new PastryIdFactory(env);
 
