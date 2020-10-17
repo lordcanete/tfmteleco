@@ -48,7 +48,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.net.URL;
 import java.lang.Object;
-
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
 /**
  * Created by PCANO on 30/01/20.
@@ -72,6 +73,8 @@ public class VistaGUI extends Application
     public static final String ERROR_UNIRSEAGRUPO = "Error al encontrar contacto para unirse a grupo";
     public static final String ERROR_ELIMINARCONVERSACION = "Error al eliminar la conversación";
     public static final String ERROR_ENVIOARCHIVODRIVE = "Error al compartir el archivo";
+    public static final String ARCHIVO_DESCARGADO = "Archivo descargado"; 
+    public static final String ERROR_DESCARGAARCHIVODRIVE = "Error al descargar el archivo"; 
 
     private final static Logger LOGGER = Logger.getLogger("us.tfg.p2pmessenger.view.VistaGUI");
     
@@ -270,13 +273,30 @@ public class VistaGUI extends Application
                     com.google.api.services.drive.model.File archivoCreado = GoogleDriveController.crearArchivoDesdeRuta(idDirectorioDrive, nombre, ruta, Files.probeContentType(Paths.get(ruta)));
                     String urlArchivo = GoogleDriveController.obtenerEnlaceCompartirArchivo(archivoCreado.getId());
                     LOGGER.log(Level.INFO, "Obtenida URL para compartición de archivo a través de Google Drive: " + urlArchivo);                
-                    String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | URL: "+urlArchivo;
+                    String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | ID: "+archivoCreado.getId();
                     enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive);  
                 } catch (Exception e) {
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_ENVIOARCHIVODRIVE);
                 }                                  
             }        
         }        
+
+        public void descargarArchivo(String id, String file) {
+            System.out.println("Entrando a descargar archivo. id: "+id+" nombre: "+file);
+            try{
+                GoogleDriveController.descargarArchivo(id, file);
+                javascriptConnector.call("notificarError", VistaGUI.ARCHIVO_DESCARGADO);
+            }catch (Exception e) {
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_DESCARGAARCHIVODRIVE);
+            }                                  
+            
+            /*URL url = new URL(urlStr);
+            ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
+            rbc.close();*/            
+        }
 
         public void cargarPagina(String pagina){         
             try {

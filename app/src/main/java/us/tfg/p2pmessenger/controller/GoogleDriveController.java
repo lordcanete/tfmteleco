@@ -18,6 +18,7 @@ import com.google.api.services.drive.model.FileList;
 
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -102,7 +103,7 @@ public class GoogleDriveController {
             .setApplicationName(APPLICATION_NAME)
             .build();
         File file = driveService.files().create(fileMetadata, mediaContent)
-            .setFields("id, parents, name, webViewLink")
+            .setFields("id, parents, name, webContentLink")
             .execute();        
         return file;
     }
@@ -117,7 +118,7 @@ public class GoogleDriveController {
             .setApplicationName(APPLICATION_NAME)
             .build();
         File file = driveService.files().create(fileMetadata, mediaContent)
-            .setFields("id, parents, name, webViewLink")
+            .setFields("id, parents, name, webContentLink")
             .execute();        
         return file;
     }
@@ -154,9 +155,18 @@ public class GoogleDriveController {
         Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
             .setApplicationName(APPLICATION_NAME)
             .build();
-        File archivo = driveService.files().get(idFile).setFields("id,name,webViewLink").execute();
-        String enlace = archivo.getWebViewLink();
+        File archivo = driveService.files().get(idFile).setFields("id,name,webContentLink").execute();
+        String enlace = archivo.getWebContentLink();
         return enlace;
+    }
+
+    public static void descargarArchivo(String id, String file) throws IOException, GeneralSecurityException{
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
+        FileOutputStream fos = new FileOutputStream(file);
+        driveService.files().get(id).executeMediaAndDownloadTo(fos);
     }
 
 
