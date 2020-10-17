@@ -360,6 +360,15 @@ function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, 
 
 }
 
+function pagAppWindow_onDescargarArchivo(item){    
+    var contenido = item.id;
+    var arrayContenido = contenido.split("--");
+    var idArchivo = arrayContenido[0];
+    var nombreArchivo = arrayContenido[1];
+    javaConnector.descargarArchivo(idArchivo, nombreArchivo);
+
+}
+
 function pagAppWindow_crearMensajeBox(mensajeJson) {
     var contenido = mensajeJson.contenido;
     var fecha = mensajeJson.fecha;
@@ -376,7 +385,17 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
     mensajeBox.attr("id", prefijoIdBloque_mensajeBox + fecha);
     mensajeBox.removeClass("d-none"); 
     var contenidoElement = mensajeBox.find(".mensajeBoxContenido");    
-    contenidoElement.text(contenido);         
+    if(pagAppWindow_comprobarSiContenidoEsArchivoCompartido(contenido)){
+        var patronId  = "ID: ";
+        var patronNombreArchivo = "Archivo compartido: ";        
+        var idArchivoCompartido = contenido.substring(contenido.indexOf(patronId)+patronId.length, contenido.length);
+        var nombreArchivoCompartido = contenido.substring(patronNombreArchivo.length, contenido.indexOf(patronId)-3);
+        contenidoElement.append(patronNombreArchivo + nombreArchivoCompartido + "<button id=\""+idArchivoCompartido+"--"+nombreArchivoCompartido+"\" class=\"bg-transparent border-0 btn-noFocus\" onclick=\"pagAppWindow_onDescargarArchivo(this);\"><i class=\"fa fa-download fa text-muted m-1\" aria-hidden=\"true\"></i></button>");
+        //contenidoElement.append(patronNombreArchivo + "<a href=\"" + urlArchivoCompartido + "\">" + nombreArchivoCompartido + "</a>");
+    }else{
+        contenidoElement.text(contenido);         
+    }
+    
     var fechaElement = mensajeBox.find(".mensajeBoxFecha");
     fechaElement.text(fechaFormateada); 
     if(mensajeJson.hasOwnProperty('remitente')){
@@ -386,6 +405,9 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
     }
     
     return mensajeBox;
+}
+function pagAppWindow_comprobarSiContenidoEsArchivoCompartido(contenido) {
+    return (contenido.includes("Archivo compartido:") && contenido.includes("|") && contenido.includes("ID:"));
 }
 
 function pagAppWindow_crearConversacionBox(conversacionJson) {
