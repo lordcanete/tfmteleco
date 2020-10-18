@@ -581,13 +581,18 @@ public class IdentityImpl<UpperIdentifier, MiddleIdentifier, UpperMsgType, Lower
                   socket.register(true, false, this);
                   return;
                 }
-                
+                logger.log("incomingSocket() received buf.array(): "+
+                        Arrays.toString(buf.array())+" me:"+
+                        Arrays.toString(localIdentifier));
                 if (!Arrays.equals(buf.array(), localIdentifier)) {
-                  if (logger.level <= Logger.INFO) 
+                  if (logger.level <= Logger.INFO) {
                     logger.log("incomingSocket() FAILURE expected "+
                         Arrays.toString(buf.array())+" me:"+
                         Arrays.toString(localIdentifier));
-                  
+                        
+                    throw new IOException("EXCEPCION NOT EXPECTING ME, SEND FAILURE");
+                  }
+                    
                   // not expecting me, send failure
                   byte[] result = new byte[1+localIdentifier.length];
                   result[0] = FAILURE;

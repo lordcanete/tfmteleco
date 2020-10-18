@@ -55,6 +55,7 @@ import java.security.KeyStore;
 import java.security.Security;
 import java.util.Map;
 
+
 import rice.environment.Environment;
 import rice.p2p.commonapi.Id;
 import rice.pastry.NodeHandle;
@@ -91,10 +92,11 @@ public class DistTutorial {
     Security.addProvider(new BouncyCastleProvider());
     
     // create the keystore    
-    final KeyStore store = KeyStore.getInstance("UBER", "BC");
+    final KeyStore store = KeyStore.getInstance("PKCS12");
     store.load(new FileInputStream(keyStoreFile), "".toCharArray());
     
     // create the id from the file name
+    System.out.println("Creando ID");
     rice.pastry.Id id = rice.pastry.Id.build(keyStoreFile.getName().split("\\.")[0]);
     
     // construct the PastryNodeFactory, this is how we use rice.pastry.socket
@@ -117,7 +119,7 @@ public class DistTutorial {
           throw new RuntimeException(ioe);
         }
       }
-
+/*
       @Override
       protected BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>> getBindStrategy() {
         return new BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>>() {        
@@ -142,23 +144,25 @@ public class DistTutorial {
             return true;
           }        
         };
-      }
+      }*/
     };
 
     // construct a node with the id this time
-    PastryNode node = factory.newNode(id);
+    //PastryNode node = factory.newNode(id);
+    PastryNode node = factory.newNode(); //Utilizando un id aleatorio
       
     // construct a new MyApp
     MyApp app = new MyApp(node);    
-    
+    System.out.println("Arrancando el nodo");
     // boot the node
     node.boot(bootaddress);
-    
+    System.out.println("Arrancado el nodo");
     // the node may require sending several messages to fully boot into the ring
     synchronized(node) {
       while(!node.isReady() && !node.joinFailed()) {
         // delay so we don't busy-wait
         node.wait(500);
+        System.out.println("Esperando a conectar");
         
         // abort if can't join
         if (node.joinFailed()) {
