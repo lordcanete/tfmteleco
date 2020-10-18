@@ -170,9 +170,13 @@ public class ControladorGUIImpl implements ControladorApp
         this.ipEscucha = ipEscucha;
         this.observadoresPing = new HashMap<>();
         this.vista = vista;
-        // create the keystore    
-        this.sslKeyStore = KeyStore.getInstance("PKCS12");
-        this.sslKeyStore.load(new FileInputStream(keystore), "".toCharArray());        
+        if (keystore != null){
+            // create the keystore    
+            this.sslKeyStore = KeyStore.getInstance("PKCS12");
+            this.sslKeyStore.load(new FileInputStream(keystore), "".toCharArray());        
+        }else{
+            this.sslKeyStore = null;
+        }        
     }
 
     @Override
@@ -196,27 +200,32 @@ public class ControladorGUIImpl implements ControladorApp
             } else {
                 ia_ipEscucha = InetAddress.getByName(ipEscucha);                
             }
-            factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env){
-                @Override
-                protected TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> getSourceRouteTransportLayer(
-                    TransportLayer<MultiInetSocketAddress, ByteBuffer> etl, 
-                    PastryNode pn, 
-                    MultiAddressSourceRouteFactory esrFactory) {
-          
-                  // get the default layer by calling super
-                  TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> sourceRoutingTransportLayer =
-                          super.getSourceRouteTransportLayer(etl, pn, esrFactory);
-                  
-                  try {
-                    // return our layer
-                    return new SSLTransportLayerImpl<SourceRoute<MultiInetSocketAddress>, ByteBuffer>
-                            (sourceRoutingTransportLayer,sslKeyStore,sslKeyStore,pn.getEnvironment());
-                  } catch (IOException ioe) {
-                    throw new RuntimeException(ioe);
-                  }
-                }
-          
-              };
+            if(this.sslKeyStore != null){
+                factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env){
+                    @Override
+                    protected TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> getSourceRouteTransportLayer(
+                        TransportLayer<MultiInetSocketAddress, ByteBuffer> etl, 
+                        PastryNode pn, 
+                        MultiAddressSourceRouteFactory esrFactory) {
+              
+                      // get the default layer by calling super
+                      TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> sourceRoutingTransportLayer =
+                              super.getSourceRouteTransportLayer(etl, pn, esrFactory);
+                      
+                      try {
+                        // return our layer
+                        return new SSLTransportLayerImpl<SourceRoute<MultiInetSocketAddress>, ByteBuffer>
+                                (sourceRoutingTransportLayer,sslKeyStore,sslKeyStore,pn.getEnvironment());
+                      } catch (IOException ioe) {
+                        throw new RuntimeException(ioe);
+                      }
+                    }
+              
+                  };
+            }else{
+                factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env);
+            }
+            
             // inicializacion de la fabrica de ids para los objetos almacenados
             pastryIdFactory = new PastryIdFactory(env);
 

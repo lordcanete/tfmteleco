@@ -71,21 +71,25 @@ public class VistaConsola implements Vista
         if(argumentos.indexOf("--puerto")!=-1)
             puerto=argumentos.get(argumentos.indexOf("--puerto")+1);
         */
-        if (args.length < 2)
-            System.out.println("usage -> java -cp ... us.tfg.p2pmessenger.view.VistaConsola puertoEscucha keystore [ip]");
+        if (args.length < 1)
+            System.out.println("usage -> java -cp ... us.tfg.p2pmessenger.view.VistaConsola puertoEscucha [ip] [keystore]");
         else
         {
             int puerto = Integer.parseInt(args[0]);
 
-             // get the keystore file
-            String keystoreFileName = args[1];
-            File keystoreFile = new File(keystoreFileName);
-            if (!keystoreFile.exists()) throw new IllegalArgumentException("No se encontró el fichero de almacenamiento de claves/certificados: "+keystoreFileName);
-
             String ip = null;
-            if (args.length > 2) {
-                ip = args[2];
+            if (args.length > 1) {
+                ip = args[1];
             }
+
+            File keystoreFile = null;            
+            if (args.length > 2){
+                 // get the keystore file
+                String keystoreFileName = args[2];
+                keystoreFile = new File(keystoreFileName);
+                if (!keystoreFile.exists()) throw new IllegalArgumentException("No se encontró el fichero de almacenamiento de claves/certificados: "+keystoreFileName);
+            }
+            
             VistaConsola servicio = new VistaConsola(ip, puerto, keystoreFile);
 
             servicio.app.onCreateEntorno();

@@ -172,9 +172,14 @@ public class ControladorConsolaImpl implements ControladorApp
         this.ipEscucha = ipEscucha;
         this.observadoresPing = new HashMap<>();
         this.vista = vista;
-        // create the keystore    
-        this.sslKeyStore = KeyStore.getInstance("PKCS12");
-        this.sslKeyStore.load(new FileInputStream(keystore), "".toCharArray());        
+        if (keystore != null){
+            // create the keystore    
+            this.sslKeyStore = KeyStore.getInstance("PKCS12");
+            this.sslKeyStore.load(new FileInputStream(keystore), "".toCharArray());        
+        }else{
+            this.sslKeyStore = null;
+        }
+        
     }
 
     @Override
@@ -199,54 +204,31 @@ public class ControladorConsolaImpl implements ControladorApp
                 ia_ipEscucha = InetAddress.getByName(ipEscucha);                
             }
 
-            factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env){
-                @Override
-                protected TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> getSourceRouteTransportLayer(
-                    TransportLayer<MultiInetSocketAddress, ByteBuffer> etl, 
-                    PastryNode pn, 
-                    MultiAddressSourceRouteFactory esrFactory) {
-          
-                  // get the default layer by calling super
-                  TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> sourceRoutingTransportLayer =
-                          super.getSourceRouteTransportLayer(etl, pn, esrFactory);
-                  
-                  try {
-                    // return our layer
-                    return new SSLTransportLayerImpl<SourceRoute<MultiInetSocketAddress>, ByteBuffer>
-                            (sourceRoutingTransportLayer,sslKeyStore,sslKeyStore,pn.getEnvironment());
-                  } catch (IOException ioe) {
-                    throw new RuntimeException(ioe);
-                  }
-                }
-          /*
-                @Override
-                protected BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>> getBindStrategy() {
-                  return new BindStrategy<TransportLayerNodeHandle<MultiInetSocketAddress>, SourceRoute<MultiInetSocketAddress>>() {        
-                    public boolean accept(TransportLayerNodeHandle<MultiInetSocketAddress> u,
-                        SourceRoute<MultiInetSocketAddress> l, Map<String, Object> options) {
+            if(this.sslKeyStore != null){
+                factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env){
+                    @Override
+                    protected TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> getSourceRouteTransportLayer(
+                        TransportLayer<MultiInetSocketAddress, ByteBuffer> etl, 
+                        PastryNode pn, 
+                        MultiAddressSourceRouteFactory esrFactory) {
+              
+                      // get the default layer by calling super
+                      TransportLayer<SourceRoute<MultiInetSocketAddress>, ByteBuffer> sourceRoutingTransportLayer =
+                              super.getSourceRouteTransportLayer(etl, pn, esrFactory);
                       
-                      // get the id from the certificate
-                      String idName = (String)options.get(SSLTransportLayer.OPTION_CERT_SUBJECT);
-                      
-                      // if it's not there, it could be because this is a UDP message, just accept
-                      if (idName != null) {              
-                        // compare the name to the id
-                        if (u.getId().toStringFull().equals(idName)) {
-                          // accept
-                          return true;
-                        } else {
-                          // reject
-                          System.out.println("Rejecting id:"+u+" which does not match the certificate entry:"+idName);
-                          System.out.println("Rejecting id:"+u.getId().toStringFull()+" which does not match the certificate entry:"+idName);
-                          return false;
-                        }
+                      try {
+                        // return our layer
+                        return new SSLTransportLayerImpl<SourceRoute<MultiInetSocketAddress>, ByteBuffer>
+                                (sourceRoutingTransportLayer,sslKeyStore,sslKeyStore,pn.getEnvironment());
+                      } catch (IOException ioe) {
+                        throw new RuntimeException(ioe);
                       }
-                      return true;
-                    }        
+                    }
                   };
-                }*/
-              };
-
+            }else{
+                factory = new SocketPastryNodeFactory(nodeIdFactory, ia_ipEscucha, puertoEscucha, env);
+            }
+            
 
             // inicializacion de la fabrica de ids para los objetos almacenados
             pastryIdFactory = new PastryIdFactory(env);
