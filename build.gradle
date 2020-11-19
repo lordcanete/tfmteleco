@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls', 'javafx.web' ]
+}
+
+tasks.withType(Jar) {
+        destinationDir = file("lib")
+    }
+
+mainClassName = 'us.tfg.p2pmessenger.view.VistaGUI'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['app/src/main/java']
+            exclude 'com/google/android/**'
+            exclude 'in/**'
+            //exclude 'rice/persistence/PersistentStorageAndroid.java'
+            exclude 'us/tfg/p2pmessenger/*.java'
+            exclude '**/*Activity.java'
+            exclude '**/*Android*'
+            exclude 'us/tfg/p2pmessenger/view/adapters/**'
+            exclude 'us/tfg/p2pmessenger/view/tls.java'
+            
+        }
+        resources {
+            srcDirs = ['app/src/main/res']
+        }
+        test {
+            java{
+                srcDirs = ['app/src/test']
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'com.google.api-client:google-api-client:1.30.4'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
+    compile fileTree(dir: 'app/libsConsola', include: ['*.jar'])
+    testImplementation 'junit:junit:4.13'  
+    
+}
+
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+    
+
+}
+
+
+
