@@ -15,7 +15,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
-
+import com.google.api.services.drive.model.Permission;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,6 +25,8 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class GoogleDriveController {
     private static final String APPLICATION_NAME = "P2P Messenger";
@@ -169,6 +171,44 @@ public class GoogleDriveController {
         driveService.files().get(id).executeMediaAndDownloadTo(fos);
     }
 
+    public static void darPermisoLectura(String id) throws IOException, GeneralSecurityException{
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
+        driveService
+            .permissions()
+            .create(
+                id,                
+                new Permission().setRole("reader").setType("anyone").setAllowFileDiscovery(false))
+            .execute();
+    }
+
+    public static void descargaArchivoDesdeURL(String fileURL, String filename)
+            throws IOException {
+        URL url = new URL(fileURL);
+        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+        int responseCode = httpConn.getResponseCode();
+ 
+        // always check HTTP response code first
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            // opens input stream from the HTTP connection
+            InputStream inputStream = httpConn.getInputStream();             
+            // opens an output stream to save into file
+            FileOutputStream outputStream = new FileOutputStream(filename); 
+            int bytesRead = -1;
+            byte[] buffer = new byte[4096];
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            } 
+            outputStream.close();
+            inputStream.close(); 
+            System.out.println("Archivo descargado");
+        } else {
+            System.out.println("Fallo al descargar. Respuesta del servidor: " + responseCode);
+        }
+        httpConn.disconnect();
+    }
 
     
 }

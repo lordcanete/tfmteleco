@@ -42,6 +42,7 @@ import org.w3c.dom.Document;
 import com.google.api.services.drive.model.File;
 
 
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -287,20 +288,25 @@ public class VistaGUI extends Application
                     }
                     LOGGER.log(Level.INFO, "Subiendo archivo a Google Drive");
                     com.google.api.services.drive.model.File archivoCreado = GoogleDriveController.crearArchivoDesdeRuta(idDirectorioDrive, nombre, ruta, Files.probeContentType(Paths.get(ruta)));
+                    LOGGER.log(Level.INFO, "Creando permisos de lectura por cualquiera en el archivo subido a Google Drive");
+                    GoogleDriveController.darPermisoLectura(archivoCreado.getId());
                     String urlArchivo = GoogleDriveController.obtenerEnlaceCompartirArchivo(archivoCreado.getId());
                     LOGGER.log(Level.INFO, "Obtenida URL para compartición de archivo a través de Google Drive: " + urlArchivo);                
-                    String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | ID: "+archivoCreado.getId();
+                    //String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | ID: "+archivoCreado.getId();
+                    String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | ID: "+ urlArchivo;
                     enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive);  
                 } catch (Exception e) {
+                    e.printStackTrace();
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_ENVIOARCHIVODRIVE);
                 }                                  
             }        
         }        
 
-        public void descargarArchivo(String id, String file) {
-            System.out.println("Entrando a descargar archivo. id: "+id+" nombre: "+file);
+        public void descargarArchivo(String url, String file) {
+            System.out.println("Entrando a descargar archivo. url: "+url+" nombre: "+file);
             try{
-                GoogleDriveController.descargarArchivo(id, file);
+                //GoogleDriveController.descargarArchivo(id, file);
+                GoogleDriveController.descargaArchivoDesdeURL(url, file);
                 javascriptConnector.call("notificarError", VistaGUI.ARCHIVO_DESCARGADO);
             }catch (Exception e) {
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_DESCARGAARCHIVODRIVE);

@@ -29,7 +29,7 @@ public class GoogleDriveTest {
         this.gDriveController = new GoogleDriveController();
         
     }  
-
+    @Test
     public void testListarArchivos() throws Exception {        
         System.out.println("----------------------------------\n"+
                             "-----   TEST testListarArchivos---\n"+
@@ -44,7 +44,7 @@ public class GoogleDriveTest {
             }
         }
     }
-
+    @Test
     public void testCrearDirectorio() throws Exception {
         System.out.println("----------------------------------\n"+
                             "-----   TEST testCrearDirectorio---\n"+
@@ -53,7 +53,7 @@ public class GoogleDriveTest {
         System.out.println("Created folder with id= "+ directorio.getId());
         System.out.println("                    name= "+ directorio.getName());
     }
-    
+    @Test
     public void testBuscarDirectorio() throws Exception {
         System.out.println("----------------------------------\n"+
                             "-----   TEST testBuscarDirectorio---\n"+
@@ -66,7 +66,7 @@ public class GoogleDriveTest {
                 file.getName(), file.getId());
         }
     }
-
+    @Test
     public void testBuscarArchivo() throws Exception {
         System.out.println("----------------------------------\n"+
                             "-----   TEST testBuscarArchivo---\n"+
@@ -79,7 +79,7 @@ public class GoogleDriveTest {
                 file.getName(), file.getId());
         }
     }
-
+    @Test
     public void testCrearArchivo() throws Exception {
         System.out.println("----------------------------------\n"+
                             "-----   TEST testCrearArchivo---\n"+
@@ -92,7 +92,7 @@ public class GoogleDriveTest {
         System.out.println("                    name= "+ archivoCreado.getName());
         
     }
-
+    @Test
     public void testCompartirArchivo() throws Exception{
         System.out.println("----------------------------------\n"+
                             "-----   TEST testCompartirArchivo---\n"+
@@ -105,7 +105,7 @@ public class GoogleDriveTest {
         System.out.printf("Enlace para compartir archivo: %s\n", enlaceCompartirArchivo);        
     }
 
-    @Test
+    
     public void testSuite(){
         try {
             testListarArchivos();
