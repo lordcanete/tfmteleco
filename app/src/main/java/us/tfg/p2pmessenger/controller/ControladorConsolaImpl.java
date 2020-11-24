@@ -400,6 +400,20 @@ public class ControladorConsolaImpl implements ControladorApp
 
         return ret;
     }
+    @Override
+    public Grupo obtenerGrupoPorId(String id)
+    {
+        Grupo ret = null;
+        try
+        {
+            ret = this.db.obtenerGrupoPorId(id, llavero.getClaveSimetrica(yo.getNombre()));
+        } catch (Exception e)
+        {
+            vista.excepcion(e);
+        }
+        return ret;
+    }
+
 
     @Override
     public ArrayList<Grupo> obtenerGrupos()
@@ -2431,13 +2445,89 @@ public class ControladorConsolaImpl implements ControladorApp
                 @Override
                 public void receiveException(Exception e)
                 {
-
+                    
                 }
             });
         }
 
 
         //return grupo;
+    }
+    @Override
+    public void obtenerBloquePorId(Id idBusqueda){      
+          
+        almacenamiento.lookup(idBusqueda, new Continuation<PastContent, Exception>()
+            {
+                @Override
+                public void receiveResult(PastContent pastContent)
+                {        
+                              
+                    if (pastContent != null && pastContent instanceof BloqueMensajes)
+                    {
+                        BloqueMensajes bloque = (BloqueMensajes) pastContent;
+                        vista.setBloqueMensajes(bloque);
+                    }
+                }
+                @Override
+                public void receiveException(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            });
+    }
+
+    @Override
+    public ArrayList<Mensaje> obtenerMensajesDeBloque(BloqueMensajes bloque){
+        ArrayList<Mensaje> mensajes = null;    
+        Id destinatario = bloque.getDestinatario();
+
+        Queue<EntradaMensaje> entradas = bloque.getMensajes();
+        mensajes = new ArrayList<>();
+
+        Key clavePrivada;
+        if (destinatario.equals(yo.getId()))
+            clavePrivada = llavero.getClavePrivada(yo.getNombre());
+        else
+            clavePrivada = llavero.getClavePrivada(destinatario.toStringFull());
+
+        if (clavePrivada != null)
+        {
+            for (EntradaMensaje entrada : entradas)
+            {
+                String claveSimCifrada = entrada.getClaveSimetricaCifrada();
+                try
+                {
+                    Key claveSimetrica = ManejadorClaves.desencriptaClaveSimetrica(claveSimCifrada,
+                            clavePrivada, ALGORITMO_CLAVE_SIMETRICA);
+                    Mensaje mensaje = entrada.getMensaje().desencripta(claveSimetrica);
+                    mensajes.add(mensaje);
+
+                } catch (Exception e)
+                {
+                    mensajes.add(new Mensaje(entrada.getRemitente(),
+                            bloque.getDestinatario(), "Error en el mensaje",
+                            Mensaje.GRUPO_IMPORTANTE));
+                }
+            }
+        }                 
+        return mensajes;  
+    }
+
+    @Override
+    public ArrayList<Mensaje> obtenerMensajesImportantesGrupo(Grupo grupo){ 
+        ArrayList<Mensaje> mensajes = null;
+        Id idBusqueda = grupo.getBloqueMensajesImportantes();
+        obtenerBloquePorId(idBusqueda);
+        BloqueMensajes bloque = vista.getBloqueMensajes();
+        if(bloque != null){
+            vista.setBloqueMensajes(null);
+            mensajes = obtenerMensajesDeBloque(bloque);     
+            System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");
+            if (bloque.getSiguienteBloque() != null){
+                System.out.println("ID Bloque Siguiente: "+bloque.getId().toStringFull()+"\n");
+            }  
+        }   
+        return mensajes;     
     }
 
     @Override

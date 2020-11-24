@@ -54,6 +54,7 @@ public interface ControladorApp extends Controlador, ObservadorPing
     void guardaGrupo(Grupo grupo, Key clave, String autor);
 
     Grupo obtenerGrupo(String id);
+    Grupo obtenerGrupoPorId(String id);
 
     ArrayList<Grupo> obtenerGrupos();
 
@@ -131,6 +132,9 @@ public interface ControladorApp extends Controlador, ObservadorPing
 
     void actualizaDireccionBloque(Id grupo, Mensaje mensaje);
 
+    ArrayList<Mensaje> obtenerMensajesDeBloque(BloqueMensajes bloque);
+    void obtenerBloquePorId(Id idBusqueda);
+
     PastryIdFactory getPastryIdFactory();
 
     void inicializaBBDD();
@@ -177,6 +181,7 @@ public interface ControladorApp extends Controlador, ObservadorPing
     void imprimeIdEnCache();
 
     void obtieneMensajesImportantes();
+    ArrayList<Mensaje> obtenerMensajesImportantesGrupo(Grupo grupo);
 
     String obrenerCodigoInvitacion(String id);
 

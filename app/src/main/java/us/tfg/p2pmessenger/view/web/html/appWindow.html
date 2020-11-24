@@ -40,15 +40,20 @@
             
         </div>
         <div id="panel-derecho" class="col-7 h-100 position-relative m-0 p-0 d-none flex-column">             
-            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-row align-items-center p-4 border">
-                <div id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</div>   
-                <div id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="mx-2">
-                    <button id="pagAppWindow_codigoInvitacionGrupo" type="button" class="btn border btn-light btn-sm px-1 py-0" data-trigger="manual" data-toggle="tooltip" 
-                    data-html="true" data-placement="bottom" title="" onclick="pagAppWindow_onClickGenerarCodigoInvitacion();">
-                        <i class="fa fa-refresh fa text-muted mx-1 my-0" aria-hidden="true"></i>Cód. invitación
-                    </button>       
-                </div>  
-                
+            <div id="pagAppWindow_bloqueConversacionContacto" class="d-flex flex-column align-items-left p-4 border">
+                <div id="pagAppWindow_bloqueConversacionContactoIdUsuario" class="font-weight-bold">Usuario</div>  
+                <div id="pagAppWindow_bloqueConversacionContactoControlesGrupo" class="flex-row">
+                    <div id="pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo" class="mx-2">
+                        <button id="pagAppWindow_codigoInvitacionGrupo" type="button" class="btn border btn-light btn-sm px-1 py-0" data-trigger="manual" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" onclick="pagAppWindow_onClickGenerarCodigoInvitacion();" data-original-title="">
+                            <i class="fa fa-refresh fa text-muted mx-1 my-0" aria-hidden="true"></i>Cód. invitación
+                        </button>       
+                    </div>  
+                    <div id="pagAppWindow_bloqueConversacionContactoSeccionMensajesImportantes" class="mx-2">                    
+                        <button id="pagAppWindow_botonMensajesImportantes" type="button" class="btn border btn-light btn-sm px-1 py-0" onclick="pagAppWindow_onClickAbrirMensajesImportantes(this);">
+                            <i class="fa fa-star fa text-muted mx-1 my-0" aria-hidden="true"></i>Mensajes importantes
+                        </button>       
+                    </div>  
+                </div>
             </div>
             <div id="pagAppWindow_bloqueConversacionListaMensajes" class="border flex-grow-1 overflow-auto scrollbarInvisible">
                 
@@ -57,9 +62,13 @@
                 <div class="form-inline">                    
                     <div class="form-group m-1 flex-grow-1">
                       <label for="pagAppWindow_formFieldMensaje" class="sr-only">Mensaje</label>
-                      <input type="text" class="form-control flex-grow-1" id="pagAppWindow_formFieldMensaje" placeholder="Escribe tu mensaje...">
-                    </div>    
-                    <input id="pagAppWindow_fieldEnviarArchivo" type="file" name="name" class="d-none"/>
+                      <input type="text" class="form-control flex-grow-1" id="pagAppWindow_formFieldMensaje" placeholder="Escribe tu mensaje...">                      
+                    </div>   
+                    <div id="pagAppWindow_BloqueMensajeImportante">
+                        <input type="checkbox" name="importante" id="pagAppWindow_formFieldMensajeImportante" class="css-checkbox">
+                        <label for="pagAppWindow_formFieldMensajeImportante" class="css-label"></label>
+                    </div>                    
+                    <input id="pagAppWindow_fieldEnviarArchivo" type="file" name="name" class="d-none"/>                                     
                     <button class="bg-transparent border-0 btn-noFocus" onclick="pagAppWindow_onClickEnviarArchivo();">                        
                         <i class="fa fa-paperclip fa-2x text-muted m-1" aria-hidden="true"></i>
                     </button>                                    
@@ -134,7 +143,20 @@
                 </div>
         </div>
 
-        
+        <div id="pagAppWindow_capaMensajesImportantes" class="h-100 w-100 align-items-center justify-content-center position-absolute d-none">
+            <div id="pagAppWindow_PanelMensajesImportantes" class="card d-flex flex-column p-1 shadow-sm h-75 w-75 position-relative">                
+                <button class="bg-transparent border-0 btn-noFocus position-absolute iconoCerrarVentana" onclick="pagAppWindow_onClickCerrarMensajesImportantes();"><i class="fa fa-times-circle-o fa-2x text-muted" aria-hidden="true"></i></button>
+                <div class="pagAppWindow_mensajesImportantesHeader">
+                    <h4 class="m-2 mb-4">Mensajes importantes</h4>
+                    <h5 class="mx-2 my-1">Grupo: <span id="pagAppWindow_mensajesImportantesNombreGrupo"></span></h5>
+                    <button type="button" class="btn btn-success px-1 mx-2 my-1" onclick="pagAppWindow_onClickRecargarMensajesImportantes();">Refrescar</button>                
+                </div>                
+                <div id="pagAppWindow_PanelMensajesImportantesListaMensajes" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
+                     
+                </div>
+
+            </div>
+        </div>                 
 
         <!-- Plantillas para cajas agregables a los contenedores -->
         <div id="contactoBoxAgendaPlantilla" class="contactoBox border p-1 position-relative d-none">
@@ -165,17 +187,23 @@
         </div>
 
         <div id="mensajeDivRecibidoPlantilla" class="mensajeDivRecibido d-flex justify-content-start col-12 px-2 py-1 d-none">
-            <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm">
+            <div class="mensajeBoxRecibido px-2 w-75 border rounded shadow-sm position-relative">
                 <div class="mensajeBoxRemitente text-wrap font-weight-bold text-left"></div>
                 <div class="mensajeBoxContenido text-wrap text-left"></div>
                 <div class="mensajeBoxFecha text-right small font-italic text-muted"></div>
+                <div class="mensajeBoxImportante d-none">
+                    <i class="fa fa-star fa text-muted mx-1 my-0" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
 
         <div id="mensajeDivEnviadoPlantilla" class="mensajeDivEnviado d-flex justify-content-end col-12 px-2 py-1 d-none">
-            <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm">
+            <div class="mensajeBoxEnviado px-2 w-75 border rounded shadow-sm position-relative">
                 <div class="mensajeBoxContenido text-wrap text-left"></div>
                 <div class="mensajeBoxFecha text-right small font-italic text-muted"></div>
+                <div class="mensajeBoxImportante d-none">
+                    <i class="fa fa-star fa text-muted mx-1 my-0" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
         <div id="capaCargando" class="capaNotificaciones d-none align-items-center">        

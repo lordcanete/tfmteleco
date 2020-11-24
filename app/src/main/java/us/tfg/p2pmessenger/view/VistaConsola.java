@@ -18,6 +18,7 @@ import us.tfg.p2pmessenger.model.Contacto;
 import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
+import us.tfg.p2pmessenger.model.BloqueMensajes;
 
 /**
  * Created by FPiriz on 21/6/17.
@@ -25,6 +26,8 @@ import us.tfg.p2pmessenger.model.Mensaje;
 public class VistaConsola implements Vista
 {
     private ControladorApp app;
+
+    private BloqueMensajes bloqueMensajes;
 
     public static final Scanner scanner = new Scanner(System.in);
 
@@ -38,11 +41,22 @@ public class VistaConsola implements Vista
     private int puerto;
     private String ip;
 
+    @Override
+    public BloqueMensajes getBloqueMensajes(){
+        return this.bloqueMensajes;
+    }
+    @Override
+    public void setBloqueMensajes(BloqueMensajes bloque){
+        this.bloqueMensajes = bloque;
+    }
+
+
     // 4euros dni original y copia y fam numerosa jueves 7/09 -> 8:45
     public VistaConsola(String ip, int puerto, File keystore) throws Exception
     {
         this.puerto=puerto;
         this.ip=ip;
+        this.bloqueMensajes = null;
         app = new ControladorConsolaImpl(ip, puerto,this, keystore);
     }   
     public static void main(String args[]) throws Exception
@@ -239,6 +253,8 @@ public class VistaConsola implements Vista
                 System.out.println("14) Obtener todos los id de bloques en cache");
                 System.out.println("15) Obtener todos los mensajes importantes para mi");
                 System.out.println("16) Unirse a grupo con codigo");
+                System.out.println("17) Obtener primer bloque de mensajes importantes de un grupo");
+                System.out.println("18) Obtener mensajes importantes de un bloque");
 
                 System.out.println("88) Cerrar sesion");
                 System.out.println("99) Salir de la aplicacion");
@@ -465,6 +481,33 @@ public class VistaConsola implements Vista
                         } else
                         {
                             System.out.println("Erro al leer");
+                        }
+                        break;
+                    case 17:
+                        System.out.println("introduzca el id: ");
+                        if(scanner.hasNext())
+                        {
+                            id = scanner.next();
+                            Grupo grupoMensajesImportantes = app.obtenerGrupoPorId(id);
+                            ArrayList<Mensaje> mensajes = app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);
+                            System.out.println("ID Bloque: "+grupoMensajesImportantes.getBloqueMensajesImportantes().toStringFull()+"\n"+mensajes+"\n");                            
+                        }
+                        break;
+                    case 18:
+                        System.out.println("introduzca el id: ");
+                        if(scanner.hasNext())
+                        {
+                            id = scanner.next();                            
+                            app.obtenerBloquePorId(rice.pastry.Id.build(id));
+                            BloqueMensajes bloque = this.getBloqueMensajes();
+                            if(bloque != null){
+                                this.setBloqueMensajes(null);
+                                ArrayList<Mensaje> mensajes = app.obtenerMensajesDeBloque(bloque);     
+                                System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");
+                                if (bloque.getSiguienteBloque() != null){
+                                    System.out.println("ID Bloque Siguiente: "+bloque.getId().toStringFull()+"\n");
+                                }  
+                            }  
                         }
                         break;
                     case 88:

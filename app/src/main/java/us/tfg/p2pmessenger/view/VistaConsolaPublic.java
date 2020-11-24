@@ -18,6 +18,7 @@ import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 import us.tfg.p2pmessenger.model.Usuario;
+import us.tfg.p2pmessenger.model.BloqueMensajes;
 import java.io.File;
 
 import netscape.javascript.JSObject;
@@ -27,6 +28,8 @@ import netscape.javascript.JSObject;
 public class VistaConsolaPublic implements Vista
 {
     private ControladorApp app;
+
+    private BloqueMensajes bloqueMensajes;
 
     public static final Scanner scanner = new Scanner(System.in);
 
@@ -107,7 +110,14 @@ public class VistaConsolaPublic implements Vista
     public void setFinCrearGrupo(boolean finalizado){
         this.finCrearGrupo = finalizado;
     }
-
+    @Override
+    public BloqueMensajes getBloqueMensajes(){
+        return this.bloqueMensajes;
+    }
+    @Override
+    public void setBloqueMensajes(BloqueMensajes bloque){
+        this.bloqueMensajes = bloque;
+    }
     
     //Constructor
     public VistaConsolaPublic(String ip, int puerto, File keystore) throws Exception
@@ -230,6 +240,8 @@ public class VistaConsolaPublic implements Vista
                 System.out.println("14) Obtener todos los id de bloques en cache");
                 System.out.println("15) Obtener todos los mensajes importantes para mi");
                 System.out.println("16) Unirse a grupo con codigo");
+                System.out.println("17) Obtener mensajes importantes de un grupo");
+                System.out.println("18) Obtener mensajes importantes de un bloque");
 
                 System.out.println("88) Cerrar sesion");
                 System.out.println("99) Salir de la aplicacion");
@@ -445,6 +457,33 @@ public class VistaConsolaPublic implements Vista
                         } else
                         {
                             System.out.println("Erro al leer");
+                        }
+                        break;
+                    case 17:
+                        System.out.println("introduzca el id: ");
+                        if(scanner.hasNext())
+                        {
+                            id = scanner.next();
+                            Grupo grupoMensajesImportantes = app.obtenerGrupoPorId(id);
+                            ArrayList<Mensaje> mensajes = app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);
+                            System.out.println("ID Bloque: "+grupoMensajesImportantes.getBloqueMensajesImportantes().toStringFull()+"\n"+mensajes+"\n");                            
+                        }
+                        break;
+                    case 18:
+                        System.out.println("introduzca el id: ");
+                        if(scanner.hasNext())
+                        {
+                            id = scanner.next();                            
+                            app.obtenerBloquePorId(rice.pastry.Id.build(id));
+                            BloqueMensajes bloque = this.getBloqueMensajes();
+                            if(bloque != null){
+                                this.setBloqueMensajes(null);
+                                ArrayList<Mensaje> mensajes = app.obtenerMensajesDeBloque(bloque);     
+                                System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");
+                                if (bloque.getSiguienteBloque().toStringFull() != null){
+                                    System.out.println("ID Bloque Siguiente: "+bloque.getId().toStringFull()+"\n");
+                                }  
+                            }  
                         }
                         break;
                     case 88:
@@ -1010,12 +1049,16 @@ public class VistaConsolaPublic implements Vista
         return this.app.boolEliminaConversacion(id);    
     }
 
-    public void appEnviarMensaje(String mensaje){
+    public void appEnviarMensaje(String mensaje, boolean importante){
         int tipoMensaje;
         if(getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO){
-            tipoMensaje = Mensaje.INDIVIDUAL_NORMAL;
+            tipoMensaje = Mensaje.INDIVIDUAL_NORMAL;                        
         }else{
-            tipoMensaje = Mensaje.GRUPO_NORMAL;
+            if(importante){
+                tipoMensaje = Mensaje.GRUPO_IMPORTANTE;
+            }else{
+                tipoMensaje = Mensaje.GRUPO_NORMAL;
+            }
         }
         app.enviaMensaje(tipoMensaje, mensaje, getConversacionSeleccionada().getId(), getConversacionSeleccionada().getTipo() != Conversacion.TIPO_GRUPO);
     }
@@ -1055,6 +1098,22 @@ public class VistaConsolaPublic implements Vista
     public ArrayList<String> appObtenerConversacionesPendiente(){
         return app.obtenerConversacionesPendiente();
 
+    }
+
+    public Grupo appObtenerGrupoPorId(String id){
+        return app.obtenerGrupoPorId(id);
+    }
+
+    public ArrayList<Mensaje> appObtenerMensajesImportantesGrupo(Grupo grupoMensajesImportantes){
+        return app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);
+    }
+    
+    public void appObtenerBloquePorId(Id id){
+        app.obtenerBloquePorId(id);
+    }
+    
+    public ArrayList<Mensaje> appObtenerMensajesDeBloque(BloqueMensajes bloque){
+        return app.obtenerMensajesDeBloque(bloque);
     }
 
 }

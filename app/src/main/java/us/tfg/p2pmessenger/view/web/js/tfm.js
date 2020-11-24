@@ -28,6 +28,11 @@ var jsConnector = {
         ocultarBloque(idCapaCargando);
         pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente, esGrupo);
     },
+    actualizarPanelMensajesImportantes: function(listaMensajesJsonString, aliasGrupo){
+        var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
+        ocultarBloque(idCapaCargando);
+        pagAppWindow_refrescarPanelMensajesImportantes(listaMensajesJSON, aliasGrupo);
+    },    
     actualizarPanelesAppWindowTrasEnvioMensaje: function(aliasRemitente){
         pagAppWindow_limpiarFormularioNuevoMensaje();
         javaConnector.obtenerListaConversacionesAbiertas(aliasRemitente);
@@ -76,6 +81,10 @@ function ocultarBloque(idBloque){
 
 function limpiarTextoInput(id){
     $(id).val("");
+}
+
+function reiniciarCheckbox(id){
+    $(id).prop("checked", false);
 }
 
 function sleep(ms) {

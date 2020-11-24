@@ -1,4 +1,5 @@
 var idCapaAgenda ="#pagAppWindow_capaAgenda";
+var idCapaMensajesImportantes = "#pagAppWindow_capaMensajesImportantes";
 var idListaConversaciones = "#pagAppWindow_bloqueIzquierdoConversaciones";
 var idListaMensajesConversacion = "#pagAppWindow_bloqueConversacionListaMensajes";
 var idInput_CrearContactoAlias = "#pagAppWindow_PanelAgendaAgregarContactoFieldAlias";
@@ -9,6 +10,7 @@ var idInput_UnirseGrupoCodigo = "pagAppWindow_PanelAgendaUnirseAGrupoFieldCodigo
 var idBloque_notifError = "#pagAppWindow_bloqueNotificacionError";
 var idBloque_textoError = "#pagAppWindow_mensajeNotificacionError";
 var idFormFieldMensaje = "pagAppWindow_formFieldMensaje";
+var idFormFieldMensajeImportante = "pagAppWindow_formFieldMensajeImportante";
 var claseBloque_conversacionAbierta = "conversacionBoxAbierta";
 var claseBloque_conversacionBox = "conversacionBox";
 var prefijoSelectorClase = ".";
@@ -93,6 +95,10 @@ function pagAppWindow_mostrarAgendaActualizada(){
     javaConnector.obtenerListaContactos();
 }
 
+function pagAppWindow_mostrarMensajesImportantesActualizados(){    
+    javaConnector.obtenerMensajesImportantes();    
+}
+
 async function pagAppWindow_onClickCerrarSesion () {
     mostrarBloque(idCapaCargando);
     await sleep(100);
@@ -104,6 +110,19 @@ function pagAppWindow_onClickAbrirAgenda(){
     pagAppWindow_mostrarAgendaActualizada();        
 }
 
+async function pagAppWindow_onClickAbrirMensajesImportantes(){    
+    mostrarBloque(idCapaCargando);
+    await sleep(100);
+    pagAppWindow_mostrarMensajesImportantesActualizados();    
+}
+
+async function pagAppWindow_onClickRecargarMensajesImportantes(){ 
+    mostrarBloque(idCapaCargando);
+    await sleep(100);   
+    pagAppWindow_mostrarMensajesImportantesActualizados();    
+}
+
+
 async function pagAppWindow_onClickRefrescarConversaciones(){    
     mostrarBloque(idCapaCargando);
     await sleep(100);
@@ -112,6 +131,10 @@ async function pagAppWindow_onClickRefrescarConversaciones(){
 
 function pagAppWindow_onClickCerrarAgenda(){
     javaConnector.cerrarAgenda();
+}
+
+function pagAppWindow_onClickCerrarMensajesImportantes(){
+    ocultarBloque(idCapaMensajesImportantes);
 }
 
 function pagAppWindow_onClickCerrarNotificacionError(){
@@ -213,8 +236,9 @@ function pagAppWindow_onClickEliminarConversacion(item){
 function pagAppWindow_onClickEnviarMensaje(item){
     var idBloqueFormEnvioMensaje = item.parentElement.parentElement.id;
     var mensaje = $(prefijoSelectorId.concat(idBloqueFormEnvioMensaje)).find(prefijoSelectorId.concat(idFormFieldMensaje)).val();
+    var importante = $(prefijoSelectorId.concat(idBloqueFormEnvioMensaje)).find(prefijoSelectorId.concat(idFormFieldMensajeImportante)).is(":checked");
     if(pagAppWindow_validarFormularioEnviarMensaje(mensaje)){
-        javaConnector.enviarMensajeAConversacionSeleccionada(mensaje);
+        javaConnector.enviarMensajeAConversacionSeleccionada(mensaje, importante);
     }    
 }
 
@@ -238,6 +262,7 @@ function pagAppWindow_limpiarFormularioNuevoContacto(){
 
 function pagAppWindow_limpiarFormularioNuevoMensaje(){
     limpiarTextoInput(prefijoSelectorId.concat(idFormFieldMensaje));
+    reiniciarCheckbox(prefijoSelectorId.concat(idFormFieldMensajeImportante));
 }
 
 function pagAppWindow_limpiarFormularioNuevoGrupo(){
@@ -324,8 +349,6 @@ function pagAppWindow_refrescarListaConversacionesAbiertas(listaConversacionesJS
     
 }
 
-
-
 function pagAppWindow_reiniciarPanelConversacionSeleccionada(){
     var panelConversacionSeleccionadaDefault = $("#panel-derecho-default");
     var panelConversacionSeleccionada = $("#panel-derecho");
@@ -333,28 +356,44 @@ function pagAppWindow_reiniciarPanelConversacionSeleccionada(){
     mostrarBloque(panelConversacionSeleccionadaDefault);
 }
 
+function pagAppWindow_refrescarPanelMensajesImportantes(listaMensajesJSON, aliasGrupo){
+    var panelMensajesImportantesListaMensajes = $("#pagAppWindow_PanelMensajesImportantesListaMensajes");
+    var panelMensajesImportantesAliasGrupo = $("#pagAppWindow_mensajesImportantesNombreGrupo");
+    var panelMensajesImportantes = $(idCapaMensajesImportantes);
+    panelMensajesImportantesListaMensajes.empty();
+    panelMensajesImportantesAliasGrupo.text(aliasGrupo);
+    mostrarBloque(panelMensajesImportantes);
+    listaMensajesJSON.forEach(function(mensajeJson) { 
+        var mensajeBox = pagAppWindow_crearMensajeBox(mensajeJson);
+        panelMensajesImportantesListaMensajes.append(mensajeBox);                  
+    });   
+    panelMensajesImportantesListaMensajes.scrollTop(panelConversacionSeleccionadaListaMensajes[0].scrollHeight);
+}
+
 function pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente, esGrupo){
     var panelConversacionSeleccionadaDefault = $("#panel-derecho-default");
     var panelConversacionSeleccionada = $("#panel-derecho");
     var panelConversacionSeleccionadaListaMensajes = $("#pagAppWindow_bloqueConversacionListaMensajes");
     var panelConversacionSeleccionadaAliasRemitente = $("#pagAppWindow_bloqueConversacionContactoIdUsuario");
-    var panelConversacionSeleccionadaBloqueCodInvitacion = $("#pagAppWindow_bloqueConversacionContactoSeccionCodigoInvitacionGrupo");    
+    var panelConversacionSeleccionadaControlesGrupo = $("#pagAppWindow_bloqueConversacionContactoControlesGrupo");    
+    var panelConversacionSeleccionadaCheckImportante = $("#pagAppWindow_BloqueMensajeImportante");  
     panelConversacionSeleccionadaListaMensajes.empty();
     panelConversacionSeleccionadaAliasRemitente.text(aliasRemitente);
     
     
     pagAppWindow_modificarCodigoInvitacionGrupo('');
     if(esGrupo){
-        mostrarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
+        mostrarBloque(panelConversacionSeleccionadaControlesGrupo);
+        mostrarBloque(panelConversacionSeleccionadaCheckImportante);
     }else{
-        ocultarBloque(panelConversacionSeleccionadaBloqueCodInvitacion);
+        ocultarBloque(panelConversacionSeleccionadaControlesGrupo);
+        ocultarBloque(panelConversacionSeleccionadaCheckImportante);
     }
     ocultarBloque(panelConversacionSeleccionadaDefault);
     mostrarBloque(panelConversacionSeleccionada);
     listaMensajesJSON.forEach(function(mensajeJson) { 
         var mensajeBox = pagAppWindow_crearMensajeBox(mensajeJson);
-        panelConversacionSeleccionadaListaMensajes.append(mensajeBox);    
-              
+        panelConversacionSeleccionadaListaMensajes.append(mensajeBox);                  
     });     
     panelConversacionSeleccionadaListaMensajes.scrollTop(panelConversacionSeleccionadaListaMensajes[0].scrollHeight);
 
@@ -373,6 +412,7 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
     var contenido = mensajeJson.contenido;
     var fecha = mensajeJson.fecha;
     var sentidoRecepcion = mensajeJson.sentidoRecepcion;   
+    var mensajeImportante = mensajeJson.importante;
     var plantilla;
     if(sentidoRecepcion){
         plantilla = $("#mensajeDivRecibidoPlantilla");
@@ -402,6 +442,11 @@ function pagAppWindow_crearMensajeBox(mensajeJson) {
         var remitente = mensajeJson.remitente;
         var remitenteElement = mensajeBox.find(".mensajeBoxRemitente");
         remitenteElement.text(remitente);
+    }
+    if(mensajeImportante){
+        var iconoImportante = mensajeBox.find(".mensajeBoxImportante");
+        iconoImportante.addClass("d-flex");
+        iconoImportante.removeClass("d-none");
     }
     
     return mensajeBox;
