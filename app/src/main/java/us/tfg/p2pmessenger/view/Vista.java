@@ -1,7 +1,7 @@
 package us.tfg.p2pmessenger.view;
 
 import us.tfg.p2pmessenger.model.Mensaje;
-
+import us.tfg.p2pmessenger.model.BloqueMensajes;
 /**
  * Created by FPiriz on 25/6/17.
  */
@@ -23,6 +23,8 @@ public interface Vista
     int ERROR_SUBSCRIPCION_GRUPO = 14;
     int ERROR_ACTUALIZACION_GRUPO = 15;
 
+    BloqueMensajes getBloqueMensajes();
+    void setBloqueMensajes(BloqueMensajes bloque);
 
     void muestraMensaje(Mensaje mensaje, String alias);
 

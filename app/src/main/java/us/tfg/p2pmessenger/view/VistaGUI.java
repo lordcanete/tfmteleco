@@ -25,6 +25,7 @@ import us.tfg.p2pmessenger.model.Conversacion;
 import us.tfg.p2pmessenger.model.Grupo;
 import us.tfg.p2pmessenger.model.Mensaje;
 import us.tfg.p2pmessenger.model.Usuario;
+import us.tfg.p2pmessenger.model.BloqueMensajes;
 import us.tfg.p2pmessenger.view.VistaConsolaPublic;
 import us.tfg.p2pmessenger.controller.GoogleDriveController;
 
@@ -76,6 +77,8 @@ public class VistaGUI extends Application
     public static final String ERROR_ENVIOARCHIVODRIVE = "Error al compartir el archivo";
     public static final String ARCHIVO_DESCARGADO = "Archivo descargado"; 
     public static final String ERROR_DESCARGAARCHIVODRIVE = "Error al descargar el archivo"; 
+    public static final String ERROR_OBTENERBLOQUEMENSAJES = "Error al obtener el bloque de mensajes importantes"; 
+    public static final String ERROR_NOHAYMENSAJESIMPORTANTES = "No se encontraron mensajes importantes"; 
 
     private final static Logger LOGGER = Logger.getLogger("us.tfg.p2pmessenger.view.VistaGUI");
     
@@ -205,10 +208,7 @@ public class VistaGUI extends Application
         private boolean archivoEncontrado;
         private final String nombreDirectorioDriveAplicacion = "P2PMessenger";
         private final String formatoDirectorioDrive = "application/vnd.google-apps.folder";
-
         
-
-
         public void RecursiveSearch(java.io.File[] arr,int index, String nombreArchivo, long lastModifiedArchivo)  
         { 
             String lastModifiedFound;
@@ -294,7 +294,7 @@ public class VistaGUI extends Application
                     LOGGER.log(Level.INFO, "Obtenida URL para compartición de archivo a través de Google Drive: " + urlArchivo);                
                     //String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | ID: "+archivoCreado.getId();
                     String mensajeComparticionFicheroDrive = "Archivo compartido: " + nombre + " | ID: "+ urlArchivo;
-                    enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive);  
+                    enviarMensajeAConversacionSeleccionada(mensajeComparticionFicheroDrive, false);  
                 } catch (Exception e) {
                     e.printStackTrace();
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_ENVIOARCHIVODRIVE);
@@ -587,11 +587,16 @@ public class VistaGUI extends Application
             if(mensajes!=null)
             {
                 for (Mensaje mensaje : mensajes)
-                {
+                {                    
                     if(!comprobarSiEsMensajeDeControl(mensaje)){
                         mensajeJsonBuilder = Json.createObjectBuilder()
                                                 .add("contenido", mensaje.getContenido()) 
-                                                .add("fecha", mensaje.getFecha().getTime());                      
+                                                .add("fecha", mensaje.getFecha().getTime());     
+                        if(mensaje.getClase() == Mensaje.GRUPO_IMPORTANTE){
+                            mensajeJsonBuilder.add("importante", true);
+                        }else{
+                            mensajeJsonBuilder.add("importante", false);
+                        }     
                         if(mensaje.getOrigen().equals(usuarioLogado.getId())){
                             mensajeJsonBuilder.add("sentidoRecepcion", false);
                         }else{
@@ -658,6 +663,107 @@ public class VistaGUI extends Application
                 javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERLISTACONTACTOS); 
             }
                 
+        }
+
+        public void obtenerPrimerBloqueMensajesImportantes(){
+            String idBloqueMensajesImportantesString = null;
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
+            Grupo grupoMensajesImportantes = servicio.appObtenerGrupoPorId(conversacionSeleccionada.getId().toStringFull());
+            Id idBloqueMensajesImportantes = grupoMensajesImportantes.getBloqueMensajesImportantes();   
+            idBloqueMensajesImportantesString = idBloqueMensajesImportantes.toStringFull();
+            System.out.println("ID Grupo: " + grupoMensajesImportantes.getId().toStringFull());  
+            if(idBloqueMensajesImportantesString != null){
+                obtenerMensajesImportantes(idBloqueMensajesImportantesString);
+            }else{
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERBLOQUEMENSAJES);
+            }
+            
+        }
+
+        public void obtenerMensajesImportantes(String idBloqueMensajesImportantesString){
+            System.out.println("Llamando a ObtenerMensajesImportantes"); 
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();           
+            ArrayList<Contacto> contactos = servicio.appObtenerContactos();
+            Usuario usuarioLogado = servicio.appGetUsuario();            
+            JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
+            JsonObjectBuilder mensajeJsonBuilder = Json.createObjectBuilder();
+            JsonArray listaMensajesJson = null;
+            JsonObject mensajeJson = null;
+            boolean contactoGuardado = false;
+            String aliasContactoGuardado = "";
+            ArrayList<Mensaje> mensajes = null;
+            String idBloqueAnterior = null;
+            String idBloqueSiguiente = null;
+            String idBloque = null;
+            Id idBloqueMensajesImportantes = rice.pastry.Id.build(idBloqueMensajesImportantesString);
+            servicio.setBloqueMensajes(null);
+            servicio.appObtenerBloquePorId(idBloqueMensajesImportantes);
+            while(servicio.getBloqueMensajes()==null){
+                try{
+                    Thread.sleep(100);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            BloqueMensajes bloque = servicio.getBloqueMensajes();
+            if(bloque.getSiguienteBloque() != null){                
+                idBloqueSiguiente = bloque.getSiguienteBloque().toStringFull();
+                System.out.println("Siguiente Bloque: " + idBloqueSiguiente);
+            }
+            if(bloque.getAnteriorBloque() != null){                
+                idBloqueAnterior = bloque.getAnteriorBloque().toStringFull();
+                System.out.println("Anterior Bloque: " + idBloqueAnterior);
+            }
+            if(bloque != null){
+                System.out.println("Extrayendo mensajes");
+                mensajes = servicio.appObtenerMensajesDeBloque(bloque);
+                idBloque = bloque.getId().toStringFull();                     
+                System.out.println("ID Bloque: "+idBloque+"\n"+mensajes+"\n");                   
+                if(mensajes!=null)
+                {
+                    for (Mensaje mensaje : mensajes)
+                    {                    
+                        mensajeJsonBuilder = Json.createObjectBuilder()
+                                                .add("contenido", mensaje.getContenido()) 
+                                                .add("fecha", mensaje.getFecha().getTime());                      
+                        if(mensaje.getClase() == Mensaje.GRUPO_IMPORTANTE){
+                            mensajeJsonBuilder.add("importante", true);
+                        }else{
+                            mensajeJsonBuilder.add("importante", false);
+                        }     
+                        if(mensaje.getOrigen().equals(usuarioLogado.getId())){
+                            mensajeJsonBuilder.add("sentidoRecepcion", false);
+                        }else{
+                            mensajeJsonBuilder.add("sentidoRecepcion", true);
+                            if(conversacionSeleccionada.getTipo() == Conversacion.TIPO_GRUPO){
+                                contactoGuardado = false;
+                                for(Contacto contacto : contactos){
+                                    if (mensaje.getOrigen().equals(contacto.getUsuario().getId())){
+                                        contactoGuardado = true;
+                                        aliasContactoGuardado = contacto.getAlias();
+                                        break;
+                                    }
+                                }
+                                if(contactoGuardado){
+                                    mensajeJsonBuilder.add("remitente", aliasContactoGuardado);
+                                }else{
+                                    mensajeJsonBuilder.add("remitente", mensaje.getOrigen().toStringFull());
+                                }
+                            }
+                        }
+                        mensajeJson = mensajeJsonBuilder.build();
+                        listaMensajesJsonBuilder.add(mensajeJson); 
+                    }   
+                    listaMensajesJson = listaMensajesJsonBuilder.build();   
+                    LOGGER.log(Level.INFO, "Mensajes imoportantes a devolver en json: \n{0}", listaMensajesJson.toString());  
+                    javascriptConnector.call("actualizarPanelMensajesImportantes", listaMensajesJson.toString(), conversacionSeleccionada.getAlias(), idBloque, idBloqueSiguiente, idBloqueAnterior);
+                }
+                else{
+                    javascriptConnector.call("notificarError", VistaGUI.ERROR_NOHAYMENSAJESIMPORTANTES);    
+                }
+            }else{
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERBLOQUEMENSAJES);
+            }
         }
 
         public void crearContacto(String inputUsuario, String inputAlias){
@@ -761,8 +867,8 @@ public class VistaGUI extends Application
             }
         }
 
-        public void enviarMensajeAConversacionSeleccionada(String mensaje){
-            servicio.appEnviarMensaje(mensaje);
+        public void enviarMensajeAConversacionSeleccionada(String mensaje, boolean importante){
+            servicio.appEnviarMensaje(mensaje, importante);
             javascriptConnector.call("actualizarPanelesAppWindowTrasEnvioMensaje", servicio.getConversacionSeleccionada().getAlias());
         }
 
@@ -824,7 +930,7 @@ public class VistaGUI extends Application
 
         public boolean comprobarSiEsMensajeDeControl(Mensaje mensaje){
             boolean validacion = false;
-            validacion = comprobarSiEsMensajeUnionGrupo(mensaje);
+            validacion = comprobarSiEsMensajeUnionGrupo(mensaje) || comprobarSiEsInsercionMensajeImportante(mensaje);
             return validacion;
         }
         public boolean comprobarSiEsMensajeUnionGrupo(Mensaje mensaje){
@@ -834,6 +940,16 @@ public class VistaGUI extends Application
             boolean tieneFormatoJSON = (contenido.substring(0,1).compareTo("{") == 0) && (contenido.substring(longContenido-1).compareTo("}") == 0);
             boolean contieneClavesValoresUnionGrupo = contenido.contains("\"id_grupo\":") && contenido.contains("\"clave_privada\":");
             validacion = tieneFormatoJSON && contieneClavesValoresUnionGrupo;
+            return validacion;
+        }
+
+        public boolean comprobarSiEsInsercionMensajeImportante(Mensaje mensaje){
+            boolean validacion = false;
+            String contenido = mensaje.getContenido();
+            int longContenido = contenido.length();
+            boolean tieneFormatoJSON = (contenido.substring(0,1).compareTo("{") == 0) && (contenido.substring(longContenido-1).compareTo("}") == 0);
+            boolean contieneClavesValoresInsercionMensajeImportante = contenido.contains("\"grupo\":") && contenido.contains("\"id_bloque\":");            
+            validacion = tieneFormatoJSON && contieneClavesValoresInsercionMensajeImportante;
             return validacion;
         }
 

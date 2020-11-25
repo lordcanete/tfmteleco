@@ -203,6 +203,46 @@ public class ManejadorBBDDConsola
     }
 
     /**
+     * Obtener un grupo de la base de datos a partir de su id, sin necesitar el creador
+     *
+     * @param id    Id del grupo que se quiere obtener
+     * @param clave Clave de cifrado de la informacion en la entrada
+     * @return El objeto grupo descifrado
+     */
+    public Grupo obtenerGrupoPorId(String id, Key clave) throws Exception
+    {
+        Grupo grupo = null;
+        String sql = "SELECT grupo FROM " + TABLA_GRUPOS + " WHERE id=?";
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql))
+        {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            // loop through the result set
+            while (rs.next())
+            {
+                String grupoCrifrado = rs.getString("grupo");
+                String grupoBase64 = ManejadorClaves.decrypt(grupoCrifrado, clave);
+                byte[] raw = Base64.getDecoder().decode(grupoBase64);
+                InputBuffer input = new SimpleInputBuffer(raw);
+                short tipo = input.readShort();
+                if (tipo == Grupo.TYPE)
+                    grupo = new Grupo(input);
+                else
+                    throw new Exception("No se puede deserializar");
+            }
+
+        } catch (Exception e)
+        {
+            throw e;
+        }
+
+        return grupo;
+    }
+
+    /**
      * Obtiene el usuario que creo un grupo concreto en la base de datos
      *
      * @param id grupo del que queremos saber el creador
