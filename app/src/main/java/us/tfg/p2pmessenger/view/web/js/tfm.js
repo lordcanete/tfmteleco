@@ -28,10 +28,10 @@ var jsConnector = {
         ocultarBloque(idCapaCargando);
         pagAppWindow_refrescarPanelConversacionSeleccionada(listaMensajesJSON, aliasRemitente, esGrupo);
     },
-    actualizarPanelMensajesImportantes: function(listaMensajesJsonString, aliasGrupo){
+    actualizarPanelMensajesImportantes: function(listaMensajesJsonString, aliasGrupo, idBloque, idBloqueSiguente, idBloqueAnterior){
         var listaMensajesJSON = JSON.parse(listaMensajesJsonString);
         ocultarBloque(idCapaCargando);
-        pagAppWindow_refrescarPanelMensajesImportantes(listaMensajesJSON, aliasGrupo);
+        pagAppWindow_refrescarPanelMensajesImportantes(listaMensajesJSON, aliasGrupo, idBloque, idBloqueSiguente, idBloqueAnterior);
     },    
     actualizarPanelesAppWindowTrasEnvioMensaje: function(aliasRemitente){
         pagAppWindow_limpiarFormularioNuevoMensaje();

@@ -665,8 +665,24 @@ public class VistaGUI extends Application
                 
         }
 
-        public void obtenerMensajesImportantes(){
-            System.out.println("Llamando a ObtenerMensajesImportantes");
+        public void obtenerPrimerBloqueMensajesImportantes(){
+            String idBloqueMensajesImportantesString = null;
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();
+            Grupo grupoMensajesImportantes = servicio.appObtenerGrupoPorId(conversacionSeleccionada.getId().toStringFull());
+            Id idBloqueMensajesImportantes = grupoMensajesImportantes.getBloqueMensajesImportantes();   
+            idBloqueMensajesImportantesString = idBloqueMensajesImportantes.toStringFull();
+            System.out.println("ID Grupo: " + grupoMensajesImportantes.getId().toStringFull());  
+            if(idBloqueMensajesImportantesString != null){
+                obtenerMensajesImportantes(idBloqueMensajesImportantesString);
+            }else{
+                javascriptConnector.call("notificarError", VistaGUI.ERROR_OBTENERBLOQUEMENSAJES);
+            }
+            
+        }
+
+        public void obtenerMensajesImportantes(String idBloqueMensajesImportantesString){
+            System.out.println("Llamando a ObtenerMensajesImportantes"); 
+            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();           
             ArrayList<Contacto> contactos = servicio.appObtenerContactos();
             Usuario usuarioLogado = servicio.appGetUsuario();            
             JsonArrayBuilder listaMensajesJsonBuilder = Json.createArrayBuilder();
@@ -675,12 +691,11 @@ public class VistaGUI extends Application
             JsonObject mensajeJson = null;
             boolean contactoGuardado = false;
             String aliasContactoGuardado = "";
-
             ArrayList<Mensaje> mensajes = null;
-            Conversacion conversacionSeleccionada = servicio.getConversacionSeleccionada();            
-            Grupo grupoMensajesImportantes = servicio.appObtenerGrupoPorId(conversacionSeleccionada.getId().toStringFull());
-            Id idBloqueMensajesImportantes = grupoMensajesImportantes.getBloqueMensajesImportantes();   
-            System.out.println("ID Grupo: " + grupoMensajesImportantes.getId().toStringFull());                    
+            String idBloqueAnterior = null;
+            String idBloqueSiguiente = null;
+            String idBloque = null;
+            Id idBloqueMensajesImportantes = rice.pastry.Id.build(idBloqueMensajesImportantesString);
             servicio.setBloqueMensajes(null);
             servicio.appObtenerBloquePorId(idBloqueMensajesImportantes);
             while(servicio.getBloqueMensajes()==null){
@@ -691,13 +706,19 @@ public class VistaGUI extends Application
                 }
             }
             BloqueMensajes bloque = servicio.getBloqueMensajes();
-            if(grupoMensajesImportantes.getSiguienteBloque() != null){
-                System.out.println("Siguiente Bloque: " + grupoMensajesImportantes.getSiguienteBloque().toStringFull);
+            if(bloque.getSiguienteBloque() != null){                
+                idBloqueSiguiente = bloque.getSiguienteBloque().toStringFull();
+                System.out.println("Siguiente Bloque: " + idBloqueSiguiente);
+            }
+            if(bloque.getAnteriorBloque() != null){                
+                idBloqueAnterior = bloque.getAnteriorBloque().toStringFull();
+                System.out.println("Anterior Bloque: " + idBloqueAnterior);
             }
             if(bloque != null){
                 System.out.println("Extrayendo mensajes");
-                mensajes = servicio.appObtenerMensajesDeBloque(bloque);                     
-                System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");                   
+                mensajes = servicio.appObtenerMensajesDeBloque(bloque);
+                idBloque = bloque.getId().toStringFull();                     
+                System.out.println("ID Bloque: "+idBloque+"\n"+mensajes+"\n");                   
                 if(mensajes!=null)
                 {
                     for (Mensaje mensaje : mensajes)
@@ -735,7 +756,7 @@ public class VistaGUI extends Application
                     }   
                     listaMensajesJson = listaMensajesJsonBuilder.build();   
                     LOGGER.log(Level.INFO, "Mensajes imoportantes a devolver en json: \n{0}", listaMensajesJson.toString());  
-                    javascriptConnector.call("actualizarPanelMensajesImportantes", listaMensajesJson.toString(), conversacionSeleccionada.getAlias());
+                    javascriptConnector.call("actualizarPanelMensajesImportantes", listaMensajesJson.toString(), conversacionSeleccionada.getAlias(), idBloque, idBloqueSiguiente, idBloqueAnterior);
                 }
                 else{
                     javascriptConnector.call("notificarError", VistaGUI.ERROR_NOHAYMENSAJESIMPORTANTES);    

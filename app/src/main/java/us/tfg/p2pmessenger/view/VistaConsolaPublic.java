@@ -465,8 +465,7 @@ public class VistaConsolaPublic implements Vista
                         {
                             id = scanner.next();
                             Grupo grupoMensajesImportantes = app.obtenerGrupoPorId(id);
-                            ArrayList<Mensaje> mensajes = app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);
-                            System.out.println("ID Bloque: "+grupoMensajesImportantes.getBloqueMensajesImportantes().toStringFull()+"\n"+mensajes+"\n");                            
+                            ArrayList<Mensaje> mensajes = app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);                            
                         }
                         break;
                     case 18:
@@ -480,8 +479,8 @@ public class VistaConsolaPublic implements Vista
                                 this.setBloqueMensajes(null);
                                 ArrayList<Mensaje> mensajes = app.obtenerMensajesDeBloque(bloque);     
                                 System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");
-                                if (bloque.getSiguienteBloque().toStringFull() != null){
-                                    System.out.println("ID Bloque Siguiente: "+bloque.getId().toStringFull()+"\n");
+                                if (bloque.getSiguienteBloque() != null){
+                                    System.out.println("ID Bloque Siguiente: "+bloque.getSiguienteBloque().toStringFull()+"\n");
                                 }  
                             }  
                         }

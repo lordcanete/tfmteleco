@@ -2661,14 +2661,22 @@ public class ControladorGUIImpl implements ControladorApp
     public ArrayList<Mensaje> obtenerMensajesImportantesGrupo(Grupo grupo){ 
         ArrayList<Mensaje> mensajes = null;
         Id idBusqueda = grupo.getBloqueMensajesImportantes();
+        vista.setBloqueMensajes(null);
+
         obtenerBloquePorId(idBusqueda);
+        while(vista.getBloqueMensajes()==null){
+            try{
+                Thread.sleep(100);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
         BloqueMensajes bloque = vista.getBloqueMensajes();
-        if(bloque != null){
-            vista.setBloqueMensajes(null);
+        if(bloque != null){            
             mensajes = obtenerMensajesDeBloque(bloque);     
             System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");
             if (bloque.getSiguienteBloque() != null){
-                System.out.println("ID Bloque Siguiente: "+bloque.getId().toStringFull()+"\n");
+                System.out.println("ID Bloque Siguiente: "+bloque.getSiguienteBloque().toStringFull()+"\n");
             }  
         }   
         return mensajes;     

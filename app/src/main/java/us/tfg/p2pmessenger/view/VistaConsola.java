@@ -489,8 +489,7 @@ public class VistaConsola implements Vista
                         {
                             id = scanner.next();
                             Grupo grupoMensajesImportantes = app.obtenerGrupoPorId(id);
-                            ArrayList<Mensaje> mensajes = app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);
-                            System.out.println("ID Bloque: "+grupoMensajesImportantes.getBloqueMensajesImportantes().toStringFull()+"\n"+mensajes+"\n");                            
+                            ArrayList<Mensaje> mensajes = app.obtenerMensajesImportantesGrupo(grupoMensajesImportantes);                            
                         }
                         break;
                     case 18:
@@ -498,14 +497,21 @@ public class VistaConsola implements Vista
                         if(scanner.hasNext())
                         {
                             id = scanner.next();                            
+                            this.setBloqueMensajes(null);
                             app.obtenerBloquePorId(rice.pastry.Id.build(id));
+                            while(this.getBloqueMensajes()==null){
+                                try{
+                                    Thread.sleep(100);
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
                             BloqueMensajes bloque = this.getBloqueMensajes();
-                            if(bloque != null){
-                                this.setBloqueMensajes(null);
+                            if(bloque != null){                                
                                 ArrayList<Mensaje> mensajes = app.obtenerMensajesDeBloque(bloque);     
                                 System.out.println("ID Bloque: "+bloque.getId().toStringFull()+"\n"+mensajes+"\n");
                                 if (bloque.getSiguienteBloque() != null){
-                                    System.out.println("ID Bloque Siguiente: "+bloque.getId().toStringFull()+"\n");
+                                    System.out.println("ID Bloque Siguiente: "+bloque.getSiguienteBloque().toStringFull()+"\n");
                                 }  
                             }  
                         }

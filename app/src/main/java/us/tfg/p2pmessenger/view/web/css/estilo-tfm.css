@@ -176,6 +176,6 @@ user-select: none;
 
 .mensajeBoxImportante{
     position: absolute;
-    top: 1%;
-    right: 1%;
+    bottom: 2%;
+    left: 2%;
 }

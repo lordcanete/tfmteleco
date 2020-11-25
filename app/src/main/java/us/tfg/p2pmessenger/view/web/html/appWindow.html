@@ -149,7 +149,21 @@
                 <div class="pagAppWindow_mensajesImportantesHeader">
                     <h4 class="m-2 mb-4">Mensajes importantes</h4>
                     <h5 class="mx-2 my-1">Grupo: <span id="pagAppWindow_mensajesImportantesNombreGrupo"></span></h5>
-                    <button type="button" class="btn btn-success px-1 mx-2 my-1" onclick="pagAppWindow_onClickRecargarMensajesImportantes();">Refrescar</button>                
+                    <div class="text-center d-flex flex-row col-12">
+                        <button id="pagAppWindow_mensajesImportantesBotonAnteriorBloque" type="button" class="btn btn-info px-2 mx-1 my-1 d-none" onclick="pagAppWindow_onClickCargarAnteriorBloqueMensajesImportantes();">
+                            <i class="fa fa-arrow-left fa-1x text-white" aria-hidden="true"></i>
+                            <span id="pagAppWindow_mensajesImportantesIdAnteriorBloque" class="d-none"></span>
+                        </button>                
+                        <button type="button" class="btn btn-success px-2 mx-1 my-1" onclick="pagAppWindow_onClickRecargarMensajesImportantes();">
+                            Recargar bloque
+                            <span id="pagAppWindow_mensajesImportantesIdBloqueActual" class="d-none"></span>
+                        </button>                
+                        <button id="pagAppWindow_mensajesImportantesBotonSiguienteBloque" type="button" class="btn btn-info px-2 mx-1 my-1 d-none" onclick="pagAppWindow_onClickCargarSiguienteBloqueMensajesImportantes();">
+                            <i class="fa fa-arrow-right fa-1x text-white" aria-hidden="true"></i>
+                            <span id="pagAppWindow_mensajesImportantesIdSiguienteBloque" class="d-none"></span>
+                        </button>                
+                    </div>
+                    
                 </div>                
                 <div id="pagAppWindow_PanelMensajesImportantesListaMensajes" class="flex-grow-1 d-flex mt-2 flex-column overflow-auto border m-1">
                      
